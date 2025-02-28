@@ -54,7 +54,7 @@ const Actions = ({ categoryId }: { categoryId: string }) => {
             <div className="hidden items-center gap-2 min-sm:flex">
                 <Link
                     href={`/dashboard/categories/edit/${categoryId}`}
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-[#2992F21C] text-primary">
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-[#d7f2dc] text-primary">
                     <Pencil size={18} />
                 </Link>
                 <button

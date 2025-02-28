@@ -191,9 +191,9 @@ const CreateNewProductPage = () => {
                                 <Controller
                                     name="category"
                                     control={control}
-                                    defaultValue=""
+                                    defaultValue=""                                
                                     render={({ field }) => (
-                                        <Select onValueChange={field.onChange}>
+                                        <Select onValueChange={field.onChange} value={field.value}>
                                             <SelectTrigger className="mt-2 h-11 capitalize focus:ring-primary">
                                                 <SelectValue placeholder="Select Product Category" />
                                             </SelectTrigger>
@@ -246,27 +246,6 @@ const CreateNewProductPage = () => {
                                     className="mt-2 h-11"
                                 />
 
-                                <div className="h-5">
-                                    {errors.quantity && (
-                                        <span className="text-xs text-red-500">
-                                            {errors.quantity.message}
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="w-full">
-                                <Label htmlFor="color" className="text-base font-semibold">
-                                    Product Color
-                                    <span className="text-red-600">*</span>
-                                </Label>
-                                <Input
-                                    id="color"
-                                    name="color"
-                                    type="text"
-                                    placeholder="Enter Product color"
-                                    className="mt-2 h-11"
-                                />
                                 <div className="h-5">
                                     {errors.quantity && (
                                         <span className="text-xs text-red-500">

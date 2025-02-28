@@ -44,12 +44,12 @@ export const columns: ColumnDef<Product>[] = [
                 <div className="">
                     {firstImage ? (
                         <Image
-                            src={firstImage}
-                            alt="thumbnail"
-                            width={60}
-                            height={60}
-                            className="min-h-[60px] min-w-[60px]"
-                        />
+                        src={firstImage}
+                        alt="thumbnail"
+                        width={70}
+                        height={70}
+                        className="min-w-[83px] object-cover rounded-md transition-transform duration-300 ease-in-out hover:scale-110"
+                    />
                     ) : (
                         <div className="flex min-h-[60px] w-[60px] min-w-[60px] items-center justify-center bg-slate-200">
                             <FileImage />
