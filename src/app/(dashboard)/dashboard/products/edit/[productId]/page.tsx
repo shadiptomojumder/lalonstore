@@ -167,6 +167,9 @@ const EditProductPage = () => {
                         <p className="text-start text-sm sm:text-left">
                             Select your image and suitable name for product and click create button.
                         </p>
+                        <p className="text-start text-sm sm:text-left">
+                            Select your image and suitable name for product and click create button.
+                        </p>
                     </div>
                     <Button
                         type="submit"
