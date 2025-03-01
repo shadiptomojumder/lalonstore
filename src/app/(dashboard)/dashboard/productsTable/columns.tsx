@@ -168,16 +168,28 @@ export const columns: ColumnDef<Product>[] = [
             return <div className="capitalize">{format(date, "dd MMMM yy")}</div>;
         },
     },
+    // {
+    //     id: "isFeatured",
+    //     accessorKey: "isFeatured",
+    //     header: () => <div>Weekend Deals</div>,
+    //     cell: ({ row }) => {
+    //         const productId = row.getValue("id");
+    //         const isFeatured = row.getValue<boolean>("isFeatured");
+    //         //console.log("isFeatured", isFeatured);
+
+    //         return <CnangeSwitch isFeatured={isFeatured} productId={productId as string} />;
+    //     },
+    // },
     {
         id: "isWeekendDeal",
         accessorKey: "isWeekendDeal",
         header: () => <div>Weekend Deals</div>,
         cell: ({ row }) => {
             const productId = row.getValue("id");
-            const isWeekendDeal = row.getValue<boolean>("isWeekendDeal");
+            const initialValue = row.getValue<boolean>("isWeekendDeal");
             //console.log("isWeekendDeal", isWeekendDeal);
 
-            return <CnangeSwitch isWeekendDeal={isWeekendDeal} productId={productId as string} />;
+            return <CnangeSwitch fieldName={"isWeekendDeal"} initialValue={initialValue} productId={productId as string} />;
         },
     },
     {

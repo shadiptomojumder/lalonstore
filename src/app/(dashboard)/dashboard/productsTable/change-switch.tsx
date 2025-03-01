@@ -5,11 +5,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 const CnangeSwitch = ({
     productId,
-    isWeekendDeal,
+    fieldName,
+    initialValue
 }: {
     productId: string;
-    isWeekendDeal: boolean;
+    fieldName: "isWeekendDeal" | "isFeatured";
+    initialValue?: boolean;
 }) => {
+    console.log("isWeekendDeal", initialValue);
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
         mutationFn: updateProduct,
@@ -40,14 +43,15 @@ const CnangeSwitch = ({
     const handleSwitchChange = (checked: boolean) => {
         console.log("The Switch was clicked:", checked);
 
-        mutate({ productId, data: { isWeekendDeal: checked } });
+        // mutate({ productId, data: { isWeekendDeal: checked } });
+        mutate({ productId, data: { [fieldName]: checked } });
     };
     return (
         <Switch
             id="isWeekendDeal"
             name="isWeekendDeal"
             className=""
-            defaultChecked={isWeekendDeal}
+            defaultChecked={initialValue}
             disabled={isPending}
             onCheckedChange={(e) => handleSwitchChange(e)}
         />
