@@ -1,5 +1,5 @@
 "use client";
-import GetCategories from "@/api/categories/getCategories";
+import getCategories from "@/api/categories/getCategories";
 import getProductById from "@/api/products/getProductById";
 import updateProduct from "@/api/products/updateProduct";
 import ProductImageBoard from "@/components/dashboardComponents/product-image-board";
@@ -14,6 +14,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Category } from "@/interfaces/category.schemas";
 import { APIError, ImageFile } from "@/interfaces/common.schemas";
@@ -52,7 +53,7 @@ const EditProductPage = () => {
 
     const { data: categories } = useQuery<Category[]>({
         queryKey: ["categories"],
-        queryFn: GetCategories,
+        queryFn: () => getCategories(),
     });
     // console.log("The categories are:", categories);
 
@@ -72,6 +73,8 @@ const EditProductPage = () => {
             setValue("price", product.price);
             setValue("quantity", product.quantity);
             setValue("category", product.category.id);
+            setValue("isWeekendDeal", product.isWeekendDeal);
+            setValue("isFeatured", product.isFeatured);
 
             setInitialData({
                 name: product.name,
@@ -79,6 +82,8 @@ const EditProductPage = () => {
                 price: product.price,
                 quantity: product.quantity,
                 category: product.category.id,
+                isWeekendDeal: product.isWeekendDeal,
+                isFeatured: product.isFeatured,
             });
         }
     }, [product, setValue]);
@@ -94,7 +99,7 @@ const EditProductPage = () => {
                 reset();
                 setImages([]);
                 queryClient.invalidateQueries({ queryKey: ["products", "product", productId] });
-                router.push("/dashboard/products");
+                // router.push("/dashboard/products");
             }
         },
         onError: (error: APIError) => {
@@ -148,6 +153,10 @@ const EditProductPage = () => {
             toast.info("No changes detected.");
             return;
         }
+
+        console.log("data is:",data);
+        console.log("update is:",updatedData);
+        
 
         mutate({ productId: productId as string, data: formData });
     };
@@ -320,6 +329,31 @@ const EditProductPage = () => {
                                         </span>
                                     )}
                                 </div>
+                            </div>
+                        </section>
+                        <section className="flex flex-col gap-2 items-center px-5 2xl:flex-row">
+                            <div className="w-full flex items-center gap-1">
+                                <Label htmlFor="isWeekendDeal" className="text-base font-semibold">
+                                    Weekend Deal :
+                                </Label>
+                                <Switch
+                                    {...register("isWeekendDeal")}
+                                    id="isWeekendDeal"
+                                    name="isWeekendDeal"
+                                    className=""
+                                />
+                            </div>
+
+                            <div className="w-full flex items-center gap-1">
+                                <Label htmlFor="isFeatured" className="text-base font-semibold">
+                                    Featured :
+                                </Label>
+                                <Switch
+                                    {...register("isFeatured")}
+                                    id="isFeatured"
+                                    name="isFeatured"
+                                    className=""
+                                />
                             </div>
                         </section>
                     </section>

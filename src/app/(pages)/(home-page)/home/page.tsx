@@ -1,5 +1,6 @@
-import HeroSection from "../homepage-sections/HeroSection/HeroSection";
-import PopularCategorieSection from "../homepage-sections/PopularCategorieSection/PopularCategorieSection";
+import HeroSection from "../homepage-sections/HeroSection";
+import PopularCategorieSection from "../homepage-sections/PopularCategorySection";
+import ShocaseSection from "../homepage-sections/ShocaseSection";
 // import PopularProductSection from "../homepage-sections/PopularProductSection/PopularProductSection";
 
 const HomePage = () => {
@@ -7,8 +8,9 @@ const HomePage = () => {
         <main className="bg-white">
             <section className="">
                 <HeroSection />
+                <ShocaseSection />
                 <PopularCategorieSection />
-                
+                <ShocaseSection />
 
                 {/* <PopularProductSection /> */}
             </section>

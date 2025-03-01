@@ -6,16 +6,19 @@ import { api } from "../api";
 // Interface for updating a product
 interface UpdateProductProps {
     productId: string;
-    data: FormData;
+    data: FormData | Record<string, any>;
 }
 
 const updateProduct = async ({ productId, data }: UpdateProductProps): Promise<APIResponse<Product>> => {
     try {
+        const isFormData = data instanceof FormData;
+        const headers = isFormData ? { "Content-Type": "multipart/form-data" } : { "Content-Type": "application/json" };
+
         const response: AxiosResponse<APIResponse<Product>> = await api.patch<APIResponse<Product>>(
             `/products/${productId}`,
             data,
             {
-                headers: { "Content-Type": "multipart/form-data" }, // Adjust if handling file uploads
+                headers
             },
         );
         // Ensure response.data exists and has a `data` property

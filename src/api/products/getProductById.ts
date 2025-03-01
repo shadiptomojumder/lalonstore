@@ -9,7 +9,7 @@ const getProductById = async (productId: string): Promise<Product> => {
             `/products/${productId}`,
         );
 
-        console.log("The Get Product By ID API Response is:", response);
+        // console.log("The Get Product By ID API Response is:", response);
         // Ensure the API response contains valid data
         if (!response.data || !response.data.data) {
             throw new Error("Invalid API response: Missing product data");

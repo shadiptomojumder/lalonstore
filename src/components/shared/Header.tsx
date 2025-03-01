@@ -9,7 +9,7 @@ const Header = () => {
             <section className="container mx-auto px-3 sm:px-0">
                 <section className="grid w-full grid-cols-2 md:grid-cols-3 items-center">
                     <section className="">
-                        <p className="text-3xl font-bold italic">SKB BEST</p>
+                        <p className="text-3xl font-bold italic">Lalon Store</p>
                     </section>
                     <section className="hidden w-full px-5 md:block">
                         <div className="relative bg-transparent">

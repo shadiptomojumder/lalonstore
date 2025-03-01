@@ -44,6 +44,8 @@ export const productSchema = z.object({
         .optional(),
 
     isActive: z.boolean().optional(),
+    isWeekendDeal: z.boolean().optional(),
+    isFeatured: z.boolean().optional(),
 
     category: z.string().min(1, { message: "Category is required" }),
 });

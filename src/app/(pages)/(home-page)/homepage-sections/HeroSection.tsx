@@ -10,7 +10,7 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import * as React from "react";
-import Banner5 from "../../../../../../public/banners/banner5.png";
+import Banner5 from "../../../../../public/banners/banner5.png";
 
 const HeroSection = () => {
     const plugin = React.useRef(Autoplay({ delay: 2000, stopOnInteraction: false }));

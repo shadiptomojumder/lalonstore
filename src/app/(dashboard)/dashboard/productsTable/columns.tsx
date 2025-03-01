@@ -9,6 +9,7 @@ import Image from "next/image";
 import takaIcon from "../../../../../public/icons/taka.png";
 import Actions from "./actions";
 import { DataTableColumnHeader } from "./data-table-column-header";
+import CnangeSwitch from "./change-switch";
 
 export const columns: ColumnDef<Product>[] = [
     {
@@ -168,6 +169,18 @@ export const columns: ColumnDef<Product>[] = [
         },
     },
     {
+        id: "isWeekendDeal",
+        accessorKey: "isWeekendDeal",
+        header: () => <div>Weekend Deals</div>,
+        cell: ({ row }) => {
+            const productId = row.getValue("id");
+            const isWeekendDeal = row.getValue<boolean>("isWeekendDeal");
+            //console.log("isWeekendDeal", isWeekendDeal);
+
+            return <CnangeSwitch isWeekendDeal={isWeekendDeal} productId={productId as string} />;
+        },
+    },
+    {
         id: "id",
         accessorKey: "id",
         header: () => <div>Actions</div>,
@@ -178,15 +191,4 @@ export const columns: ColumnDef<Product>[] = [
             return <Actions productId={productId as string} />;
         },
     },
-
-    // {
-    //     id: "actions",
-    //     enableHiding: false,
-    //     cell: ({ row }) => {
-    //         const product = row.original;
-    //         // console.log("Apointment", apoointment);
-
-    //         return <ActionButton product={product} />;
-    //     },
-    // },
 ];
