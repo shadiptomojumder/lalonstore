@@ -6,7 +6,7 @@ import { toast } from "sonner";
 const CnangeSwitch = ({
     productId,
     fieldName,
-    initialValue
+    initialValue,
 }: {
     productId: string;
     fieldName: "isWeekendDeal" | "isFeatured";
@@ -17,18 +17,13 @@ const CnangeSwitch = ({
     const { mutate, isPending } = useMutation({
         mutationFn: updateProduct,
         onSuccess: (response) => {
-            console.log("The Response was:", response);
-            console.log("The Response.data was:", response.data);
-
             if (response.statusCode === 200) {
-                toast.success("Product successfully created");
-
-                queryClient.invalidateQueries({ queryKey: ["products", "product", productId] });
-                // router.push("/dashboard/products");
+                toast.success("Product Successfully Updated");
+                queryClient.invalidateQueries({ queryKey: ["products"] });
             }
         },
         onError: (error: APIError) => {
-            console.log("The Create Product Page Error is: ", error);
+            console.log("The CnangeSwitch Page Error is: ", error);
 
             if (error.statusCode === 409) {
                 toast.warning("Product already exist.");
@@ -43,7 +38,6 @@ const CnangeSwitch = ({
     const handleSwitchChange = (checked: boolean) => {
         console.log("The Switch was clicked:", checked);
 
-        // mutate({ productId, data: { isWeekendDeal: checked } });
         mutate({ productId, data: { [fieldName]: checked } });
     };
     return (
