@@ -159,15 +159,15 @@ export const columns: ColumnDef<Product>[] = [
             );
         },
     },
-    {
-        id: "createdAt",
-        accessorKey: "createdAt",
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
-        cell: ({ row }) => {
-            const date = new Date(row.getValue("createdAt"));
-            return <div className="capitalize">{format(date, "dd MMMM yy")}</div>;
-        },
-    },
+    // {
+    //     id: "createdAt",
+    //     accessorKey: "createdAt",
+    //     header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
+    //     cell: ({ row }) => {
+    //         const date = new Date(row.getValue("createdAt"));
+    //         return <div className="capitalize">{format(date, "dd MMMM yy")}</div>;
+    //     },
+    // },
     {
         id: "isFeatured",
         accessorKey: "isFeatured",
@@ -195,7 +195,7 @@ export const columns: ColumnDef<Product>[] = [
     {
         id: "id",
         accessorKey: "id",
-        header: () => <div>Actions</div>,
+        header: () => <div className="text-center">Actions</div>,
         cell: ({ row }) => {
             const productId = row.getValue("id");
             //console.log("productId", productId);

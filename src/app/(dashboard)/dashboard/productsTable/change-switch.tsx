@@ -12,7 +12,6 @@ const CnangeSwitch = ({
     fieldName: "isWeekendDeal" | "isFeatured";
     initialValue?: boolean;
 }) => {
-    console.log("isWeekendDeal", initialValue);
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
         mutationFn: updateProduct,
@@ -36,7 +35,7 @@ const CnangeSwitch = ({
     });
 
     const handleSwitchChange = (checked: boolean) => {
-        console.log("The Switch was clicked:", checked);
+        // console.log("The Switch was clicked:", checked);
 
         mutate({ productId, data: { [fieldName]: checked } });
     };

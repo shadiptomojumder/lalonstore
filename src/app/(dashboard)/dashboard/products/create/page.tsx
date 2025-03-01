@@ -1,7 +1,6 @@
 "use client";
-import GetCategories from "@/api/categories/getCategories";
+import getCategories from "@/api/categories/getCategories";
 import createProduct from "@/api/products/createProduct";
-
 import ProductImageSelector from "@/components/dashboardComponents/product-image-selector";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,7 +29,7 @@ const CreateNewProductPage = () => {
 
     const { data: categories } = useQuery<Category[]>({
         queryKey: ["categories"],
-        queryFn: GetCategories,
+        queryFn: () => getCategories(),
     });
     // console.log("The categories are:", categories);
 
@@ -191,7 +190,7 @@ const CreateNewProductPage = () => {
                                 <Controller
                                     name="category"
                                     control={control}
-                                    defaultValue=""                                
+                                    defaultValue=""
                                     render={({ field }) => (
                                         <Select onValueChange={field.onChange} value={field.value}>
                                             <SelectTrigger className="mt-2 h-11 capitalize focus:ring-primary">
