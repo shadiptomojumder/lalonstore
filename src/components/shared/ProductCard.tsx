@@ -45,7 +45,7 @@ const ProductCard = ({product}: {product:Product}) => {
     };
 
     return (
-        <section className="group relative flex w-full h-full flex-col justify-between rounded-md border bg-white p-[5px] shadow transition-all duration-300 disabled:bg-red-400 sm:p-3 md:min-w-[220px] z-50">
+        <section className="group relative flex w-full h-full flex-col justify-between rounded-md border bg-white p-[5px] shadow-lg transition-all duration-300 disabled:bg-red-400 sm:p-3 md:min-w-[220px] z-50">
             <div className="relative">
                 <Image
                     src={product?.images[0]}

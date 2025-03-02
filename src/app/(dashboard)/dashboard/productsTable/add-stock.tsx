@@ -3,7 +3,6 @@ import getProductById from "@/api/products/getProductById";
 import updateProduct from "@/api/products/updateProduct";
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
@@ -38,7 +37,7 @@ const AddStock = ({ productId }: { productId: string }) => {
             if (response.statusCode === 200) {
                 toast.success("Product Successfully Updated");
                 queryClient.invalidateQueries({ queryKey: ["products"] });
-                setStock(null)
+                setStock(null);
                 setIsDialogOpen(false); // Close the dialog on success
             }
         },
@@ -61,17 +60,17 @@ const AddStock = ({ productId }: { productId: string }) => {
         setIsTouched(true);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         if (stock !== null) {
             mutate({ productId, data: { stock } });
         }
     };
 
-
     return (
-        <div>
+        <div className="okey">
             <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <AlertDialogTrigger asChild>
+                <AlertDialogTrigger asChild className="focus-visible:ring-0 focus-visible:outline-0">
                     <button className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-sky-100 text-sky-700">
                         <PackagePlus size={18} />
                     </button>
@@ -82,43 +81,46 @@ const AddStock = ({ productId }: { productId: string }) => {
                             Update Product Stock
                         </AlertDialogTitle>
                         <AlertDialogDescription className="text-center">
-                            This action cannot be undone. Are you sure that you want to update this {" "}
+                            This action cannot be undone. Are you sure that you want to update this{" "}
                             <span className="font-medium text-primary">{product?.name}</span> stock.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <section>
-                        <div className="w-full">
-                            <Label htmlFor="stock" className="text-base font-semibold">
-                                Product Stock <span className="text-red-600">*</span>
-                            </Label>
-                            <Input
-                                id="stock"
-                                name="stock"
-                                type="number"
-                                placeholder="Enter Product stock"
-                                className="mt-2 h-11"
-                                onChange={handleStockChange}
-                            />
+                    <form onSubmit={handleSubmit}>
+                        <section>
+                            <div className="w-full">
+                                <Label htmlFor="stock" className="text-base font-semibold">
+                                    Product Stock <span className="text-red-600">*</span>
+                                </Label>
+                                <Input
+                                    id="stock"
+                                    name="stock"
+                                    type="number"
+                                    placeholder="Enter Product stock"
+                                    className="mt-2 h-11"
+                                    onChange={handleStockChange}
+                                />
 
-                            <div className="h-5">
-                                {/* {errors.price && (
+                                <div className="h-5">
+                                    {/* {errors.price && (
                                         <span className="text-xs text-red-500">
                                             {errors.price.message}
                                         </span>
                                     )} */}
+                                </div>
                             </div>
-                        </div>
-                    </section>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
-                        <Button
-                            disabled={!isTouched || isPending}
-                            onClick={handleSubmit}
-                        >
-                            {isPending ? <Loader size={28} className="animate-spin text-white" /> : ""}
-                            Continue
-                        </Button>
-                    </AlertDialogFooter>
+                        </section>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+                            <Button type="submit" disabled={!isTouched || isPending}>
+                                {isPending ? (
+                                    <Loader size={28} className="animate-spin text-white" />
+                                ) : (
+                                    ""
+                                )}
+                                Continue
+                            </Button>
+                        </AlertDialogFooter>
+                    </form>
                 </AlertDialogContent>
             </AlertDialog>
         </div>

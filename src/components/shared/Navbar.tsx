@@ -5,9 +5,9 @@ import Link from "next/link";
 
 const Navbar = () => {
     return (
-        <main className="grid grid-cols-3 bg-[#2992F21C] px-40 py-3">
+        <main className="grid grid-cols-3 bg-gray-100 px-40 py-3 drop-shadow-lg fixed top-0 z-[1000] w-full">
             <section>
-                <p className="text-2xl font-bold italic">SKB BEST</p>
+                <p className="text-3xl font-bold italic">SKB BEST</p>
             </section>
             <section className="w-full px-5">
                 <div className="relative bg-transparent">

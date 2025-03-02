@@ -5,23 +5,25 @@ import ProductCard from "@/components/shared/ProductCard";
 import { Carousel, CarouselContent, CarouselItem, Next, Previous } from "@/components/ui/carousel";
 import { Product } from "@/interfaces/product.schemas";
 import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
+import oppo from "../../../../../public/banners/banner1.png"
+import leaf1 from "../../../../../public/banners/leaf4.jpg"
 
 
 const FeaturedProducts = () => {
     const { data: products, isLoading } = useQuery<Product[]>({
-        queryKey: ["products"],
+        queryKey: ["products",{ isFeatured: true }],
         queryFn: () => getAllProducts({ isFeatured: true }),
     });
 
     console.log("The products are:", products);
 
     return (
-        <div className="bg-red-200 py-8">
+        <div className="py-12" style={{ backgroundImage: `url(${leaf1.src})` }}>
             <div className="container mx-auto px-3 sm:px-0">
-                <h2 className="mb-5 text-center font-rubik text-xl font-semibold text-black uppercase md:text-lg lg:text-2xl">
-                    Featured Products
+                <h2 className="mb-5 text-center font-rubik text-xl font-semibold text-white uppercase md:text-lg lg:text-2xl">
+                    Featured Products 🎇
                 </h2>
-                
 
                 <Carousel
                     opts={{

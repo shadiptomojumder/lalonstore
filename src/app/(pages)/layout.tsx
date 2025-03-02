@@ -1,3 +1,4 @@
+import Footer from "@/components/shared/Footer";
 import Header from "@/components/shared/Header";
 import TanstackProvider from "@/TanstackProvider/TanstackProvider";
 import type { Metadata } from "next";
@@ -36,11 +37,9 @@ export default function RootLayout({
             <body
                 className={`${roboto.className} ${roboto.variable} ${rubik.variable} ${montserrat.variable} antialiased`}>
                 <TanstackProvider>
-                    <div>
-                        <Header></Header>
-                        {/* <Navbar></Navbar> */}
-                    </div>
+                    <Header />
                     {children}
+                    <Footer />
                 </TanstackProvider>
             </body>
         </html>

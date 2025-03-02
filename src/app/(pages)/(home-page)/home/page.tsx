@@ -2,7 +2,7 @@ import FeaturedProducts from "../homepage-sections/FeaturedProducts";
 import HeroSection from "../homepage-sections/HeroSection";
 import PopularCategorieSection from "../homepage-sections/PopularCategorySection";
 import ShocaseSection from "../homepage-sections/ShocaseSection";
-// import PopularProductSection from "../homepage-sections/PopularProductSection/PopularProductSection";
+import WeekendDeals from "../homepage-sections/WeekendDeals";
 
 const HomePage = () => {
     return (
@@ -11,10 +11,8 @@ const HomePage = () => {
                 <HeroSection />
                 <ShocaseSection />
                 <PopularCategorieSection />
-                <ShocaseSection />
                 <FeaturedProducts />
-
-                {/* <PopularProductSection /> */}
+                <WeekendDeals />
             </section>
         </main>
     );
