@@ -41,8 +41,8 @@ const CnangeSwitch = ({
     };
     return (
         <Switch
-            id="isWeekendDeal"
-            name="isWeekendDeal"
+            id={fieldName}
+            name={fieldName}
             className=""
             defaultChecked={initialValue}
             disabled={isPending}

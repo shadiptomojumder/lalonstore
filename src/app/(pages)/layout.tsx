@@ -1,17 +1,24 @@
 import Header from "@/components/shared/Header";
 import TanstackProvider from "@/TanstackProvider/TanstackProvider";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Montserrat, Roboto, Rubik } from "next/font/google";
 import "../globals.css";
 
-const geistSans = Geist({
-    variable: "--font-geist-sans",
+const roboto = Roboto({
+    variable: "--font-roboto",
+    subsets: ["latin"],
+    weight: ["300", "400", "500", "700", "900"],
+});
+
+const rubik = Rubik({
+    variable: "--font-rubik",
     subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
+const montserrat = Montserrat({
+    variable: "--font-montserrat",
     subsets: ["latin"],
+    weight: ["300", "400", "500", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -26,7 +33,8 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+            <body
+                className={`${roboto.className} ${roboto.variable} ${rubik.variable} ${montserrat.variable} antialiased`}>
                 <TanstackProvider>
                     <div>
                         <Header></Header>

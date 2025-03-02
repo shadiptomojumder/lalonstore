@@ -4,7 +4,7 @@ import * as React from "react"
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
-import { ArrowLeft, ArrowRight } from "lucide-react"
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -201,6 +201,62 @@ function CarouselPrevious({
   )
 }
 
+function Previous({
+  className,
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  const { orientation, scrollPrev, canScrollPrev } = useCarousel()
+
+  return (
+    <button
+      data-slot="carousel-previous"
+      className={cn(
+        "absolute p-1 rounded-sm transition-opacity duration-250",
+        `${canScrollPrev ? "opacity-100" : "opacity-0"}`,
+        orientation === "horizontal"
+          ? "top-1/2 -left-12 -translate-y-1/2"
+          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+        className
+      )}
+      disabled={!canScrollPrev}
+      onClick={scrollPrev}
+      {...props}
+    >
+      <ChevronLeft />
+      <span className="sr-only">Previous slide</span>
+    </button>
+  )
+}
+
+function Next({
+  className,
+  variant = "outline",
+  size = "icon",
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  const { orientation, scrollNext, canScrollNext } = useCarousel()
+
+  return (
+    <button
+      data-slot="carousel-next"
+      className={cn(
+        "absolute p-1 rounded-sm transition-opacity duration-250",
+        `${canScrollNext ? "opacity-100" : "opacity-0"}`,
+        orientation === "horizontal"
+          ? "top-1/2 -right-12 -translate-y-1/2"
+          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+        className
+      )}
+      disabled={!canScrollNext}
+      onClick={scrollNext}
+      {...props}
+    >
+      <ChevronRight />
+      <span className="sr-only">Next slide</span>
+    </button>
+  )
+}
+
 function CarouselNext({
   className,
   variant = "outline",
@@ -238,4 +294,6 @@ export {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  Previous,
+  Next
 }

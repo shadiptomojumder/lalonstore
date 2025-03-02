@@ -1,91 +1,62 @@
 "use client";
-import getCategories from "@/api/categories/getCategories";
+import getAllProducts from "@/api/products/getProducts";
 import CategoryLoading from "@/components/loading/CategoryLoading";
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-} from "@/components/ui/carousel";
-import { Category } from "@/interfaces/category.schemas";
+import ProductCard from "@/components/shared/ProductCard";
+import { Carousel, CarouselContent, CarouselItem, Next, Previous } from "@/components/ui/carousel";
+import { Product } from "@/interfaces/product.schemas";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
-import Link from "next/link";
+
 
 const FeaturedProducts = () => {
-    const { data: categories, isLoading } = useQuery({
-        queryKey: ["categories"],
-        queryFn: () => getCategories(),
+    const { data: products, isLoading } = useQuery<Product[]>({
+        queryKey: ["products"],
+        queryFn: () => getAllProducts({ isFeatured: true }),
     });
 
-    console.log("categories is", categories);
+    console.log("The products are:", products);
 
     return (
-        <section className="container mx-auto mb-10 px-3 sm:px-0">
-            <Carousel
-                opts={{
-                    dragFree: true,
-                }}>
-                <div className="flex justify-between pb-5">
-                    <h2 className="text-xl font-semibold text-black md:text-lg lg:text-2xl">
-                        Popular Categories
-                    </h2>
-                    <div className="relative w-[80px]">
-                        <CarouselPrevious
-                            variant="default"
-                            className="absolute top-1/2 left-0 z-50 bg-primary text-white"
-                        />
-                        <CarouselNext
-                            variant="default"
-                            className="absolute top-1/2 right-0 z-50 bg-primary text-white"
-                        />
-                    </div>
-                </div>
-                <CarouselContent className="-ml-8 h-full w-full">
-                    {isLoading ? (
-                        <>
-                            {Array.from({ length: 10 }, (_, index) => (
-                                <CarouselItem
-                                    key={index}
-                                    className="w-full basis-1/2 min-[450px]:basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/6 2xl:basis-1/6">
-                                    <CategoryLoading />
-                                </CarouselItem>
-                            ))}
-                        </>
-                    ) : (
-                        <>
-                            {categories &&
-                                categories.length > 0 &&
-                                categories.map((category: Category, index: number) => (
+        <div className="bg-red-200 py-8">
+            <div className="container mx-auto px-3 sm:px-0">
+                <h2 className="mb-5 text-center font-rubik text-xl font-semibold text-black uppercase md:text-lg lg:text-2xl">
+                    Featured Products
+                </h2>
+                
+
+                <Carousel
+                    opts={{
+                        dragFree: true,
+                    }}>
+                    <CarouselContent className="-ml-8">
+                        {isLoading ? (
+                            <>
+                                {Array.from({ length: 10 }, (_, index) => (
                                     <CarouselItem
                                         key={index}
-                                        className="w-full basis-1/2 pl-8 min-[450px]:basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/6 2xl:basis-1/6">
-                                        <Link href={`/${category?.id}`}>
-                                            <div className="h-full rounded-lg border bg-white p-2 shadow-md">
-                                                <div className="flex items-center justify-center rounded-lg bg-white">
-                                                    <Image
-                                                        src={category?.thumbnail}
-                                                        alt="food"
-                                                        width={200}
-                                                        height={200}
-                                                        className="w-[166px] object-cover object-center"
-                                                    />
-                                                </div>
-                                                <p className="mt-1 text-center text-sm font-semibold capitalize group-hover:text-[#2C742F] sm:text-base">
-                                                    {category?.title}
-                                                </p>
-                                            </div>
-                                        </Link>
+                                        className="w-full basis-1/2 min-[450px]:basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/6 2xl:basis-1/6">
+                                        <CategoryLoading />
                                     </CarouselItem>
                                 ))}
-                        </>
-                    )}
-                </CarouselContent>
-                {/* <CarouselPrevious />
-                <CarouselNext /> */}
-            </Carousel>
-        </section>
+                            </>
+                        ) : (
+                            <>
+                                {products &&
+                                    products.length > 0 &&
+                                    products.map((product: Product, index: number) => (
+                                        <CarouselItem
+                                            key={index}
+                                            className="w-full basis-1/2 pl-8 min-[450px]:basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/6 2xl:basis-1/6">
+                                            <ProductCard product={product} />
+                                        </CarouselItem>
+                                    ))}
+                            </>
+                        )}
+                    </CarouselContent>
+                    <Previous className="-left-3.5 bg-primary text-white" />
+                    <Next className="-right-3.5 bg-primary text-white" />
+                </Carousel>
+            </div>
+        </div>
     );
 };
 

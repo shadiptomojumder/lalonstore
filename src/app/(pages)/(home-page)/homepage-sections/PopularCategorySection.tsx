@@ -42,7 +42,7 @@ const PopularCategorieSection = () => {
                         />
                     </div>
                 </div>
-                <CarouselContent className="-ml-8 h-full w-full">
+                <CarouselContent className="-ml-8">
                     {isLoading ? (
                         <>
                             {Array.from({ length: 10 }, (_, index) => (

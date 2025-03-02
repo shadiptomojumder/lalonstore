@@ -14,7 +14,9 @@ interface ProductQueryParams {
     name?: string;
     price?: number;
     sku?: string;
-    category?: string; // Optional: Fetch by category
+    category?: string;
+    isFeatured?: boolean;
+    isWeekendDeal?: boolean;
 }
 
 const getAllProducts = async (queryParams: ProductQueryParams = {}): Promise<Product[]> => {
