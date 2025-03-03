@@ -1,43 +1,20 @@
-import { Product } from "@/interfaces/product.schemas";
-import axios from "axios";
+"use client"
+import getProductById from "@/api/products/getProductById";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 
-// Next.js will invalidate the cache when a
-// request comes in, at most once every 60 seconds.
-export const revalidate = 60;
+const ProductDetailsPage = () => {
+    const params = useParams(); // Get URL parameters
 
-// We'll prerender only the params from `generateStaticParams` at build time.
-// If a request comes in for a path that hasn't been generated,
-// Next.js will server-render the page on-demand.
-export const dynamicParams = true; // or false, to 404 on unknown paths
+    const { productId } = params;
 
-// Function to fetch all products
-const getProducts = async (): Promise<Product[]> => {
-    try {
-        const response = await axios.get("http://localhost:5000/api/v1/products");
-        console.log("The Get ALL Product API Response is:", response);
-        return response.data?.data;
-    } catch (error) {
-        console.error("Error fetching products:", error);
-        throw new Error("An unknown error occurred while fetching products");
-    }
-};
+    console.log("The productId is:", productId);
+    const { data: product } = useQuery({
+        queryKey: ["product", productId],
+        queryFn: () => getProductById({ productId: productId as string }),
+    });
 
-export async function generateStaticParams() {
-    try {
-        const productData = await getProducts();
-        console.log("Product Details:", productData);
-        return productData.map((product: Product) => ({
-            productId: String(product.id),
-        }));
-    } catch (error) {
-        console.error("Error fetching products:", error);
-        return [];
-    }
-}
-
-const ProductDetailsPage = async () => {
-    // const product = await getProductById("67c210b0242ac346afc86b36");
-    // console.log("Product Details:", product);
+    console.log("The product is:", product);
 
     return <div>Product details</div>;
 };
