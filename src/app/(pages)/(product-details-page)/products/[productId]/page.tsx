@@ -24,18 +24,20 @@ const ProductDetailsPage = () => {
     return (
         <main className="container mx-auto px-3 sm:px-0">
             <section>
-                <div>
+                <div className="p-5 bg-gray-300 rounded-lg">
                     {product && (
                         <Image
                             src={product.images[0]}
                             alt={product.name}
-                            width={100}
-                            height={100}
-                            className=""
+                            width={400}
+                            height={400}
+                            className="p-2 aspect-square"
                         />
                     )}
                 </div>
-                <div></div>
+                <div>
+                    <p className="text-base font-medium">{product?.name}</p>
+                </div>
             </section>
         </main>
     );
