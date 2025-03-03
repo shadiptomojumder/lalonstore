@@ -1,5 +1,5 @@
 "use client";
-import getAllProducts from "@/api/products/getProducts";
+import getProducts from "@/api/products/getProducts";
 import ProductLoading from "@/components/loading/ProductLoading";
 import ProductCard from "@/components/shared/ProductCard";
 import { Carousel, CarouselContent, CarouselItem, Next, Previous } from "@/components/ui/carousel";
@@ -10,7 +10,7 @@ import leaf1 from "../../../../../public/banners/leaf4.jpg";
 const FeaturedProducts = () => {
     const { data: products, isLoading } = useQuery<Product[]>({
         queryKey: ["products", { isFeatured: true }],
-        queryFn: () => getAllProducts({ isFeatured: true }),
+        queryFn: () => getProducts({ isFeatured: true }),
     });
 
     console.log("The products are:", products);

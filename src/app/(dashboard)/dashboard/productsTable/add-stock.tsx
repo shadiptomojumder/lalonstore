@@ -25,7 +25,7 @@ const AddStock = ({ productId }: { productId: string }) => {
     const [stock, setStock] = useState<number | null>(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-    const { data: product, isLoading: productIsLoading } = useQuery({
+    const { data: product } = useQuery({
         queryKey: ["product", productId],
         queryFn: () => getProductById(productId as string),
     });
@@ -63,14 +63,16 @@ const AddStock = ({ productId }: { productId: string }) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (stock !== null) {
-            mutate({ productId, data: { stock } });
+            mutate({ productId, data: { stock: stock } });
         }
     };
 
     return (
         <div className="okey">
             <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <AlertDialogTrigger asChild className="focus-visible:ring-0 focus-visible:outline-0">
+                <AlertDialogTrigger
+                    asChild
+                    className="focus-visible:ring-0 focus-visible:outline-0">
                     <button className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-sky-100 text-sky-700">
                         <PackagePlus size={18} />
                     </button>

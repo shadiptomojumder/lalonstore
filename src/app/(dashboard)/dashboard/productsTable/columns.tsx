@@ -3,13 +3,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Product } from "@/interfaces/product.schemas";
 import { ColumnDef } from "@tanstack/react-table";
-import { format } from "date-fns";
 import { FileImage } from "lucide-react";
 import Image from "next/image";
 import takaIcon from "../../../../../public/icons/taka.png";
 import Actions from "./actions";
-import { DataTableColumnHeader } from "./data-table-column-header";
 import CnangeSwitch from "./change-switch";
+import { DataTableColumnHeader } from "./data-table-column-header";
 
 export const columns: ColumnDef<Product>[] = [
     {
@@ -45,12 +44,12 @@ export const columns: ColumnDef<Product>[] = [
                 <div className="">
                     {firstImage ? (
                         <Image
-                        src={firstImage}
-                        alt="thumbnail"
-                        width={70}
-                        height={70}
-                        className="min-w-[83px] object-cover rounded-md transition-transform duration-300 ease-in-out hover:scale-110"
-                    />
+                            src={firstImage}
+                            alt="thumbnail"
+                            width={70}
+                            height={70}
+                            className="min-w-[83px] rounded-md object-cover transition-transform duration-300 ease-in-out hover:scale-110"
+                        />
                     ) : (
                         <div className="flex min-h-[60px] w-[60px] min-w-[60px] items-center justify-center bg-slate-200">
                             <FileImage />
@@ -177,7 +176,13 @@ export const columns: ColumnDef<Product>[] = [
             const initialValue = row.getValue<boolean>("isFeatured");
             //console.log("isFeatured", isFeatured);
 
-            return <CnangeSwitch fieldName={"isFeatured"} initialValue={initialValue} productId={productId as string} />;
+            return (
+                <CnangeSwitch
+                    fieldName={"isFeatured"}
+                    initialValue={initialValue}
+                    productId={productId as string}
+                />
+            );
         },
     },
     {
@@ -189,7 +194,13 @@ export const columns: ColumnDef<Product>[] = [
             const initialValue = row.getValue<boolean>("isWeekendDeal");
             //console.log("isWeekendDeal", isWeekendDeal);
 
-            return <CnangeSwitch fieldName={"isWeekendDeal"} initialValue={initialValue} productId={productId as string} />;
+            return (
+                <CnangeSwitch
+                    fieldName={"isWeekendDeal"}
+                    initialValue={initialValue}
+                    productId={productId as string}
+                />
+            );
         },
     },
     {

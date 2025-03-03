@@ -230,8 +230,6 @@ function Previous({
 
 function Next({
   className,
-  variant = "outline",
-  size = "icon",
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { orientation, scrollNext, canScrollNext } = useCarousel()

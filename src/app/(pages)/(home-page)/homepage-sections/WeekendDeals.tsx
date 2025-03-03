@@ -1,5 +1,5 @@
 "use client";
-import getAllProducts from "@/api/products/getProducts";
+import getProducts from "@/api/products/getProducts";
 import ProductLoading from "@/components/loading/ProductLoading";
 import ProductCard from "@/components/shared/ProductCard";
 import { Carousel, CarouselContent, CarouselItem, Next, Previous } from "@/components/ui/carousel";
@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 const WeekendDeals = () => {
     const { data: products, isLoading } = useQuery<Product[]>({
         queryKey: ["products", { isWeekendDeal: true }],
-        queryFn: () => getAllProducts({ isWeekendDeal: true }),
+        queryFn: () => getProducts({ isWeekendDeal: true }),
         staleTime: 0, // Always fetch fresh data
         refetchOnMount: true,
     });

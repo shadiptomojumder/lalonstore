@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { Eye, PackagePlus, Pencil, Settings2, Trash2 } from "lucide-react";
+import { Eye, Pencil, Settings2, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 import AddStock from "./add-stock";
@@ -66,7 +66,7 @@ const Actions = ({ productId }: { productId: string }) => {
                 {/* <button className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-sky-100 text-sky-700">
                     <PackagePlus size={18} />
                 </button> */}
-                <AddStock productId={productId}/>
+                <AddStock productId={productId} />
             </div>
             <DropdownMenu>
                 <DropdownMenuTrigger className="hidden w-full justify-center max-sm:flex">

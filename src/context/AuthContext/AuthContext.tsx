@@ -66,6 +66,7 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
     // });
 
     // Load user data from localStorage on component mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         const storedUser = localStorage.getItem("userData");
         //console.log("The storedUser is:", storedUser);

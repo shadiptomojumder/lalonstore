@@ -19,7 +19,7 @@ interface ProductQueryParams {
     isWeekendDeal?: boolean;
 }
 
-const getAllProducts = async (queryParams: ProductQueryParams = {}): Promise<Product[]> => {
+const getProducts = async (queryParams: ProductQueryParams = {}): Promise<Product[]> => {
     try {
         // Build query string dynamically
         const buildQueryString = (queryParams: ProductQueryParams) => {
@@ -52,4 +52,4 @@ const getAllProducts = async (queryParams: ProductQueryParams = {}): Promise<Pro
     }
 };
 
-export default getAllProducts;
+export default getProducts;

@@ -3,7 +3,7 @@ import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { Column } from "@tanstack/react-table";
 import * as React from "react";
 
-import GetCategories from "@/api/categories/getCategories";
+import getCategories from "@/api/categories/getCategories";
 import {
     Command,
     CommandEmpty,
@@ -37,7 +37,7 @@ export function DataTableCategoryFilter<TData, TValue>({
 
     const { data: categories, isLoading } = useQuery<Category[]>({
         queryKey: ["categories"],
-        queryFn: GetCategories,
+        queryFn: () => getCategories(),
     });
 
     return (

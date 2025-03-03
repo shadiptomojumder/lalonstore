@@ -6,7 +6,7 @@ import { api } from "../api";
 // Interface for updating a product
 interface UpdateProductProps {
     productId: string;
-    data: FormData | Record<string, any>;
+    data: FormData | Partial<Product>;
 }
 
 const updateProduct = async ({ productId, data }: UpdateProductProps): Promise<APIResponse<Product>> => {

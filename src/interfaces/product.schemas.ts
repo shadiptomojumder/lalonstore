@@ -68,12 +68,6 @@ export type Product = z.infer<typeof productDataSchema>;
 
 export type ProductFormData = z.infer<typeof productSchema>;
 
-// Product Input Schema (used when accepting input from user)
-export const ProductInput = productSchema.extend({
-    // Use the same validation but make the SKU optional if it's auto-generated
-    sku: z.string().optional(),
-});
-
 // Product Update Schema (to handle updates)
 export const productUpdateSchema = productSchema.partial().extend({
     // Allow partial updates

@@ -1,5 +1,5 @@
 "use client";
-import GetCategories from "@/api/categories/getCategories";
+import getCategories from "@/api/categories/getCategories";
 import { Category } from "@/interfaces/category.schemas";
 import { useQuery } from "@tanstack/react-query";
 import { Boxes } from "lucide-react";
@@ -9,7 +9,7 @@ import { DataTable } from "../categoriesTable/data-table";
 const AllCategoryPage = () => {
     const { data: categories } = useQuery<Category[]>({
         queryKey: ["categories"],
-        queryFn: GetCategories,
+        queryFn: () => getCategories(),
     });
 
     console.log("The categories are:", categories);

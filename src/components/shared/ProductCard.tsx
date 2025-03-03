@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const ProductCard = ({ product }: { product: Product }) => {
+    /* eslint-disable @typescript-eslint/no-unused-vars */
     const { cartItems, addToCart, removeFromCart, updateCartItem, clearCart } = useCart();
 
     //console.log("cartItems is:", cartItems);
