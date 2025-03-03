@@ -5,7 +5,7 @@ import { Minus, Plus, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const ProductCard = ({product}: {product:Product}) => {
+const ProductCard = ({ product }: { product: Product }) => {
     const { cartItems, addToCart, removeFromCart, updateCartItem, clearCart } = useCart();
 
     //console.log("cartItems is:", cartItems);
@@ -45,14 +45,15 @@ const ProductCard = ({product}: {product:Product}) => {
     };
 
     return (
-        <section className="group relative flex w-full h-full flex-col justify-between rounded-md border bg-white p-[5px] shadow-lg transition-all duration-300 disabled:bg-red-400 sm:p-3 md:min-w-[220px] z-50">
+        <section className="group relative z-50 flex h-full w-full flex-col justify-between rounded-md border bg-white p-[5px] shadow-lg transition-all duration-300 disabled:bg-red-400 sm:p-3">
             <div className="relative">
                 <Image
                     src={product?.images[0]}
                     alt="product"
-                    width={150}
-                    height={150}
-                    className="mx-auto h-[100px] w-[120px] object-cover object-center md:h-[150px] md:w-[150px]"
+                    width={415}
+                    height={332}
+                    // className="mx-auto h-[100px] w-[120px] aspect-square object-cover object-center md:h-[150px] md:w-[150px]"
+                    className="mx-auto aspect-[415/332] h-full w-full object-cover object-center"
                 />
 
                 {/* ADD TO CART BUTTON FOR MOBILE DEVICES */}
@@ -120,8 +121,7 @@ const ProductCard = ({product}: {product:Product}) => {
             </section>
 
             {product?.stock === 0 && (
-                <div
-                    className={`absolute top-0 left-0 h-full w-full rounded-md bg-gray-100/70`}>
+                <div className={`absolute top-0 left-0 h-full w-full rounded-md bg-gray-100/70`}>
                     {product?.stock === 0 && (
                         <Badge className="absolute top-2 left-2 bg-yellow-400 hover:bg-yellow-400">
                             Out of stocks

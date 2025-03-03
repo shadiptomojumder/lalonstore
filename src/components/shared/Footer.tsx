@@ -5,7 +5,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <main className="pt-16 bg-[#F2F2F2]">
+    <main className="pt-16 bg-[#F2F2F2] px-3 sm:px-0">
       <div className="mx-auto container">
         <div className="grid gap-10 row-gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="sm:col-span-2">
@@ -115,7 +115,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="flex justify-center py-5 border-t">
-          <p className="text-sm text-gray-600 dark:text-primary font-semibold">
+          <p className="sm:text-sm text-xs text-gray-600 dark:text-primary font-semibold">
             © Copyright 2024. All rights reserved by Lalon Store.
           </p>
         </div>
