@@ -37,6 +37,7 @@ const ProductDetailsPage = () => {
                 </div>
                 <div>
                     <p className="text-base font-medium">{product?.name}</p>
+                    <p className="text-base font-medium">{product?.name}</p>
                 </div>
             </section>
         </main>
