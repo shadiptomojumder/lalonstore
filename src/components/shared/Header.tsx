@@ -10,10 +10,16 @@ const Header = () => {
                 <section className="flex w-full items-center justify-between">
                     <section className="flex items-center gap-1">
                         <Menu size={28} className="sm:hidden" />
-                        <p className="hidden font-montserrat text-2xl font-bold text-nowrap italic sm:block">
-                            Lalon Store
-                        </p>
-                        <p className="font-montserrat text-xl font-bold italic sm:hidden">Store</p>
+                        <Link href="/">
+                            <p className="hidden font-montserrat text-2xl font-bold text-nowrap italic sm:block">
+                                Lalon Store
+                            </p>
+                        </Link>
+                        <Link href="/">
+                            <p className="font-montserrat text-xl font-bold italic sm:hidden">
+                                Store
+                            </p>
+                        </Link>
                     </section>
                     <section className="px-5 sm:w-[350px] md:w-[450px] lg:w-[550px] xl:w-[750px]">
                         <div className="relative bg-transparent">

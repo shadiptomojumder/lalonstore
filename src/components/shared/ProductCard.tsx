@@ -83,7 +83,7 @@ const ProductCard = ({ product }: { product: Product }) => {
                 )}
             </div>
             <section className="mt-3 flex h-full flex-col justify-between gap-1 min-[424px]:mt-1">
-                <Link href="#">
+                <Link href={`/products/${product?.id}`} passHref>
                     <h2 className="line-clamp-2 text-center text-sm font-medium text-ellipsis text-[#1A1A1A] capitalize transition-all duration-300 hover:underline">
                         {product?.name}
                     </h2>

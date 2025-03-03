@@ -6,7 +6,7 @@ import { Carousel, CarouselContent, CarouselItem, Next, Previous } from "@/compo
 import { Product } from "@/interfaces/product.schemas";
 import { useQuery } from "@tanstack/react-query";
 
-const WeekendDeals = () => {
+const SimilarProducts = () => {
     const { data: products, isLoading } = useQuery<Product[]>({
         queryKey: ["products", { isWeekendDeal: true }],
         queryFn: () => getProducts({ isWeekendDeal: true }),
@@ -19,7 +19,7 @@ const WeekendDeals = () => {
             {/* <Image src={weekend} alt="oppo" height={320} width={320}/> */}
             <div className="container mx-auto px-3 sm:px-0">
                 <h2 className="mb-5 text-center font-rubik text-xl font-semibold text-black uppercase md:text-lg lg:text-2xl">
-                    Weekend Deals ✨
+                Similar Products ✨
                 </h2>
 
                 <Carousel
@@ -59,4 +59,4 @@ const WeekendDeals = () => {
     );
 };
 
-export default WeekendDeals;
+export default SimilarProducts;
