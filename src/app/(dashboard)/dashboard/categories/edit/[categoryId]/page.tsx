@@ -16,48 +16,78 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const CategoryEditPage = () => {
-    const [image, setImage] = useState<ImageFile | null>(null);
-    const [initialImage, setInitialImage] = useState<string | null>(null);
-    const [isImageChanged, setIsImageChanged] = useState<boolean>(false);
+    const [images, setImages] = useState<{ thumbnail: ImageFile | null; logo: ImageFile | null }>({
+        thumbnail: null,
+        logo: null,
+    });
+    const [initialImages, setInitialImages] = useState<{
+        thumbnail: string | null;
+        logo: string | null;
+    }>({
+        thumbnail: null,
+        logo: null,
+    });
+    const [isImageChanged, setIsImageChanged] = useState<{ thumbnail: boolean; logo: boolean }>({
+        thumbnail: false,
+        logo: false,
+    });
     const queryClient = useQueryClient();
     const router = useRouter();
-    
+
     const params = useParams(); // Get URL parameters
 
     const { categoryId } = params;
-
-    console.log("The categoryid is:", categoryId);
 
     const { data: category } = useQuery({
         queryKey: ["category", categoryId],
         queryFn: () => GetCategoryById({ categoryId: categoryId as string }),
     });
 
-    // console.log("The category is:", category);
-
     const {
         register,
         handleSubmit,
-        formState: { errors,isDirty },
+        formState: { errors, isDirty },
         reset,
-        setValue
+        setValue,
     } = useForm<CategoryFormData>({ resolver: zodResolver(categorySchema) });
 
     useEffect(() => {
         if (category) {
             if (category.thumbnail) {
-                setImage({
-                    id: category.thumbnail,
-                    file: new File([], category.thumbnail),
-                    preview: category.thumbnail,
-                    name: category.thumbnail,
-                    type: "image/png",
-                });
-                setInitialImage(category.thumbnail);
+                setImages((prevImages) => ({
+                    ...prevImages,
+                    thumbnail: {
+                        id: category.thumbnail,
+                        file: new File([], category.thumbnail),
+                        preview: category.thumbnail,
+                        name: category.thumbnail,
+                        type: "image/png",
+                    },
+                }));
+                setInitialImages((prevImages) => ({
+                    ...prevImages,
+                    thumbnail: category.thumbnail,
+                }));
+            }
+            if (category.logo) {
+                setImages((prevImages) => ({
+                    ...prevImages,
+                    logo: {
+                        id: category.logo,
+                        file: new File([], category.logo),
+                        preview: category.logo,
+                        name: category.logo,
+                        type: "image/png",
+                    },
+                }));
+                setInitialImages((prevImages) => ({
+                    ...prevImages,
+                    logo: category.logo,
+                }));
             }
             setValue("title", category.title);
         }
-    }, [category,setValue]);
+    }, [category, setValue]);
 
     const { mutate, isPending } = useMutation({
         mutationFn: UpdateCategory,
@@ -69,9 +99,9 @@ const CategoryEditPage = () => {
                 toast.success("Category successfully updated");
                 queryClient.invalidateQueries({ queryKey: ["categories"] });
                 reset();
-                setImage(null);
-                setInitialImage(null);
-                setIsImageChanged(false);
+                setImages({ thumbnail: null, logo: null });
+                setInitialImages({ thumbnail: null, logo: null });
+                setIsImageChanged({ thumbnail: false, logo: false });
                 router.push("/dashboard/categories");
             }
         },
@@ -92,11 +122,6 @@ const CategoryEditPage = () => {
         },
     });
 
-    console.log("isDirty:", isDirty);
-    console.log("isImageChanged:", isImageChanged);
-    console.log("isPending:", isPending);
-    
-
     const onSubmit: SubmitHandler<CategoryFormData> = async (data) => {
         const formData = new FormData();
 
@@ -105,10 +130,16 @@ const CategoryEditPage = () => {
             formData.append("title", data.title);
         }
 
-        // Append image file only if it has changed
-        if (image && image.preview !== initialImage as string) {
-            console.log("Image has changed, appending to FormData");
-            formData.append("thumbnail", image.file);
+        // Append thumbnail image file only if it has changed
+        if (images.thumbnail && images.thumbnail.preview !== initialImages.thumbnail) {
+            console.log("Thumbnail has changed, appending to FormData");
+            formData.append("thumbnail", images.thumbnail.file);
+        }
+
+        // Append logo image file only if it has changed
+        if (images.logo && images.logo.preview !== initialImages.logo) {
+            console.log("Logo has changed, appending to FormData");
+            formData.append("logo", images.logo.file);
         }
 
         if (categoryId) {
@@ -175,11 +206,12 @@ const CategoryEditPage = () => {
                                     Media
                                 </h2>
                                 <div className="px-5">
-                                    <Label htmlFor="picture" className="text-base font-semibold">
-                                        Category Thumbnail <span className="text-red-600">*</span>
-                                    </Label>
-
-                                    <CategoriesImageSelector image={image} setImage={setImage} setIsImageChanged={setIsImageChanged} />
+                                    {/* <CategoriesImageSelector image={image} setImage={setImage} setIsImageChanged={setIsImageChanged} /> */}
+                                    <CategoriesImageSelector
+                                        images={images}
+                                        setImages={setImages}
+                                        setIsImageChanged={setIsImageChanged}
+                                    />
 
                                     <div className="h-5">
                                         {errors.thumbnail && (
@@ -192,10 +224,17 @@ const CategoryEditPage = () => {
                             </section>
                         </section>
 
-                        <Button type="submit" size="lg" disabled={(!isDirty && !isImageChanged) || isPending} className="">
+                        <Button
+                            type="submit"
+                            size="lg"
+                            disabled={
+                                (!isDirty && !isImageChanged.thumbnail && !isImageChanged.logo) ||
+                                isPending
+                            }
+                            className="">
                             {isPending ? (
                                 <>
-                                    <LoaderCircle className="animate-spin" /> Submiting
+                                    <LoaderCircle className="animate-spin" /> Submitting
                                 </>
                             ) : (
                                 <>Save & Publish</>

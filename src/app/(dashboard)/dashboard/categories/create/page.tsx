@@ -15,8 +15,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const CategoryCreatePage = () => {
-    const [image, setImage] = useState<ImageFile | null>(null);
-    console.log("The images are form file:", image);
+    const [images, setImages] = useState<{ thumbnail: ImageFile | null; logo: ImageFile | null }>({
+        thumbnail: null,
+        logo: null,
+    });
     const queryClient = useQueryClient();
 
     const {
@@ -36,12 +38,12 @@ const CategoryCreatePage = () => {
                 toast.success("Category successfully created");
                 queryClient.invalidateQueries({ queryKey: ["categories"] });
                 reset();
-                setImage(null);
+                setImages({ thumbnail: null, logo: null });
             }
         },
         onError: (error: AxiosError) => {
             console.log("The Create Category Error is: ", error);
-            
+
             if (error?.response?.status == 409) {
                 toast.warning("Category already created!!");
             } else if (error?.response?.status == 400) {
@@ -62,13 +64,15 @@ const CategoryCreatePage = () => {
             formData.append(key, data[key as keyof typeof data]);
         });
 
-        // Append image files (assuming single image upload)
-        if (image) {
-            formData.append("thumbnail", image.file); // Only append the first image
+        // Append thumbnail image file if provided
+        if (images.thumbnail) {
+            formData.append("thumbnail", images.thumbnail.file);
         }
 
-        console.log("The data is: ", data);
-        console.log("The categoryData data is: ", formData);
+        // Append logo image file if provided
+        if (images.logo) {
+            formData.append("logo", images.logo.file);
+        }
 
         mutate(formData);
     };
@@ -121,11 +125,10 @@ const CategoryCreatePage = () => {
                                     Media
                                 </h2>
                                 <div className="px-5">
-                                    <Label htmlFor="picture" className="text-base font-semibold">
-                                        Category Thumbnail <span className="text-red-600">*</span>
-                                    </Label>
-
-                                    <CategoriesImageSelector image={image} setImage={setImage} />
+                                    <CategoriesImageSelector
+                                        images={images}
+                                        setImages={setImages}
+                                    />
 
                                     <div className="h-5">
                                         {errors.thumbnail && (

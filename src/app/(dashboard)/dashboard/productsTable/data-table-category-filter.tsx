@@ -116,7 +116,9 @@ export function DataTableCategoryFilter<TData, TValue>({
                                                 />
                                             </div>
 
-                                            <span>{option.title}</span>
+                                            <span className="text-gray-900 capitalize">
+                                                {option.title}
+                                            </span>
                                             {/* {facets?.get(option.value) && (
                                                 <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
                                                     {facets.get(option.value)}

@@ -33,13 +33,13 @@ export const columns: ColumnDef<Category>[] = [
         enableHiding: false,
     },
     {
-        id: "thumbnail",
-        accessorKey: "thumbnail",
-        header: () => <div>Thumbnail</div>,
+        id: "logo",
+        accessorKey: "logo",
+        header: () => <div>Category Icon</div>,
         cell: ({ row }) => (
             <div className="">
                 {/* {row.getValue("thumbnail")} */}
-                <Image src={row.getValue("thumbnail")} alt="thumbnail" width={60} height={60} />
+                <Image src={row.getValue("logo")} alt="Logo" width={100} height={100} className="p-1 aspect-square" />
             </div>
         ),
     },
