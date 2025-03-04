@@ -43,7 +43,7 @@ const EditProductPage = () => {
 
     const { data: product, isLoading: productIsLoading } = useQuery({
         queryKey: ["product", productId],
-        queryFn: () => getProductById(productId as string),
+        queryFn: () => getProductById({productId: productId as string}),
         staleTime: 0, // Always fetch fresh data
         refetchOnMount: true,
     });

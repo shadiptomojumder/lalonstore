@@ -1,18 +1,8 @@
 import { Button } from "@/components/ui/button";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Product } from "@/interfaces/product.schemas";
 
-const Description = ({product}:{product?:Product}) => {
+const Description = ({ product }: { product?: Product }) => {
     return (
         <div>
             <Tabs defaultValue="description" className="w-full">
@@ -44,7 +34,9 @@ const Description = ({product}:{product?:Product}) => {
                 </TabsContent>
                 <TabsContent value="review" className="rounded-lg border-2 bg-gray-50 p-5">
                     <div className="flex flex-col items-center justify-center">
-                        <p className="text-gray-800 text-lg font-semibold">No reviews yet, Be the first one to review !</p>
+                        <p className="text-lg font-semibold text-gray-800">
+                            No reviews yet, Be the first one to review !
+                        </p>
                         <br />
                         <Button variant="default" size="lg" className="">
                             Write a review

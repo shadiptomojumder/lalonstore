@@ -27,7 +27,7 @@ const AddStock = ({ productId }: { productId: string }) => {
 
     const { data: product } = useQuery({
         queryKey: ["product", productId],
-        queryFn: () => getProductById(productId as string),
+        queryFn: () => getProductById({productId:productId as string}),
     });
 
     const queryClient = useQueryClient();
