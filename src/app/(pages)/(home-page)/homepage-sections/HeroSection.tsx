@@ -16,7 +16,7 @@ const HeroSection = () => {
     const plugin = React.useRef(Autoplay({ delay: 2000, stopOnInteraction: false }));
 
     return (
-        <section className="container mx-auto px-3 pt-26 pb-5 sm:px-0 sm:pt-31 md:pt-22">
+        <section className="container mx-auto px-3 pb-5 sm:px-0 pt-5 sm:pt-10">
             <Carousel
                 plugins={[plugin.current]}
                 className="w-full max-w-full"

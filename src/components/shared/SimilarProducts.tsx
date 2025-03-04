@@ -12,8 +12,6 @@ const SimilarProducts = () => {
         queryFn: () => getProducts({ isWeekendDeal: true }),
     });
 
-    console.log("The products are:", products);
-
     return (
         <div className="overflow-hidden bg-white py-12">
             {/* <Image src={weekend} alt="oppo" height={320} width={320}/> */}
