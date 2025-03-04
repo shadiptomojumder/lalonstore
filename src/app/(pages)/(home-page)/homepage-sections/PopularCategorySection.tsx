@@ -61,11 +61,11 @@ const PopularCategorieSection = () => {
                                     <CarouselItem
                                         key={index}
                                         className="w-full basis-1/2 pl-8 min-[450px]:basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/6 2xl:basis-1/6">
-                                        <Link href={`/${category?.id}`}>
+                                        <Link href={`/products?category=${category?.id}`}>
                                             <div className="h-full rounded-lg border bg-white p-2 shadow-md">
                                                 <div className="flex items-center justify-center rounded-lg bg-white">
                                                     <Image
-                                                        src={category?.thumbnail}
+                                                        src={category?.logo}
                                                         alt="food"
                                                         width={200}
                                                         height={200}

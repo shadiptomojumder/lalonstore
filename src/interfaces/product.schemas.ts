@@ -55,6 +55,7 @@ export const productDataSchema = productSchema.extend({
     category: z.object({
         title: z.string(),
         value: z.string(),
+        logo: z.string().url(),
         thumbnail: z.string().url(),
         id: z.string(),
     }),

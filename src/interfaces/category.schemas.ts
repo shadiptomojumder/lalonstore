@@ -7,7 +7,8 @@ export const categorySchema = z.object({
     .min(3, "Category title must be at least 3 characters")
     .max(50, "Category title not more than 50 characters")
     .trim(),
-  thumbnail: z.any().optional()
+  logo: z.any().optional(),
+  thumbnail: z.any().optional(),
 });
 
 // Full category schema (used for fetching categories from the database)
