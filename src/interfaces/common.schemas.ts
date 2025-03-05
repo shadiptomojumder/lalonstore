@@ -28,3 +28,9 @@ export interface APIError {
     errorMessages?: { path: string; message: string }[];
     stack?: string;
 }
+
+// Interface representing a Banner object.
+export interface BannerImage {
+    imageURL: string;
+    public_id: string;
+}

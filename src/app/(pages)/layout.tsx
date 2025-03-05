@@ -4,6 +4,7 @@ import TanstackProvider from "@/TanstackProvider/TanstackProvider";
 import type { Metadata } from "next";
 import { Montserrat, Roboto, Rubik } from "next/font/google";
 import "../globals.css";
+import { Suspense } from "react";
 
 const roboto = Roboto({
     variable: "--font-roboto",
@@ -37,9 +38,11 @@ export default function RootLayout({
             <body
                 className={`${roboto.className} ${roboto.variable} ${rubik.variable} ${montserrat.variable} antialiased`}>
                 <TanstackProvider>
+                <Suspense fallback={<div>Loading search...</div>}>
                     <Header />
                     {children}
                     <Footer />
+                    </Suspense>
                 </TanstackProvider>
             </body>
         </html>

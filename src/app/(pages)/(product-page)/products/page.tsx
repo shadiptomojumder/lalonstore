@@ -5,15 +5,15 @@ import ProductLoading from "@/components/loading/ProductLoading";
 import ProductCard from "@/components/shared/ProductCard";
 import ProductFilterBar from "@/components/shared/ProductFilterBar";
 import { Skeleton } from "@/components/ui/skeleton";
+import { APIResponse } from "@/interfaces/common.schemas";
 import { Product } from "@/interfaces/product.schemas";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import ProductPagination from "../component/Pagination";
-import { useEffect, useState } from "react";
-import { APIResponse } from "@/interfaces/common.schemas";
 
-const page = () => {
+const ProductPage = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
@@ -26,7 +26,7 @@ const page = () => {
     const { data: category, isLoading: categoryIsLoading } = useQuery({
         queryKey: ["category", categoryId],
         queryFn: () => getCategoryById({ categoryId: categoryId as string }),
-        enabled: !!categoryId,  // Only run this query if categoryId exists
+        enabled: !!categoryId, // Only run this query if categoryId exists
     });
 
     const filters: { [key: string]: string } = {};
@@ -45,11 +45,9 @@ const page = () => {
         queryKey: ["products", filters, currentPage],
         queryFn: () => getProducts({ ...filters, page: currentPage }),
         staleTime: 5 * 60 * 1000, // 5 minutes
-        
     });
 
-
-    const products=data?.data
+    const products = data?.data;
     useEffect(() => {
         if (data) {
             const totalProducts = data?.meta?.total ?? 1;
@@ -57,7 +55,6 @@ const page = () => {
             setTotalPages(Math.ceil(totalProducts / productsPerPage));
         }
     }, [data, filters.limit]);
-
 
     console.log("The products are:", products);
     // console.log("The category is:", category);
@@ -92,8 +89,9 @@ const page = () => {
                     )}
                 </>
             )}
-
-            <ProductFilterBar filters={filters} pathname={pathname} router={router} />
+            <Suspense fallback={<div>Loading search...</div>}>
+                <ProductFilterBar filters={filters} pathname={pathname} router={router} />
+            </Suspense>
 
             <div className="">
                 {isLoading ? (
@@ -131,4 +129,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default ProductPage;

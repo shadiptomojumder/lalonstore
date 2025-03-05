@@ -1,7 +1,6 @@
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { CircleUser, Menu, Search, ShoppingCart } from "lucide-react";
+import { CircleUser, Menu, ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 import SearchProduct from "./SearchProduct";
 
 const Header = () => {
@@ -23,7 +22,9 @@ const Header = () => {
                         </Link>
                     </section>
                     <section className="px-5 sm:w-[350px] md:w-[450px] lg:w-[550px] xl:w-[750px]">
-                    <SearchProduct />
+                        <Suspense fallback={<div>Loading search...</div>}>
+                            <SearchProduct />
+                        </Suspense>
                     </section>
                     <section className="flex items-center gap-2 justify-self-end">
                         <Link

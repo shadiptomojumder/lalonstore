@@ -1,10 +1,10 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 interface ProductFilterBarProps {
     filters: { [key: string]: string };
-    router: any;
+    router: ReturnType<typeof useRouter>;
     pathname: string;
 }
 
@@ -32,34 +32,35 @@ const ProductFilterBar: React.FC<ProductFilterBarProps> = ({ filters, router, pa
 
     return (
         <main>
-            <section className="py-7 flex flex-col items-start gap-4">
-                <div className="flex items-center sm:gap-3 gap-2 flex-wrap">
+            <section className="flex flex-col items-start gap-4 py-7">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                     <p className="font-semibold">Sort By :</p>
                     <Button
                         onClick={() => updateSorting("", "")}
                         variant={"outline"}
-                        className={`border-none shadow-md bg-slate-100 h-7 sm:h-9 px-2 sm:px-4 sm:py-2 text-xs sm:text-sm text-black hover:text-black ${
-                            !sortBy ? "bg-[#73dd76] hover:bg-[#73dd76] font-medium" : ""
-                        }`}
-                    >
+                        className={`h-7 border-none bg-slate-100 px-2 text-xs text-black shadow-md hover:text-black sm:h-9 sm:px-4 sm:py-2 sm:text-sm ${
+                            !sortBy ? "bg-[#73dd76] font-medium hover:bg-[#73dd76]" : ""
+                        }`}>
                         Default
                     </Button>
                     <Button
                         onClick={() => updateSorting("price", "asc")}
                         variant={"outline"}
-                        className={`border-none shadow-md bg-slate-100 h-7 sm:h-9 px-2 sm:px-4 sm:py-2 text-xs sm:text-sm text-black hover:text-black ${
-                            sortBy === "price" && sortOrder === "asc" ? "bg-[#73dd76] hover:bg-[#73dd76] font-medium" : ""
-                        }`}
-                    >
+                        className={`h-7 border-none bg-slate-100 px-2 text-xs text-black shadow-md hover:text-black sm:h-9 sm:px-4 sm:py-2 sm:text-sm ${
+                            sortBy === "price" && sortOrder === "asc"
+                                ? "bg-[#73dd76] font-medium hover:bg-[#73dd76]"
+                                : ""
+                        }`}>
                         Price asc
                     </Button>
                     <Button
                         onClick={() => updateSorting("price", "desc")}
                         variant={"outline"}
-                        className={`border-none shadow-md bg-slate-100 h-7 sm:h-9 px-2 sm:px-4 sm:py-2 text-xs sm:text-sm text-black hover:text-black ${
-                            sortBy === "price" && sortOrder === "desc" ? "bg-[#73dd76] hover:bg-[#73dd76] font-medium" : ""
-                        }`}
-                    >
+                        className={`h-7 border-none bg-slate-100 px-2 text-xs text-black shadow-md hover:text-black sm:h-9 sm:px-4 sm:py-2 sm:text-sm ${
+                            sortBy === "price" && sortOrder === "desc"
+                                ? "bg-[#73dd76] font-medium hover:bg-[#73dd76]"
+                                : ""
+                        }`}>
                         Price desc
                     </Button>
                 </div>
