@@ -1,16 +1,19 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
-import LoginBanner from "../../../../../public/banners/login1.jpg"
 import Image from "next/image";
 import Link from "next/link";
+import LoginBanner from "../../../../../public/banners/login1.jpg";
 
-const LoginPage=() =>{
+const LoginPage = () => {
+    // const {user,token} = useSelector((state: RootState) => state.user);
+    // console.log("Redux User is:", user,token);
+
     return (
-        <div className="flex flex-col gap-6 py-24 md:max-w-[60dvw] max-w-[93dvw] mx-auto">
-            <Card className="overflow-hidden w-full">
+        <div className="mx-auto flex max-w-[93dvw] flex-col gap-6 py-24 md:max-w-[60dvw]">
+            <Card className="w-full overflow-hidden">
                 <CardContent className="grid p-0 lg:grid-cols-2">
                     <form className="p-6 md:p-8">
                         <div className="flex flex-col gap-6">
@@ -25,8 +28,8 @@ const LoginPage=() =>{
                                 <Input
                                     id="email"
                                     type="email"
-                                    placeholder="m@example.com"
-                                    required
+                                    placeholder="jack@example.com"
+                                    suppressHydrationWarning
                                 />
                             </div>
                             <div className="grid gap-2">
@@ -100,6 +103,6 @@ const LoginPage=() =>{
             </div>
         </div>
     );
-}
+};
 
 export default LoginPage;

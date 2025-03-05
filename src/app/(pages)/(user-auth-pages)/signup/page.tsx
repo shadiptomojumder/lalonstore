@@ -1,19 +1,44 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+import { SignupSchema, signupSchema, User, userSchema } from "@/interfaces/user.schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import type React from "react";
-import LoginBanner from "../../../../../public/banners/login1.jpg";
 import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
+import LoginBanner from "../../../../../public/banners/login1.jpg";
 
 const SignupPage = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm<SignupSchema>({ resolver: zodResolver(signupSchema) });
+
+    const onSubmit: SubmitHandler<SignupSchema> = async (data) => {
+        // Extract email or phone from emailOrPhone field
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isEmail = data.emailOrPhone ? emailRegex.test(data.emailOrPhone) : false;
+        const userData:Partial<SignupSchema> = {
+            ...data,
+            // email: isEmail ? data.emailOrPhone : undefined,
+            // phone: isEmail ? undefined : data.emailOrPhone,
+            ...(isEmail ? { email: data.emailOrPhone } : { phone: data.emailOrPhone }),
+        };
+        // Remove emailOrPhone field
+        delete userData.emailOrPhone;
+        // TODO: Add API call to create user with userData
+        console.log("Form submitted:", userData);
+        
+    }
     return (
-        <div className="flex flex-col gap-6 py-24 md:max-w-[60dvw] max-w-[93dvw] mx-auto">
+        <div className="mx-auto flex max-w-[93dvw] flex-col gap-6 py-24 md:max-w-[60dvw]">
             <Card className="overflow-hidden">
                 <CardContent className="grid p-0 lg:grid-cols-2">
-                    <form className="p-6 md:p-8">
+                    <form onSubmit={handleSubmit(onSubmit)} className="p-6 md:p-8">
                         <div className="flex flex-col gap-6">
                             <div className="flex flex-col items-center text-center">
                                 <h1 className="text-2xl font-bold">Create an account</h1>
@@ -23,27 +48,64 @@ const SignupPage = () => {
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="grid gap-2">
-                                    <Label htmlFor="firstName">First Name <span className="text-red-600">*</span></Label>
-                                    <Input id="firstName" type="text" required />
+                                    <Label htmlFor="firstName">
+                                        First Name <span className="text-red-600">*</span>
+                                    </Label>
+                                    <Input {...register("firstName")} id="firstName" type="text" />
+                                    <div className="h-5">
+                                        {errors.firstName && (
+                                            <span className="text-xs text-red-500">
+                                                {errors.firstName.message}
+                                            </span>
+                                        )}
+                                    </div>
                                 </div>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="lastName">Last Name <span className="text-red-600">*</span></Label>
-                                    <Input id="lastName" type="text" required />
+                                    <Label htmlFor="lastName">
+                                        Last Name <span className="text-red-600">*</span>
+                                    </Label>
+                                    <Input {...register("lastName")} id="lastName" type="text" />
+                                    <div className="h-5">
+                                        {errors.lastName && (
+                                            <span className="text-xs text-red-500">
+                                                {errors.lastName.message}
+                                            </span>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="emailOrPhone">Email or Phone <span className="text-red-600">*</span></Label>
+                                <Label htmlFor="emailOrPhone">
+                                    Email or Phone <span className="text-red-600">*</span>
+                                </Label>
                                 <Input
+                                {...register("emailOrPhone")}
                                     id="emailOrPhone"
                                     type="text"
                                     placeholder="m@example.com or +1234567890"
-                                    required
                                     className="placeholder:text-sm"
+                                    suppressHydrationWarning
                                 />
+                                <div className="h-5">
+                                    {errors.emailOrPhone && (
+                                        <span className="text-xs text-red-500">
+                                            {errors.emailOrPhone.message}
+                                        </span>
+                                    )}
+                                </div>
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="password">Password <span className="text-red-600">*</span></Label>
-                                <Input id="password" type="password" required />
+                                <Label htmlFor="password">
+                                    Password <span className="text-red-600">*</span>
+                                </Label>
+                                <Input {...register("password")} id="password" type="password" />
+                                <div className="h-5">
+                                    {errors.password && (
+                                        <span className="text-xs text-red-500">
+                                            {errors.password.message}
+                                        </span>
+                                    )}
+                                </div>
                             </div>
                             <Button type="submit" className="w-full">
                                 Create Account
@@ -95,6 +157,7 @@ const SignupPage = () => {
                             src={LoginBanner}
                             alt="Image"
                             className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+                            priority
                         />
                     </div>
                 </CardContent>
