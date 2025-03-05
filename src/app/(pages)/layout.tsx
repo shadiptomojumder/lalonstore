@@ -36,7 +36,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${roboto.className} ${roboto.variable} ${rubik.variable} ${montserrat.variable} antialiased`}>
+                className={`${roboto.className} ${roboto.variable} ${rubik.variable} ${montserrat.variable} antialiased`} cz-shortcut-listen="true">
                 <TanstackProvider>
                 <Suspense fallback={<div>Loading search...</div>}>
                     <Header />
