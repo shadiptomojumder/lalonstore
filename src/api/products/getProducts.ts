@@ -19,7 +19,7 @@ interface ProductQueryParams {
     isWeekendDeal?: boolean;
 }
 
-const getProducts = async (queryParams: ProductQueryParams = {}): Promise<Product[]> => {
+const getProducts = async (queryParams: ProductQueryParams = {}): Promise<APIResponse<Product[]>> => {
     try {
         // Build query string dynamically
         const buildQueryString = (queryParams: ProductQueryParams) => {
@@ -36,12 +36,11 @@ const getProducts = async (queryParams: ProductQueryParams = {}): Promise<Produc
 
         const url = queryString ? `/products?${queryString}` : "/products";
         console.log("The URL is:", url);
-        
 
         const response = await api.get<APIResponse<Product[]>>(url);
         console.log("The Get ALL Product API Response is:", response);
 
-        return response.data?.data ?? [];
+        return response.data;
     } catch (error) {
         console.log("The Get ALL Product API Error is:", error);
 

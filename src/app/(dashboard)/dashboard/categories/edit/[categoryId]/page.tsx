@@ -1,5 +1,5 @@
 "use client";
-import GetCategoryById from "@/api/categories/getCategoryById";
+import getCategoryById from "@/api/categories/getCategoryById";
 import UpdateCategory from "@/api/categories/updateCategory";
 import CategoriesImageSelector from "@/components/dashboardComponents/categories-image-selector";
 import { Button } from "@/components/ui/button";
@@ -40,7 +40,7 @@ const CategoryEditPage = () => {
 
     const { data: category } = useQuery({
         queryKey: ["category", categoryId],
-        queryFn: () => GetCategoryById({ categoryId: categoryId as string }),
+        queryFn: () => getCategoryById({ categoryId: categoryId as string }),
     });
 
     const {
