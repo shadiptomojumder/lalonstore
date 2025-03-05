@@ -1,5 +1,6 @@
 "use client";
 import getProducts from "@/api/products/getProducts";
+import { APIResponse } from "@/interfaces/common.schemas";
 import { Product } from "@/interfaces/product.schemas";
 import { useQuery } from "@tanstack/react-query";
 import { Boxes } from "lucide-react";
@@ -7,10 +8,11 @@ import { columns } from "../productsTable/columns";
 import { DataTable } from "../productsTable/data-table";
 
 const AllProductPage = () => {
-    const { data: products } = useQuery<Product[]>({
+    const { data } = useQuery<APIResponse<Product[]>>({
         queryKey: ["products"],
         queryFn: () => getProducts({ limit: 0 }),
     });
+    const products = data?.data;
 
     console.log("The products are:", products);
 

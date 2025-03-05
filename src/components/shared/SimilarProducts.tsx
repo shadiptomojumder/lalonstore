@@ -3,21 +3,23 @@ import getProducts from "@/api/products/getProducts";
 import ProductLoading from "@/components/loading/ProductLoading";
 import ProductCard from "@/components/shared/ProductCard";
 import { Carousel, CarouselContent, CarouselItem, Next, Previous } from "@/components/ui/carousel";
+import { APIResponse } from "@/interfaces/common.schemas";
 import { Product } from "@/interfaces/product.schemas";
 import { useQuery } from "@tanstack/react-query";
 
 const SimilarProducts = () => {
-    const { data: products, isLoading } = useQuery<Product[]>({
+    const { data, isLoading } = useQuery<APIResponse<Product[]>>({
         queryKey: ["products", { isWeekendDeal: true }],
         queryFn: () => getProducts({ isWeekendDeal: true }),
     });
+    const products = data?.data;
 
     return (
         <div className="overflow-hidden bg-white py-12">
             {/* <Image src={weekend} alt="oppo" height={320} width={320}/> */}
             <div className="container mx-auto px-3 sm:px-0">
                 <h2 className="mb-5 text-center font-rubik text-xl font-semibold text-black uppercase md:text-lg lg:text-2xl">
-                Similar Products ✨
+                    Similar Products ✨
                 </h2>
 
                 <Carousel

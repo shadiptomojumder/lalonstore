@@ -3,14 +3,16 @@ import getProducts from "@/api/products/getProducts";
 import ProductLoading from "@/components/loading/ProductLoading";
 import ProductCard from "@/components/shared/ProductCard";
 import { Carousel, CarouselContent, CarouselItem, Next, Previous } from "@/components/ui/carousel";
+import { APIResponse } from "@/interfaces/common.schemas";
 import { Product } from "@/interfaces/product.schemas";
 import { useQuery } from "@tanstack/react-query";
 
 const WeekendDeals = () => {
-    const { data: products, isLoading } = useQuery<Product[]>({
+    const { data, isLoading } = useQuery<APIResponse<Product[]>>({
         queryKey: ["products", { isWeekendDeal: true }],
         queryFn: () => getProducts({ isWeekendDeal: true }),
     });
+    const products = data?.data;
 
     console.log("The products are:", products);
 

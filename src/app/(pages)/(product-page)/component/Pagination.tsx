@@ -1,7 +1,6 @@
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
     PaginationItem,
     PaginationLink,
     PaginationNext,
@@ -32,50 +31,50 @@ const ProductPagination: React.FC<PaginationProps> = ({
         }
     };
 
+    const renderPaginationItems = () => {
+        const items = [];
+        for (let page = 1; page <= totalPages; page++) {
+            items.push(
+                <PaginationItem key={page}>
+                    <PaginationLink
+                        
+                        isActive={page === currentPage}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onPageChange(page);
+                        }}>
+                        {page}
+                    </PaginationLink>
+                </PaginationItem>,
+            );
+        }
+        return items;
+    };
+
     return (
-        <>
-            <div className="mt-4 flex items-center justify-center gap-2">
-                <button
-                    onClick={handlePrevious}
-                    disabled={currentPage === 1}
-                    className="rounded bg-gray-200 px-3 py-1 disabled:opacity-50">
-                    Previous
-                </button>
-                <span>
-                    Page {currentPage} of {totalPages}
-                </span>
-                <button
-                    onClick={handleNext}
-                    disabled={currentPage === totalPages}
-                    className="rounded bg-gray-200 px-3 py-1 disabled:opacity-50">
-                    Next
-                </button>
-            </div>
-            <Pagination>
-                <PaginationContent>
-                    <PaginationItem>
-                        <PaginationPrevious href="#" />
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationLink href="#">1</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationLink href="#" isActive>
-                            2
-                        </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationLink href="#">3</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationEllipsis />
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationNext href="#" />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
-        </>
+        <Pagination className="my-10">
+            <PaginationContent>
+                <PaginationItem>
+                    <PaginationPrevious
+                        href="#"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handlePrevious();
+                        }}
+                    />
+                </PaginationItem>
+                {renderPaginationItems()}
+                <PaginationItem>
+                    <PaginationNext
+                        href="#"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleNext();
+                        }}
+                    />
+                </PaginationItem>
+            </PaginationContent>
+        </Pagination>
     );
 };
 

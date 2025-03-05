@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CircleUser, Menu, Search, ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import SearchProduct from "./SearchProduct";
 
 const Header = () => {
     return (
@@ -22,18 +23,7 @@ const Header = () => {
                         </Link>
                     </section>
                     <section className="px-5 sm:w-[350px] md:w-[450px] lg:w-[550px] xl:w-[750px]">
-                        <div className="relative bg-transparent">
-                            <Label
-                                htmlFor="search"
-                                className="absolute top-1/2 right-0 flex h-full -translate-y-1/2 cursor-pointer items-center justify-center rounded-r-full bg-accent px-1 py-2 text-primary sm:px-4">
-                                <Search />
-                            </Label>
-                            <Input
-                                id="search"
-                                placeholder="Search Your Products"
-                                className="rounded-full bg-accent placeholder:text-sm md:placeholder:text-base"
-                            />
-                        </div>
+                    <SearchProduct />
                     </section>
                     <section className="flex items-center gap-2 justify-self-end">
                         <Link

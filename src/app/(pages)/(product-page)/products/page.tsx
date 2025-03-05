@@ -26,27 +26,38 @@ const page = () => {
     const { data: category, isLoading: categoryIsLoading } = useQuery({
         queryKey: ["category", categoryId],
         queryFn: () => getCategoryById({ categoryId: categoryId as string }),
-        enabled: !!categoryId,
+        enabled: !!categoryId,  // Only run this query if categoryId exists
     });
 
     const filters: { [key: string]: string } = {};
     for (const [key, value] of searchParams.entries()) {
         filters[key] = value;
     }
-    filters.page = currentPage.toString();
+    // filters.page = currentPage.toString();
+    useEffect(() => {
+        const page = searchParams.get("page");
+        if (page) {
+            setCurrentPage(Number(page));
+        }
+    }, [searchParams]);
 
-    const { data , isLoading } = useQuery<APIResponse<Product[]>>({
-        queryKey: ["products", filters],
-        queryFn: () => getProducts(filters),
+    const { data, isLoading } = useQuery<APIResponse<Product[]>>({
+        queryKey: ["products", filters, currentPage],
+        queryFn: () => getProducts({ ...filters, page: currentPage }),
+        staleTime: 5 * 60 * 1000, // 5 minutes
+        
     });
 
-    const products=data?.data
 
+    const products=data?.data
     useEffect(() => {
         if (data) {
-            setTotalPages(data.meta?.total ?? 1);
+            const totalProducts = data?.meta?.total ?? 1;
+            const productsPerPage = Number(filters.limit) || 10; // Use the limit from filters or default to 10
+            setTotalPages(Math.ceil(totalProducts / productsPerPage));
         }
-    }, [data]);
+    }, [data, filters.limit]);
+
 
     console.log("The products are:", products);
     // console.log("The category is:", category);
@@ -87,7 +98,7 @@ const page = () => {
             <div className="">
                 {isLoading ? (
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                        {Array.from({ length: 6 }, (_, index) => (
+                        {Array.from({ length: 5 }, (_, index) => (
                             <ProductLoading key={index} />
                         ))}
                     </div>
@@ -109,9 +120,13 @@ const page = () => {
                 ) : null}
             </div>
 
-            <ProductPagination currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}/>
+            {products && products.length > 0 && (
+                <ProductPagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                />
+            )}
         </div>
     );
 };

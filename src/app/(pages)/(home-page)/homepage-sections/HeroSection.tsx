@@ -33,6 +33,7 @@ const HeroSection = () => {
                                                 src={Banner5}
                                                 alt="banner"
                                                 className="rounded-lg object-cover"
+                                                priority
                                             />
                                         </div>
                                         <span className="absolute z-10 text-6xl font-semibold text-green-500">
