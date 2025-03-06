@@ -1,13 +1,18 @@
-"use client"
+"use client";
+import signup from "@/api/auth/signup";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SignupSchema, signupSchema, User, userSchema } from "@/interfaces/user.schemas";
+import { APIError } from "@/interfaces/common.schemas";
+import { SignupSchema, signupSchema } from "@/interfaces/user.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { Loader } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import LoginBanner from "../../../../../public/banners/login1.jpg";
 
 const SignupPage = () => {
@@ -18,11 +23,44 @@ const SignupPage = () => {
         reset,
     } = useForm<SignupSchema>({ resolver: zodResolver(signupSchema) });
 
+    const { mutate, isPending } = useMutation({
+        mutationFn: signup,
+        onSuccess: (response) => {
+            console.log("The Response was:", response);
+            console.log("The Response.data was:", response.data);
+            console.log("The Response statusCode was:", response.statusCode);
+
+            if (response.statusCode === 201) {
+                toast.success("Account successfully created");
+                reset();
+            }
+        },
+        onError: (error: APIError) => {
+            console.log("The Account Create Error is: ", error);
+
+            // Extract error message safely
+            const errorMessage = error?.message ?? "Something went wrong!";
+            const statusCode = error?.statusCode;
+
+            if (statusCode === 400) {
+                toast.warning(errorMessage || "Please fill all required fields!");
+            } else if (statusCode === 409) {
+                toast.warning(errorMessage || "User already exists!");
+            } else if (error) {
+                // Handles other API errors with a response
+                toast.error(`Error ${statusCode}: ${errorMessage}`);
+            } else {
+                // Handles network errors or server down issues
+                toast.error("No response received from the server! Please check your connection.");
+            }
+        },
+    });
+
     const onSubmit: SubmitHandler<SignupSchema> = async (data) => {
         // Extract email or phone from emailOrPhone field
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const isEmail = data.emailOrPhone ? emailRegex.test(data.emailOrPhone) : false;
-        const userData:Partial<SignupSchema> = {
+        const userData: SignupSchema = {
             ...data,
             // email: isEmail ? data.emailOrPhone : undefined,
             // phone: isEmail ? undefined : data.emailOrPhone,
@@ -32,8 +70,8 @@ const SignupPage = () => {
         delete userData.emailOrPhone;
         // TODO: Add API call to create user with userData
         console.log("Form submitted:", userData);
-        
-    }
+        mutate({ data: userData });
+    };
     return (
         <div className="mx-auto flex max-w-[93dvw] flex-col gap-6 py-24 md:max-w-[60dvw]">
             <Card className="overflow-hidden">
@@ -51,7 +89,12 @@ const SignupPage = () => {
                                     <Label htmlFor="firstName">
                                         First Name <span className="text-red-600">*</span>
                                     </Label>
-                                    <Input {...register("firstName")} id="firstName" type="text" />
+                                    <Input
+                                        {...register("firstName")}
+                                        id="firstName"
+                                        placeholder="Enter your first name"
+                                        type="text"
+                                    />
                                     <div className="h-5">
                                         {errors.firstName && (
                                             <span className="text-xs text-red-500">
@@ -64,7 +107,12 @@ const SignupPage = () => {
                                     <Label htmlFor="lastName">
                                         Last Name <span className="text-red-600">*</span>
                                     </Label>
-                                    <Input {...register("lastName")} id="lastName" type="text" />
+                                    <Input
+                                        {...register("lastName")}
+                                        id="lastName"
+                                        placeholder="Enter your last name"
+                                        type="text"
+                                    />
                                     <div className="h-5">
                                         {errors.lastName && (
                                             <span className="text-xs text-red-500">
@@ -79,10 +127,10 @@ const SignupPage = () => {
                                     Email or Phone <span className="text-red-600">*</span>
                                 </Label>
                                 <Input
-                                {...register("emailOrPhone")}
+                                    {...register("emailOrPhone")}
                                     id="emailOrPhone"
                                     type="text"
-                                    placeholder="m@example.com or +1234567890"
+                                    placeholder="Enter your email or phone number"
                                     className="placeholder:text-sm"
                                     suppressHydrationWarning
                                 />
@@ -98,7 +146,12 @@ const SignupPage = () => {
                                 <Label htmlFor="password">
                                     Password <span className="text-red-600">*</span>
                                 </Label>
-                                <Input {...register("password")} id="password" type="password" />
+                                <Input
+                                    {...register("password")}
+                                    id="password"
+                                    placeholder="Enter your password"
+                                    type="password"
+                                />
                                 <div className="h-5">
                                     {errors.password && (
                                         <span className="text-xs text-red-500">
@@ -107,7 +160,14 @@ const SignupPage = () => {
                                     )}
                                 </div>
                             </div>
-                            <Button type="submit" className="w-full">
+                            <Button type="submit" disabled={isPending} className="w-full">
+                                {isPending ? (
+                                    <>
+                                        <Loader className="animate-spin" />
+                                    </>
+                                ) : (
+                                    <></>
+                                )}
                                 Create Account
                             </Button>
                             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">

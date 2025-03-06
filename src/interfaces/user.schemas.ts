@@ -9,7 +9,7 @@ const emailOrPhoneSchema = z.string().refine(
         return emailRegex.test(value) || bdPhoneRegex.test(value);
     },
     {
-        message: "Must be a valid email or Bangladeshi phone number",
+        message: "Must be a valid email or phone number",
     },
 );
 
@@ -30,7 +30,7 @@ export const userSchema = z.object({
     role: z.enum(["USER", "ADMIN"]).default("USER"),
     avatar: z.string().optional(),
     otp: z.number().optional(),
-    password: z.string().min(6), // Adjust min length as needed
+    password: z.string().min(8), // Adjust min length as needed
     refreshToken: z.string().optional(), // refreshToken is optional.
 });
 
@@ -51,7 +51,7 @@ export const signupSchema = userSchema
     })
     .extend({
         emailOrPhone: emailOrPhoneSchema.optional(),
-        password: z.string().min(6),
+        password: z.string().min(8),
     });
 
 export type SignupSchema = z.infer<typeof signupSchema>;

@@ -1,5 +1,5 @@
 "use client";
-import Logout from "@/api/user/logout";
+import Logout from "@/api/auth/logout";
 import { differenceInMilliseconds } from "date-fns";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";

@@ -6,6 +6,7 @@ import { Montserrat, Roboto, Rubik } from "next/font/google";
 import { Suspense } from "react";
 import "../globals.css";
 import StoreProvider from "./StoreProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const roboto = Roboto({
     variable: "--font-roboto",
@@ -48,6 +49,7 @@ export default function RootLayout({
                             <Footer />
                         </Suspense>
                     </TanstackProvider>
+                    <Toaster richColors />
                 </StoreProvider>
             </body>
         </html>
