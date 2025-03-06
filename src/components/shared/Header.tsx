@@ -9,7 +9,7 @@ const Header = () => {
         <main className="sticky top-0 z-[1000] w-full bg-primary px-2 py-2 drop-shadow-md sm:px-0 sm:py-3 md:py-4">
             <section className="container mx-auto">
                 <section className="flex w-full items-center justify-between">
-                    <section className="flex items-center gap-1">
+                    <section className="flex items-center gap-0.5">
                         <Menu size={28} className="sm:hidden" />
                         <Link href="/">
                             <p className="hidden font-montserrat text-2xl font-bold text-nowrap italic sm:block">
@@ -22,7 +22,7 @@ const Header = () => {
                             </p>
                         </Link>
                     </section>
-                    <section className="px-5 sm:w-[350px] md:w-[450px] lg:w-[550px] xl:w-[750px]">
+                    <section className="w-full px-3 sm:w-[350px] sm:px-5 md:w-[450px] lg:w-[550px] xl:w-[750px]">
                         <Suspense fallback={<div>Loading search...</div>}>
                             <SearchProduct />
                         </Suspense>
@@ -31,7 +31,7 @@ const Header = () => {
                         <Link
                             href="#"
                             className="hidden rounded-md bg-accent p-2 text-primary sm:block">
-                            <ShoppingCart size={19} />
+                            <ShoppingCart size={20} />
                         </Link>
                         <AuthUser />
                     </section>

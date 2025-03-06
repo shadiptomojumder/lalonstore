@@ -100,14 +100,14 @@ const LoginPage = () => {
             <Card className="w-full overflow-hidden">
                 <CardContent className="grid p-0 lg:grid-cols-2">
                     <form onSubmit={handleSubmit(onSubmit)} className="p-6 md:p-8">
-                        <div className="flex flex-col gap-6">
+                        <div className="flex flex-col gap-2">
                             <div className="flex flex-col items-center text-center">
                                 <h1 className="text-2xl font-bold">Welcome back</h1>
                                 <p className="text-balance text-muted-foreground">
                                     Login to your Lalon Store account
                                 </p>
                             </div>
-                            <div className="grid gap-2">
+                            <div className="">
                                 <Label htmlFor="emailOrPhone">
                                     Email or Phone <span className="text-red-600">*</span>
                                 </Label>
@@ -116,7 +116,7 @@ const LoginPage = () => {
                                     id="emailOrPhone"
                                     type="text"
                                     placeholder="Enter your email or phone number"
-                                    className="placeholder:text-sm"
+                                    className="placeholder:text-sm mt-1"
                                     suppressHydrationWarning
                                 />
                                 <div className="h-5">
@@ -127,7 +127,7 @@ const LoginPage = () => {
                                     )}
                                 </div>
                             </div>
-                            <div className="grid gap-2">
+                            <div className="">
                                 <Label htmlFor="password">
                                     Password <span className="text-red-600">*</span>
                                 </Label>
@@ -136,6 +136,7 @@ const LoginPage = () => {
                                     id="password"
                                     placeholder="Enter your password"
                                     type="password"
+                                    className="placeholder:text-sm mt-1"
                                 />
                                 <div className="h-5">
                                     {errors.password && (

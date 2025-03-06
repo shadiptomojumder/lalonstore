@@ -24,7 +24,7 @@ const SearchProduct = () => {
     };
 
     return (
-        <form onSubmit={handleSearch} className="relative bg-transparent">
+        <form onSubmit={handleSearch} className="relative w-full bg-transparent">
             <button
                 type="submit"
                 className="absolute top-1/2 right-0 flex h-full -translate-y-1/2 cursor-pointer items-center justify-center rounded-r-full bg-green-700 px-1 py-2 text-white sm:px-4">
@@ -35,7 +35,7 @@ const SearchProduct = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search Your Products"
-                className="rounded-full bg-accent placeholder:text-sm md:placeholder:text-base"
+                className="w-full rounded-full bg-accent placeholder:text-sm md:placeholder:text-base"
             />
         </form>
     );

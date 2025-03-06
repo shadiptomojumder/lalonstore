@@ -31,8 +31,12 @@ const AuthUser = () => {
                         <>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                    <div className="flex cursor-pointer items-center gap-1.5 rounded-md bg-accent p-2 text-sm font-semibold text-primary">
-                                        <CircleUser size={19} /> <span>Shadipto</span>
+                                    {/* <div className="flex cursor-pointer items-center gap-1.5 rounded-md bg-accent p-2 text-sm font-semibold text-primary">
+                                        <CircleUser size={20} /> <span className="hidden sm:block">Shadipto</span>
+                                    </div> */}
+                                    <div className="flex cursor-pointer items-center gap-1.5 rounded-full bg-accent p-0 text-sm font-semibold text-primary sm:rounded-md sm:p-2">
+                                        <CircleUser className="h-[35px] w-[35px] sm:h-[20px] sm:w-[20px]" />{" "}
+                                        <span className="hidden sm:block">Shadipto</span>
                                     </div>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="z-[2255] w-56">
@@ -52,7 +56,7 @@ const AuthUser = () => {
                                             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem>
-                                            Keyboard shortcuts
+                                            Dashboard
                                             <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>
