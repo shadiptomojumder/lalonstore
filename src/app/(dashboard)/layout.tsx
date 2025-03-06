@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import TanstackProvider from "@/TanstackProvider/TanstackProvider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import StoreProvider from "../(pages)/StoreProvider";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -29,17 +30,22 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-                <TanstackProvider>
-                    <SidebarProvider>
-                        <AppSidebar />
-                        <SidebarInset>
-                            <TopNavbar />
-                            {children}
-                        </SidebarInset>
-                    </SidebarProvider>
-                </TanstackProvider>
-                <Toaster richColors />
+            <body
+                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                cz-shortcut-listen="true"
+                suppressHydrationWarning>
+                <StoreProvider>
+                    <TanstackProvider>
+                        <SidebarProvider>
+                            <AppSidebar />
+                            <SidebarInset>
+                                <TopNavbar />
+                                {children}
+                            </SidebarInset>
+                        </SidebarProvider>
+                    </TanstackProvider>
+                    <Toaster richColors />
+                </StoreProvider>
             </body>
         </html>
     );

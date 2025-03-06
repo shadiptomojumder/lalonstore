@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import userReducer from "./slices/userSlice";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import userReducer from "./slices/userSlice";
 
 // Combine reducers (if you have more slices in the future)
 const rootReducer = combineReducers({
@@ -17,14 +17,6 @@ const persistConfig = {
 // Create a persisted reducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// export const makeStore = () => {
-//     return configureStore({
-//         reducer: {
-//             user: userReducer,
-//         },
-//     });
-// };
-
 // Configure the Redux store
 export const store = configureStore({
     reducer: persistedReducer,
@@ -35,7 +27,6 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
-
 
 // Infer the type of makeStore
 export type AppStore = typeof store;

@@ -21,10 +21,6 @@ const PopularCategorieSection = () => {
         queryFn: () => getCategories(),
     });
 
-    console.log("categories is", categories);
-    const {user,accesstoken} = useSelector((state: RootState) => state.user);
-    console.log("Redux User is:", user,accesstoken);
-
     return (
         <section className="container mx-auto mb-10 px-3 sm:px-0">
             <Carousel

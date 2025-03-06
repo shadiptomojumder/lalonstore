@@ -1,6 +1,7 @@
-import { CircleUser, Menu, ShoppingCart } from "lucide-react";
+import { Menu, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
+import AuthUser from "./AuthUser";
 import SearchProduct from "./SearchProduct";
 
 const Header = () => {
@@ -32,13 +33,7 @@ const Header = () => {
                             className="hidden rounded-md bg-accent p-2 text-primary sm:block">
                             <ShoppingCart size={19} />
                         </Link>
-
-                        <Link
-                            href="#"
-                            className="flex items-center gap-0.5 rounded-md bg-accent p-2 text-sm font-semibold text-nowrap text-primary sm:gap-1.5">
-                            <CircleUser size={19} className="hidden sm:block" /> Sign in
-                            <span className="max-[430px]:hidden"> / Sign up</span>
-                        </Link>
+                        <AuthUser />
                     </section>
                 </section>
                 {/* <section className="mt-2 w-full sm:mt-3 md:hidden">

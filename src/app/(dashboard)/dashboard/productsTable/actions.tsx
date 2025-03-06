@@ -69,7 +69,7 @@ const Actions = ({ productId }: { productId: string }) => {
                 <AddStock productId={productId} />
             </div>
             <DropdownMenu>
-                <DropdownMenuTrigger className="hidden w-full justify-center max-sm:flex">
+                <DropdownMenuTrigger asChild className="hidden w-full justify-center max-sm:flex">
                     <button className="w-fit rounded-md bg-gray-100 p-2">
                         <Settings2 size={18} />
                     </button>

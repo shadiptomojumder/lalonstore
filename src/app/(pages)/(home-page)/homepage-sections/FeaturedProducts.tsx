@@ -15,7 +15,6 @@ const FeaturedProducts = () => {
     });
     const products = data?.data;
 
-    console.log("The products are:", products);
 
     return (
         <div className="overflow-hidden py-12" style={{ backgroundImage: `url(${leaf1.src})` }}>

@@ -2,7 +2,7 @@
 import { useRef } from "react";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { AppStore, store, persistor } from "../../lib/store";
+import { AppStore, persistor, store } from "../../lib/store";
 
 export default function StoreProvider({ children }: { children: React.ReactNode }) {
     const storeRef = useRef<AppStore>(undefined);

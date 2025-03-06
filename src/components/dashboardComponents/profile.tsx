@@ -1,3 +1,4 @@
+"use client";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -12,9 +13,16 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import useLogout from "@/hooks/useLogout ";
+import { RootState } from "@/lib/store";
 import Image from "next/image";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
+    const { user, isLoading } = useSelector((state: RootState) => state.user);
+    console.log("Redux User is:", user);
+    console.log("Redux isLoading is:", isLoading);
+    const handleLogout = useLogout();
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -28,8 +36,10 @@ const Profile = () => {
                         />
                     </div>
                     <div>
-                        <p className="text-black text-sm font-semibold">Promit Mojumder</p>
-                        <p className="text-gray-800 text-sm font-semibold">@admin</p>
+                        <p className="text-sm font-semibold text-black capitalize">
+                            {user?.firstName} {user?.lastName}
+                        </p>
+                        <p className="text-sm font-semibold text-gray-800">@{user?.role}</p>
                     </div>
                 </div>
             </DropdownMenuTrigger>

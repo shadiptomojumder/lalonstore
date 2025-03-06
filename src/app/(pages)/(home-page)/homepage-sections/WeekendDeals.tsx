@@ -14,7 +14,6 @@ const WeekendDeals = () => {
     });
     const products = data?.data;
 
-    console.log("The products are:", products);
 
     return (
         <div className="overflow-hidden bg-white py-12">

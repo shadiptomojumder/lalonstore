@@ -12,17 +12,15 @@ import { useMutation } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import LoginBanner from "../../../../../public/banners/login1.jpg";
-import { RootState } from "@/lib/store";
 
 const LoginPage = () => {
-    // const {user,accesstoken} = useSelector((state: RootState) => state.user);
-    // console.log("Redux User is:", user,accesstoken);
     const dispatch = useDispatch();
-
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -44,6 +42,7 @@ const LoginPage = () => {
             if (response.statusCode === 200) {
                 toast.success("User successfully login");
                 reset();
+
                 // Save user in Redux store
                 if (accesstoken) {
                     if (userData) {
@@ -54,12 +53,7 @@ const LoginPage = () => {
                 } else {
                     console.log("Access token is undefined");
                 }
-
-                // Save the access token and user data in local storage
-                if (accesstoken) {
-                    localStorage.setItem("accessToken", accesstoken);
-                }
-                localStorage.setItem("userData", JSON.stringify(userData));
+                router.push("/");
             }
         },
         onError: (error: APIError) => {
