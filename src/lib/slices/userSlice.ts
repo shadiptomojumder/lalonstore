@@ -1,38 +1,30 @@
+import { User } from "@/interfaces/user.schemas";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface User {
-    fullname: string;
-    email: string;
-    role: "USER" | "ADMIN";
-    phone?: string;
-    address?: string;
-    googleId?: string;
-    avatar?: string;
-    otp?: number;
-    refreshToken?: string;
-}
+import { persistStore } from "redux-persist";
+import { store } from "../store";
 
 interface UserState {
     user: User | null;
-    token: string | null;
+    accesstoken: string | null;
 }
 
 const initialState: UserState = {
     user: null,
-    token: null,
+    accesstoken: null,
 };
 
 const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        setUser: (state, action: PayloadAction<{ user: User; token: string }>) => {
+        setUser: (state, action: PayloadAction<{ user: User; accesstoken: string }>) => {
             state.user = action.payload.user;
-            state.token = action.payload.token;
+            state.accesstoken = action.payload.accesstoken;
         },
         logout: (state) => {
             state.user = null;
-            state.token = null;
+            state.accesstoken = null;
+            persistStore(store).purge(); // Purge persisted storage
         },
     },
 });

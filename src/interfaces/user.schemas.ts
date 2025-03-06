@@ -58,7 +58,16 @@ export type SignupSchema = z.infer<typeof signupSchema>;
 
 // Login Schema (email or phone, password)
 export const loginSchema = z.object({
-    emailOrPhone: z.string().trim().toLowerCase(),
+    email: z.string().email().trim().toLowerCase().optional(), // optional due to sparse
+    phone: z
+        .string()
+        .trim()
+        .toLowerCase()
+        .optional()
+        .refine((value) => !value || bdPhoneRegex.test(value), {
+            message: "Invalid Bangladeshi phone number. Use format: +8801XXXXXXXXX or 01XXXXXXXXX",
+        }),
+    emailOrPhone: emailOrPhoneSchema.optional(),
     password: z.string().min(6),
 });
 

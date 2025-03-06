@@ -1,21 +1,111 @@
 "use client";
+import login from "@/api/auth/login";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { APIError } from "@/interfaces/common.schemas";
+import { loginSchema, LoginSchema } from "@/interfaces/user.schemas";
+import { setUser } from "@/lib/slices/userSlice";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { Loader } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
 import LoginBanner from "../../../../../public/banners/login1.jpg";
+import { RootState } from "@/lib/store";
 
 const LoginPage = () => {
-    // const {user,token} = useSelector((state: RootState) => state.user);
-    // console.log("Redux User is:", user,token);
+    // const {user,accesstoken} = useSelector((state: RootState) => state.user);
+    // console.log("Redux User is:", user,accesstoken);
+    const dispatch = useDispatch();
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm<LoginSchema>({ resolver: zodResolver(loginSchema) });
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: login,
+        onSuccess: (response) => {
+            console.log("The Response was:", response);
+            console.log("The Response.data was:", response.data);
+            console.log("The Response statusCode was:", response.statusCode);
+
+            const userData = response?.data?.user;
+            const accesstoken = response?.data?.accessToken;
+            console.log("The userData is:", userData);
+
+            if (response.statusCode === 200) {
+                toast.success("User successfully login");
+                reset();
+                // Save user in Redux store
+                if (accesstoken) {
+                    if (userData) {
+                        dispatch(setUser({ user: userData, accesstoken: accesstoken }));
+                    } else {
+                        console.log("User data is undefined");
+                    }
+                } else {
+                    console.log("Access token is undefined");
+                }
+
+                // Save the access token and user data in local storage
+                if (accesstoken) {
+                    localStorage.setItem("accessToken", accesstoken);
+                }
+                localStorage.setItem("userData", JSON.stringify(userData));
+            }
+        },
+        onError: (error: APIError) => {
+            console.log("The Account Create Error is: ", error);
+
+            // Extract error message safely
+            const errorMessage = error?.message ?? "Something went wrong!";
+            const statusCode = error?.statusCode;
+
+            if (statusCode === 400) {
+                toast.warning(errorMessage || "Please fill all required fields!");
+            } else if (statusCode === 401) {
+                toast.error(errorMessage || "Invalid credentials!");
+            } else if (error) {
+            } else if (statusCode === 500) {
+                toast.error(errorMessage || "Server faild to process.Please try again later!");
+            } else if (error) {
+                // Handles other API errors with a response
+                toast.error(`Error ${statusCode}: ${errorMessage}`);
+            } else {
+                // Handles network errors or server down issues
+                toast.error("No response received from the server! Please check your connection.");
+            }
+        },
+    });
+
+    const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
+        // Extract email or phone from emailOrPhone field
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isEmail = data.emailOrPhone ? emailRegex.test(data.emailOrPhone) : false;
+        const userData: LoginSchema = {
+            ...data,
+            ...(isEmail ? { email: data.emailOrPhone } : { phone: data.emailOrPhone }),
+        };
+        // Remove emailOrPhone field
+        delete userData.emailOrPhone;
+        // TODO: Add API call to create user with userData
+        console.log("Form submitted:", userData);
+        mutate({ data: userData });
+    };
 
     return (
         <div className="mx-auto flex max-w-[93dvw] flex-col gap-6 py-24 md:max-w-[60dvw]">
             <Card className="w-full overflow-hidden">
                 <CardContent className="grid p-0 lg:grid-cols-2">
-                    <form className="p-6 md:p-8">
+                    <form onSubmit={handleSubmit(onSubmit)} className="p-6 md:p-8">
                         <div className="flex flex-col gap-6">
                             <div className="flex flex-col items-center text-center">
                                 <h1 className="text-2xl font-bold">Welcome back</h1>
@@ -24,26 +114,51 @@ const LoginPage = () => {
                                 </p>
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email</Label>
+                                <Label htmlFor="emailOrPhone">
+                                    Email or Phone <span className="text-red-600">*</span>
+                                </Label>
                                 <Input
-                                    id="email"
-                                    type="email"
-                                    placeholder="jack@example.com"
+                                    {...register("emailOrPhone")}
+                                    id="emailOrPhone"
+                                    type="text"
+                                    placeholder="Enter your email or phone number"
+                                    className="placeholder:text-sm"
                                     suppressHydrationWarning
                                 />
+                                <div className="h-5">
+                                    {errors.emailOrPhone && (
+                                        <span className="text-xs text-red-500">
+                                            {errors.emailOrPhone.message}
+                                        </span>
+                                    )}
+                                </div>
                             </div>
                             <div className="grid gap-2">
-                                <div className="flex items-center">
-                                    <Label htmlFor="password">Password</Label>
-                                    <a
-                                        href="#"
-                                        className="ml-auto text-sm underline-offset-2 hover:underline">
-                                        Forgot your password?
-                                    </a>
+                                <Label htmlFor="password">
+                                    Password <span className="text-red-600">*</span>
+                                </Label>
+                                <Input
+                                    {...register("password")}
+                                    id="password"
+                                    placeholder="Enter your password"
+                                    type="password"
+                                />
+                                <div className="h-5">
+                                    {errors.password && (
+                                        <span className="text-xs text-red-500">
+                                            {errors.password.message}
+                                        </span>
+                                    )}
                                 </div>
-                                <Input id="password" type="password" required />
                             </div>
-                            <Button type="submit" className="w-full">
+                            <Button type="submit" disabled={isPending} className="w-full">
+                                {isPending ? (
+                                    <>
+                                        <Loader className="animate-spin" />
+                                    </>
+                                ) : (
+                                    <></>
+                                )}
                                 Login
                             </Button>
                             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">

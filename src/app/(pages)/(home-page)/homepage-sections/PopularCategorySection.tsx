@@ -9,9 +9,11 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Category } from "@/interfaces/category.schemas";
+import { RootState } from "@/lib/store";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 const PopularCategorieSection = () => {
     const { data: categories, isLoading } = useQuery({
@@ -20,6 +22,8 @@ const PopularCategorieSection = () => {
     });
 
     console.log("categories is", categories);
+    const {user,accesstoken} = useSelector((state: RootState) => state.user);
+    console.log("Redux User is:", user,accesstoken);
 
     return (
         <section className="container mx-auto mb-10 px-3 sm:px-0">

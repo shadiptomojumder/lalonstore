@@ -1,3 +1,5 @@
+import { User } from "./user.schemas";
+
 // Interface representing an image file.
 export interface ImageFile {
     id: string;
@@ -33,4 +35,10 @@ export interface APIError {
 export interface BannerImage {
     imageURL: string;
     public_id: string;
+}
+
+// Interface representing a login response object.
+export interface LoginResponseData {
+    user: User;
+    accessToken: string;
 }
