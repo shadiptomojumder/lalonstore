@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import "../globals.css";
 import StoreProvider from "./StoreProvider";
 import { Toaster } from "@/components/ui/sonner";
+import TokenExpirationContex from "@/context/TokenExpirationContext";
 
 const roboto = Roboto({
     variable: "--font-roboto",
@@ -42,12 +43,15 @@ export default function RootLayout({
                 cz-shortcut-listen="true"
                 suppressHydrationWarning>
                 <StoreProvider>
+                    
                     <TanstackProvider>
+                    <TokenExpirationContex>
                         <Suspense fallback={<div>Loading search...</div>}>
                             <Header />
                             {children}
                             <Footer />
                         </Suspense>
+                        </TokenExpirationContex>
                     </TanstackProvider>
                     <Toaster richColors />
                 </StoreProvider>

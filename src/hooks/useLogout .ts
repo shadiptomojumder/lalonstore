@@ -10,13 +10,6 @@ const useLogout = () => {
     const handleLogout = async () => {
         dispatch(setLoading(true)); // Set loading state to true
 
-        try {
-            // Call the logout API
-            await logoutApi();
-        } catch (error) {
-            console.log("Logout API Error:", error);
-        }
-
         // Clear user state
         dispatch(logout());
 
@@ -25,6 +18,13 @@ const useLogout = () => {
 
         // Clear all persisted state
         persistStore(store).purge();
+
+        // Call the logout API
+        try {
+            await logoutApi();
+        } catch (error) {
+            console.log("Logout API Error:", error);
+        }
 
         // Clear cookies
         document.cookie.split(";").forEach((cookie) => {

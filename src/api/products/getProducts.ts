@@ -37,10 +37,10 @@ const getProducts = async (
         const queryString = buildQueryString(queryParams);
 
         const url = queryString ? `/products?${queryString}` : "/products";
-        console.log("The URL is:", url);
+        // console.log("The URL is:", url);
 
         const response = await api.get<APIResponse<Product[]>>(url);
-        console.log("The Get ALL Product API Response is:", response);
+        // console.log("The Get ALL Product API Response is:", response);
 
         return response.data;
     } catch (error) {

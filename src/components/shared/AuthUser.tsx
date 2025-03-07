@@ -10,16 +10,24 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import useLogout from "@/hooks/useLogout ";
+import { setLoading } from "@/lib/slices/userSlice";
 import { RootState } from "@/lib/store";
 import { CircleUser } from "lucide-react";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const AuthUser = () => {
     const { user, isLoading } = useSelector((state: RootState) => state.user);
     console.log("Redux User is:", user);
     console.log("Redux isLoading is:", isLoading);
     const handleLogout = useLogout();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        // Set loading state to false after initial check
+        dispatch(setLoading(false));
+    }, [dispatch]);
 
     return (
         <>
@@ -57,8 +65,8 @@ const AuthUser = () => {
                                         </DropdownMenuItem>
                                         <DropdownMenuItem>
                                             <Link href="/dashboard">
-                                            Dashboard
-                                            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+                                                Dashboard
+                                                <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
                                             </Link>
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>

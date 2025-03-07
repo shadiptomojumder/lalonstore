@@ -1,7 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { LogoutUtil } from "./utils/logoutUtil";
 
 // Define protected routes and their allowed roles
 const protectedRoutes: Record<string, string[]> = {
@@ -36,7 +35,6 @@ const decodeToken = (token: string): DecodedToken | null => {
     }
 };
 
-
 // Middleware function
 export function middleware(req: NextRequest) {
     const token = req.cookies.get("accessToken")?.value;
@@ -58,12 +56,6 @@ export function middleware(req: NextRequest) {
         // If no token or role is found, redirect to login
         if (!token) {
             return NextResponse.redirect(new URL("/login", req.url));
-        }
-
-        // Handle case where the token is expired
-        if (!decoded) {
-            LogoutUtil()
-            return NextResponse.redirect(new URL("/login?message=session-expired", req.url));
         }
 
         // If user role is not allowed, redirect to unauthorized page
