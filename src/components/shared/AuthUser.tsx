@@ -56,8 +56,10 @@ const AuthUser = () => {
                                             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem>
+                                            <Link href="/dashboard">
                                             Dashboard
                                             <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+                                            </Link>
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>
                                     <DropdownMenuSeparator />

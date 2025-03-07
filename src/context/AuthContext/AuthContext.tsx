@@ -1,5 +1,5 @@
 "use client";
-import Logout from "@/api/auth/logout";
+import {logout} from "@/api/auth/logout";
 import { differenceInMilliseconds } from "date-fns";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
@@ -17,7 +17,7 @@ const DecodeToken = (token: string): DecodedToken | null => {
         const decoded = jwtDecode<DecodedToken>(token);
         return decoded;
     } catch (error) {
-        console.error("Invalid token:", error);
+        console.log("Invalid token:", error);
         return null;
     }
 };
@@ -79,7 +79,7 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
                 setUser(parsedUser);
                 console.log("The state User line 85:", user);
             } catch (error) {
-                console.error("Error parsing stored user data:", error);
+                console.log("Error parsing stored user data:", error);
                 // Handle the error appropriately (clear the invalid data from localStorage)
                 localStorage.removeItem("userData");
             }
@@ -100,7 +100,7 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
     //             }
     //             console.log("The state User line 108:", user);
     //         } catch (error) {
-    //             console.error("Error parsing stored user data:", error);
+    //             console.log("Error parsing stored user data:", error);
     //             localStorage.removeItem("userData");
     //         }
     //     } else {
@@ -114,6 +114,7 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
         if (storedUser) {
             try {
                 const parsedUser = JSON.parse(storedUser);
+                // eslint-disable-next-line
                 const userId = parsedUser?._id;
                 const tokenData: DecodedToken | null | undefined = DecodeToken(
                     parsedUser?.refreshToken,
@@ -137,7 +138,7 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
                         // );
 
                         setTimeout(async () => {
-                            const response = await Logout({ userId });
+                            const response = await logout();
                             console.log("The Logout Response line 110", response);
 
                             if (response.statusCode === 200) {
@@ -147,13 +148,13 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
                                 document.cookie = "";
                                 router.push("/login");
                             } else {
-                                console.error("Logout failed:", response);
+                                console.log("Logout failed:", response);
                             }
                         }, remainingTimeInMilliseconds);
                     } else {
                         console.warn("Token has already expired");
                         // Handle token expiration immediately
-                        const response = Logout({ userId });
+                        const response = logout();
                         console.log("The Logout Response line 128", response);
                         toast.error("Session expired. Please log in again 22222.");
                         localStorage.clear();
@@ -163,7 +164,7 @@ const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
                     }
                 }
             } catch (error) {
-                console.error("Error parsing stored user data:", error);
+                console.log("Error parsing stored user data:", error);
             }
         }
     };

@@ -31,20 +31,18 @@ const ProductDetailsPage = () => {
     //     return <p>Loading...</p>;
     // }
     if (error) {
-        return (
-            <ProductNotFound/>
-        );
+        return <ProductNotFound />;
     }
 
     return (
         <main>
-            <div className="container mx-auto md:my-13 my-10 px-3 sm:px-0">
+            <div className="container mx-auto my-10 px-3 sm:px-0 md:my-13">
                 <section className="mb-15 flex flex-col items-start gap-10 sm:flex-row sm:gap-15 md:gap-25">
                     <div className="mx-auto rounded-sm border border-gray-200 bg-white p-0 shadow-lg sm:mx-0">
                         {isLoading ? (
                             <>
-                                <Skeleton className="flex aspect-[415/332] sm:h-[332px] h-[165px] sm:w-[415px] w-[207px] items-center justify-center rounded-sm bg-gray-300 text-gray-400 text-[230px]">
-                                    <ImageIcon className="h-[130px] w-[130px]"/>
+                                <Skeleton className="flex aspect-[415/332] h-[165px] w-[207px] items-center justify-center rounded-sm bg-gray-300 text-[230px] text-gray-400 sm:h-[332px] sm:w-[415px]">
+                                    <ImageIcon className="h-[130px] w-[130px]" />
                                 </Skeleton>
                             </>
                         ) : (
@@ -62,13 +60,12 @@ const ProductDetailsPage = () => {
                         )}
                     </div>
                     {isLoading ? (
-                        <div className="bg-white sm:w-[45%] w-full flex flex-col gap-3">
-                            
-                        <Skeleton className="h-[20px] w-full rounded-full bg-gray-300" />
-                        <Skeleton className="h-[18px] w-full rounded-full bg-gray-300" />
-                        <Skeleton className="h-[18px] md:w-[45%] sm:w-[85%] hidden sm:block rounded-full bg-gray-300" />
-                        <Skeleton className="h-[20px] md:w-[40%] sm:w-[75%] w-full rounded-full bg-gray-300" />
-                        <Skeleton className="h-[40px] md:w-[45%] w-full sm:mt-7 mt-4 rounded-full bg-gray-300" />
+                        <div className="flex w-full flex-col gap-3 bg-white sm:w-[45%]">
+                            <Skeleton className="h-[20px] w-full rounded-full bg-gray-300" />
+                            <Skeleton className="h-[18px] w-full rounded-full bg-gray-300" />
+                            <Skeleton className="hidden h-[18px] rounded-full bg-gray-300 sm:block sm:w-[85%] md:w-[45%]" />
+                            <Skeleton className="h-[20px] w-full rounded-full bg-gray-300 sm:w-[75%] md:w-[40%]" />
+                            <Skeleton className="mt-4 h-[40px] w-full rounded-full bg-gray-300 sm:mt-7 md:w-[45%]" />
                         </div>
                     ) : (
                         <div className="mx-auto rounded-lg bg-white text-center sm:mx-0 sm:text-start">
@@ -93,8 +90,8 @@ const ProductDetailsPage = () => {
                                                     y1="14.332"
                                                     y2="1.72"
                                                     gradientUnits="userSpaceOnUse">
-                                                    <stop stop-color="#FFD700" />
-                                                    <stop offset="1" stop-color="#ffcd0f" />
+                                                    <stop stopColor="#FFD700" />
+                                                    <stop offset="1" stopColor="#ffcd0f" />
                                                 </linearGradient>
                                             </defs>
                                         </g>
@@ -117,8 +114,8 @@ const ProductDetailsPage = () => {
                                                     y1="14.332"
                                                     y2="1.72"
                                                     gradientUnits="userSpaceOnUse">
-                                                    <stop stop-color="#FFD700" />
-                                                    <stop offset="1" stop-color="#ffcd0f" />
+                                                    <stop stopColor="#FFD700" />
+                                                    <stop offset="1" stopColor="#ffcd0f" />
                                                 </linearGradient>
                                             </defs>
                                         </g>
@@ -141,8 +138,8 @@ const ProductDetailsPage = () => {
                                                     y1="14.332"
                                                     y2="1.72"
                                                     gradientUnits="userSpaceOnUse">
-                                                    <stop stop-color="#FFD700" />
-                                                    <stop offset="1" stop-color="#ffcd0f" />
+                                                    <stop stopColor="#FFD700" />
+                                                    <stop offset="1" stopColor="#ffcd0f" />
                                                 </linearGradient>
                                             </defs>
                                         </g>
@@ -165,8 +162,8 @@ const ProductDetailsPage = () => {
                                                     y1="14.332"
                                                     y2="1.72"
                                                     gradientUnits="userSpaceOnUse">
-                                                    <stop stop-color="#FFD700" />
-                                                    <stop offset="1" stop-color="#ffcd0f" />
+                                                    <stop stopColor="#FFD700" />
+                                                    <stop offset="1" stopColor="#ffcd0f" />
                                                 </linearGradient>
                                             </defs>
                                         </g>

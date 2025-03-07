@@ -9,11 +9,9 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Category } from "@/interfaces/category.schemas";
-import { RootState } from "@/lib/store";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-import { useSelector } from "react-redux";
 
 const PopularCategorieSection = () => {
     const { data: categories, isLoading } = useQuery({

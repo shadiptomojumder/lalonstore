@@ -19,7 +19,9 @@ interface ProductQueryParams {
     isWeekendDeal?: boolean;
 }
 
-const getProducts = async (queryParams: ProductQueryParams = {}): Promise<APIResponse<Product[]>> => {
+const getProducts = async (
+    queryParams: ProductQueryParams = {},
+): Promise<APIResponse<Product[]>> => {
     try {
         // Build query string dynamically
         const buildQueryString = (queryParams: ProductQueryParams) => {
@@ -45,7 +47,7 @@ const getProducts = async (queryParams: ProductQueryParams = {}): Promise<APIRes
         console.log("The Get ALL Product API Error is:", error);
 
         if (error instanceof AxiosError && error.response) {
-            console.error("Server Error:", error.response.data);
+            console.log("Server Error:", error.response.data);
             throw error.response.data; // Throwing the actual API error response
         }
 

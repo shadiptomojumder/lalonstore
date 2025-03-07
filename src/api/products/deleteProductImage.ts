@@ -12,10 +12,11 @@ const deleteProductImage = async ({
     imageUrl,
 }: DeleteProductImageProps): Promise<APIResponse<{ message: string }>> => {
     try {
-        const response: AxiosResponse<APIResponse<{ message: string }>> =
-            await api.delete<APIResponse<{ message: string }>>(`/products/${productId}/image`, {
-                data: { imageUrl }, // Send image URLs in request body
-            });
+        const response: AxiosResponse<APIResponse<{ message: string }>> = await api.delete<
+            APIResponse<{ message: string }>
+        >(`/products/${productId}/image`, {
+            data: { imageUrl }, // Send image URLs in request body
+        });
 
         console.log("Response from deleteProductImage API:", response);
 
@@ -24,7 +25,7 @@ const deleteProductImage = async ({
         console.log("Error in deleteProductImage API:", error);
 
         if (error instanceof AxiosError && error.response) {
-            console.error("Server Error:", error.response.data);
+            console.log("Server Error:", error.response.data);
             throw error.response.data;
         }
 

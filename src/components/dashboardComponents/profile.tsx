@@ -5,12 +5,8 @@ import {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuPortal,
     DropdownMenuSeparator,
     DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import useLogout from "@/hooks/useLogout ";
@@ -35,7 +31,7 @@ const Profile = () => {
                         <>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                    <div className="flex items-center gap-2">
+                                    <div className="flex cursor-pointer items-center gap-2">
                                         <div>
                                             <Image
                                                 src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?t=st=1739111967~exp=1739115567~hmac=42aa19f2a97f479e45ea4ae7e4d279a79e9a7b2f074822aa45944d4115f833b4&w=996"
@@ -76,32 +72,8 @@ const Profile = () => {
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuGroup>
-                                        <DropdownMenuItem>Team</DropdownMenuItem>
-                                        <DropdownMenuSub>
-                                            <DropdownMenuSubTrigger>
-                                                Invite users
-                                            </DropdownMenuSubTrigger>
-                                            <DropdownMenuPortal>
-                                                <DropdownMenuSubContent>
-                                                    <DropdownMenuItem>Email</DropdownMenuItem>
-                                                    <DropdownMenuItem>Message</DropdownMenuItem>
-                                                    <DropdownMenuSeparator />
-                                                    <DropdownMenuItem>More...</DropdownMenuItem>
-                                                </DropdownMenuSubContent>
-                                            </DropdownMenuPortal>
-                                        </DropdownMenuSub>
-                                        <DropdownMenuItem>
-                                            New Team
-                                            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-                                        </DropdownMenuItem>
-                                    </DropdownMenuGroup>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem>GitHub</DropdownMenuItem>
-                                    <DropdownMenuItem>Support</DropdownMenuItem>
-                                    <DropdownMenuItem disabled>API</DropdownMenuItem>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem>
+
+                                    <DropdownMenuItem onClick={handleLogout}>
                                         Log out
                                         <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                                     </DropdownMenuItem>

@@ -41,7 +41,7 @@ const deleteProducts = async ({
         console.log("The Delete Products API Error is:", error);
 
         if (error instanceof AxiosError && error.response) {
-            console.error("Server Error:", error.response.data);
+            console.log("Server Error:", error.response.data);
             throw error.response.data; // Throwing the actual API error response
         }
 

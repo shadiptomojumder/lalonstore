@@ -51,7 +51,7 @@ const CategoryCreatePage = () => {
             } else if (error.request) {
                 toast.error("No response received from the server!!");
             } else {
-                console.error("Error while sending the request:", error.message);
+                console.log("Error while sending the request:", error.message);
             }
         },
     });

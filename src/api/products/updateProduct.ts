@@ -9,16 +9,21 @@ interface UpdateProductProps {
     data: FormData | Partial<Product>;
 }
 
-const updateProduct = async ({ productId, data }: UpdateProductProps): Promise<APIResponse<Product>> => {
+const updateProduct = async ({
+    productId,
+    data,
+}: UpdateProductProps): Promise<APIResponse<Product>> => {
     try {
         const isFormData = data instanceof FormData;
-        const headers = isFormData ? { "Content-Type": "multipart/form-data" } : { "Content-Type": "application/json" };
+        const headers = isFormData
+            ? { "Content-Type": "multipart/form-data" }
+            : { "Content-Type": "application/json" };
 
         const response: AxiosResponse<APIResponse<Product>> = await api.patch<APIResponse<Product>>(
             `/products/${productId}`,
             data,
             {
-                headers
+                headers,
             },
         );
         // Ensure response.data exists and has a `data` property
@@ -33,7 +38,7 @@ const updateProduct = async ({ productId, data }: UpdateProductProps): Promise<A
         console.log("The Update Product API Error is:", error);
 
         if (error instanceof AxiosError && error.response) {
-            console.error("Server Error:", error.response.data);
+            console.log("Server Error:", error.response.data);
             throw error.response.data; // Throwing the actual API error response
         }
 

@@ -1,5 +1,5 @@
-import { APIResponse } from "@/interfaces/common.schemas";
 import { Category } from "@/interfaces/category.schemas";
+import { APIResponse } from "@/interfaces/common.schemas";
 import { AxiosError } from "axios";
 import { api } from "../api";
 
@@ -38,7 +38,7 @@ const getCategories = async (queryParams: CategoryQueryParams = {}): Promise<Cat
         console.log("The Get Categories API Error is:", error);
 
         if (error instanceof AxiosError && error.response) {
-            console.error("Server Error:", error.response.data);
+            console.log("Server Error:", error.response.data);
             throw error.response.data; // Throwing the actual API error response
         }
 

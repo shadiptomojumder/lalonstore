@@ -19,7 +19,7 @@ const getCategoryById = async ({ categoryId }: { categoryId: string }): Promise<
         console.log("The Get Category By ID API Error is:", error);
 
         if (error instanceof AxiosError && error.response) {
-            console.error("Server Error:", error.response.data);
+            console.log("Server Error:", error.response.data);
             throw error.response.data; // Throwing the actual API error response
         }
 

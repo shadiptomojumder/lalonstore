@@ -40,7 +40,7 @@ const Actions = ({ categoryId }: { categoryId: string }) => {
             } else if (error.request) {
                 toast.error("No response received from the server!!");
             } else {
-                console.error("Error while sending the request:", error.message);
+                console.log("Error while sending the request:", error.message);
             }
         },
     });
@@ -73,13 +73,13 @@ const Actions = ({ categoryId }: { categoryId: string }) => {
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
-                        <DropdownMenuItem className="font-medium cursor-pointer">
+                        <DropdownMenuItem className="cursor-pointer font-medium">
                             Edit
                             <DropdownMenuShortcut>
                                 <Pencil />
                             </DropdownMenuShortcut>
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="bg-red-200 hover:bg-red-200 cursor-pointer font-medium text-red-700 hover:text-red-700">
+                        <DropdownMenuItem className="cursor-pointer bg-red-200 font-medium text-red-700 hover:bg-red-200 hover:text-red-700">
                             Delete
                             <DropdownMenuShortcut>
                                 <Trash2 className="text-red-700" />
