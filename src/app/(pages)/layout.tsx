@@ -1,13 +1,14 @@
+import CartForMobile from "@/components/shared/CartForMobile";
 import Footer from "@/components/shared/Footer";
 import Header from "@/components/shared/Header";
+import { Toaster } from "@/components/ui/sonner";
+import TokenExpirationContex from "@/context/TokenExpirationContext";
 import TanstackProvider from "@/TanstackProvider/TanstackProvider";
 import type { Metadata } from "next";
 import { Montserrat, Roboto, Rubik } from "next/font/google";
 import { Suspense } from "react";
 import "../globals.css";
 import StoreProvider from "./StoreProvider";
-import { Toaster } from "@/components/ui/sonner";
-import TokenExpirationContex from "@/context/TokenExpirationContext";
 
 const roboto = Roboto({
     variable: "--font-roboto",
@@ -43,14 +44,14 @@ export default function RootLayout({
                 cz-shortcut-listen="true"
                 suppressHydrationWarning>
                 <StoreProvider>
-                    
                     <TanstackProvider>
-                    <TokenExpirationContex>
-                        <Suspense fallback={<div>Loading search...</div>}>
-                            <Header />
-                            {children}
-                            <Footer />
-                        </Suspense>
+                        <TokenExpirationContex>
+                            <Suspense fallback={<div>Loading search...</div>}>
+                                <Header />
+                                {children}
+                                <Footer />
+                                <CartForMobile />
+                            </Suspense>
                         </TokenExpirationContex>
                     </TanstackProvider>
                     <Toaster richColors />

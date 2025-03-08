@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 // Define protected routes and their allowed roles
 const protectedRoutes: Record<string, string[]> = {
     "/dashboard": ["ADMIN"], // Both users & admins can access
-    "/products": ["USER"], // Both users & admins can access
+    // "/products": ["USER"], // Both users & admins can access
 };
 
 interface DecodedToken {

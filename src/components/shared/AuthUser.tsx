@@ -12,15 +12,16 @@ import {
 import useLogout from "@/hooks/useLogout ";
 import { setLoading } from "@/lib/slices/userSlice";
 import { RootState } from "@/lib/store";
-import { CircleUser } from "lucide-react";
+import { CircleUser, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const AuthUser = () => {
     const { user, isLoading } = useSelector((state: RootState) => state.user);
-    console.log("Redux User is:", user);
-    console.log("Redux isLoading is:", isLoading);
+    const { items } = useSelector((state: RootState) => state.cart);
+    // console.log("Redux User is:", user);
+    // console.log("Redux isLoading is:", isLoading);
     const handleLogout = useLogout();
     const dispatch = useDispatch();
 
@@ -31,6 +32,18 @@ const AuthUser = () => {
 
     return (
         <>
+            <Link
+                href="/checkout"
+                className="relative hidden rounded-md bg-accent p-2 text-primary sm:block">
+                <ShoppingCart size={20} />
+                {items && items.length > 0 ? (
+                    <div className="absolute -top-2.5 -right-2 flex h-[20px] w-[20px] items-center justify-center rounded-full bg-blue-200 text-xs font-semibold">
+                        {items?.length}
+                    </div>
+                ) : (
+                    <></>
+                )}
+            </Link>
             {isLoading ? (
                 <div>User Loading...</div>
             ) : (

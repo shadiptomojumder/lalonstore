@@ -1,4 +1,4 @@
-import { Menu, ShoppingCart } from "lucide-react";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 import AuthUser from "./AuthUser";
@@ -27,12 +27,7 @@ const Header = () => {
                             <SearchProduct />
                         </Suspense>
                     </section>
-                    <section className="flex items-center gap-2 justify-self-end">
-                        <Link
-                            href="#"
-                            className="hidden rounded-md bg-accent p-2 text-primary sm:block">
-                            <ShoppingCart size={20} />
-                        </Link>
+                    <section className="flex items-center gap-3 justify-self-end">
                         <AuthUser />
                     </section>
                 </section>
