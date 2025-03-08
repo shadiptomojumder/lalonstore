@@ -1,11 +1,12 @@
 "use client";
-import useLogout from "@/hooks/useLogout ";
-import { RootState } from "@/lib/store";
-import { differenceInMilliseconds, formatDistanceToNow } from "date-fns";
+import { logout as logoutApi } from "@/api/auth/logout";
+import { logout, setLoading } from "@/lib/slices/userSlice";
+import { RootState, store } from "@/lib/store";
 import { jwtDecode } from "jwt-decode";
-import React from "react";
-import { useSelector } from "react-redux";
-import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { persistStore } from "redux-persist";
 
 interface DecodedToken {
     id: string;
@@ -34,35 +35,67 @@ const decodeToken = (token: string): DecodedToken | null => {
     }
 };
 
-const TokenExpirationContex = ({ children }: { children: React.ReactNode }) => {
+const TokenExpirationContext = ({ children }: { children: React.ReactNode }) => {
     const { accesstoken } = useSelector((state: RootState) => state.user);
-    const handleLogout = useLogout();
+    const dispatch = useDispatch();
+    const router = useRouter();
 
-    if (accesstoken) {
+    useEffect(() => {
+        if (!accesstoken) return;
+
         const decoded = decodeToken(accesstoken);
-        console.log("Token expiration time:", decoded?.exp || Date.now);
+        if (!decoded || !decoded.exp) return;
 
-        if (decoded && decoded.exp) {
-            const expireTimestamp = Number(decoded.exp);
-            const now = new Date();
-            const expireDate = new Date(Number(expireTimestamp) * 1000); // Convert to milliseconds
-            const remainingTimeInMilliseconds = differenceInMilliseconds(expireDate, now);
-            const formattedRemainingTime = formatDistanceToNow(expireDate, {
-                addSuffix: true,
-            });
-            console.log(`Remaining formated time: ${formattedRemainingTime} milliseconds`);
-            console.log(`Remaining time: ${remainingTimeInMilliseconds} milliseconds`);
+        const expireTimestamp = decoded.exp * 1000; // Convert to milliseconds
+        const now = Date.now();
+        const timeRemaining = expireTimestamp - now;
 
-            if (remainingTimeInMilliseconds > 0) {
-                setTimeout(async () => {
-                    handleLogout();
-                    toast.warning("Session expired.Please login again.")
-                }, remainingTimeInMilliseconds);
-            }
+        if (timeRemaining > 0) {
+            console.log(`Session expires in: ${timeRemaining / 1000}s`);
+
+            const timeoutId = setTimeout(async () => {
+                dispatch(setLoading(true));
+
+                // Dispatch logout action
+                dispatch(logout());
+
+                // Clear authentication-related data
+                localStorage.removeItem("accessToken");
+
+                // Purge only the user state, not the entire Redux store
+                persistStore(store).purge();
+
+                try {
+                    await logoutApi();
+                } catch (error) {
+                    console.error("Logout API Error:", error);
+                }
+
+                dispatch(setLoading(false));
+                router.push("/login?message=session-expired");
+            }, timeRemaining);
+
+            return () => clearTimeout(timeoutId); // Cleanup on unmount
+        } else {
+            // If token is already expired, log out immediately
+            dispatch(logout());
+            localStorage.removeItem("accessToken");
+            persistStore(store).purge();
+            // Notify backend immediately
+            (async () => {
+                try {
+                    await logoutApi();
+                } catch (error) {
+                    console.error("Logout API Error:", error);
+                } finally {
+                    dispatch(setLoading(false));
+                    router.push("/login?message=session-expired");
+                }
+            })();
         }
-    }
+    }, [accesstoken, dispatch, router]);
 
     return <>{children}</>;
 };
 
-export default TokenExpirationContex;
+export default TokenExpirationContext;

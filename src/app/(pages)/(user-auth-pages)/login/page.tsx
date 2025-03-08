@@ -12,13 +12,26 @@ import { useMutation } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import LoginBanner from "../../../../../public/banners/login1.jpg";
 
 const LoginPage = () => {
+    const urlParams = useSearchParams();
+    useEffect(() => {
+        const message = urlParams.get("message");
+        console.log("The Message is:", message);
+
+        if (message === "no-token") {
+            toast.warning("No token found. Please log in again.");
+        } else if (message === "session-expired") {
+            toast.warning("Your session has expired. Please log in again.");
+        }
+    }, [urlParams]); // Dependency ensures it runs when `urlParams` updates
+
     const dispatch = useDispatch();
     const router = useRouter();
     const {
@@ -116,7 +129,7 @@ const LoginPage = () => {
                                     id="emailOrPhone"
                                     type="text"
                                     placeholder="Enter your email or phone number"
-                                    className="placeholder:text-sm mt-1"
+                                    className="mt-1 placeholder:text-sm"
                                     suppressHydrationWarning
                                 />
                                 <div className="h-5">
@@ -136,7 +149,7 @@ const LoginPage = () => {
                                     id="password"
                                     placeholder="Enter your password"
                                     type="password"
-                                    className="placeholder:text-sm mt-1"
+                                    className="mt-1 placeholder:text-sm"
                                 />
                                 <div className="h-5">
                                     {errors.password && (

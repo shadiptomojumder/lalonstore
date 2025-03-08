@@ -2,7 +2,7 @@ import CartForMobile from "@/components/shared/CartForMobile";
 import Footer from "@/components/shared/Footer";
 import Header from "@/components/shared/Header";
 import { Toaster } from "@/components/ui/sonner";
-import TokenExpirationContex from "@/context/TokenExpirationContext";
+import TokenExpirationContext from "@/context/TokenExpirationContext";
 import TanstackProvider from "@/TanstackProvider/TanstackProvider";
 import type { Metadata } from "next";
 import { Montserrat, Roboto, Rubik } from "next/font/google";
@@ -45,14 +45,14 @@ export default function RootLayout({
                 suppressHydrationWarning>
                 <StoreProvider>
                     <TanstackProvider>
-                        <TokenExpirationContex>
+                        <TokenExpirationContext>
                             <Suspense fallback={<div>Loading search...</div>}>
                                 <Header />
                                 {children}
                                 <Footer />
                                 <CartForMobile />
                             </Suspense>
-                        </TokenExpirationContex>
+                        </TokenExpirationContext>
                     </TanstackProvider>
                     <Toaster richColors />
                 </StoreProvider>

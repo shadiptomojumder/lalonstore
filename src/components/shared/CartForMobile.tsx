@@ -33,10 +33,10 @@ const CartForMobile = () => {
 
             <Link href={"/checkout"} className="sm:hidden">
                 <div
-                    className={`fixed right-5 bottom-5 z-[3000] flex h-[45px] w-[45px] items-center justify-center rounded-full bg-[#d7f2dc] shadow-[0px_0px_4px_4px_rgba(0,0,0,0.2)] transition duration-200 ease-in-out ${isMatched ? "scale-0" : "scale-100"}`}>
+                    className={`fixed right-5 bottom-5 z-[3000] text-primary flex h-[45px] w-[45px] items-center justify-center rounded-full bg-[#d7f2dc] shadow-[0px_0px_4px_4px_rgba(0,0,0,0.2)] transition duration-200 ease-in-out ${isMatched ? "scale-0" : "scale-100"}`}>
                     <ShoppingCart size={25} />
                     {items && items.length > 0 ? (
-                        <div className="absolute -top-1 -right-1 flex h-[20px] w-[20px] items-center justify-center rounded-full bg-blue-200 text-xs font-semibold">
+                        <div className="absolute -top-1 -right-1 flex h-[20px] w-[20px] items-center justify-center rounded-full bg-blue-200 text-xs text-gray-950 font-semibold">
                             {items?.length}
                         </div>
                     ) : (

@@ -49,7 +49,7 @@ const AddToCartButtonMobile = ({ product }: { product: Product }) => {
                 <>
                     <div
                         onClick={handleAddToCart}
-                        className="absolute right-3 bottom-0 flex h-[30px] w-[30px] items-center justify-center rounded-full bg-white text-primary shadow-2xl sm:hidden">
+                        className="absolute right-3 bottom-0 flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[#d7f2dc] text-primary shadow-2xl sm:hidden">
                         <Plus />
                     </div>
                 </>

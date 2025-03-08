@@ -32,7 +32,7 @@ const AddToCartButton = ({ product }: { product: Product }) => {
                 <div className="hidden min-h-[32px] w-full items-center justify-between gap-1 rounded-full bg-yellow-500 shadow-lg sm:flex">
                     <button
                         onClick={() => handleQuantityChange(quantity - 1)}
-                        className="flex h-[32px] w-[50px] cursor-pointer items-center justify-center rounded-l-full border-r-2 border-gray-600 bg-orange-400 text-gray-800">
+                        className="flex h-[32px] w-[50px] cursor-pointer items-center justify-center rounded-l-full border-r-2 border-gray-600 text-gray-800">
                         <Minus />
                     </button>
                     <p className="text-base font-semibold text-gray-900">
@@ -40,7 +40,7 @@ const AddToCartButton = ({ product }: { product: Product }) => {
                     </p>
                     <button
                         onClick={() => handleQuantityChange(quantity + 1)}
-                        className="flex h-[32px] w-[50px] cursor-pointer items-center justify-center rounded-r-full border-l-2 border-gray-600 bg-orange-400 text-gray-800">
+                        className="flex h-[32px] w-[50px] cursor-pointer items-center justify-center rounded-r-full border-l-2 border-gray-600 text-gray-800">
                         <Plus />
                     </button>
                 </div>

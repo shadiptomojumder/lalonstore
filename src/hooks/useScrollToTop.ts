@@ -1,22 +1,19 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 function useScrollToTop() {
-  const router = useRouter();
+    const router = useRouter();
 
-  useEffect(() => {
-    const handleRouteChange = () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+    useEffect(() => {
+        const handleRouteChange = () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        };
 
-    router.events.on('routeChangeComplete', handleRouteChange);   
-
-
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
-    };
-  }, [router.events]);
-
+        router.events.on("routeChangeComplete", handleRouteChange);
+        return () => {
+            router.events.off("routeChangeComplete", handleRouteChange);
+        };
+    }, [router.events]);
 }
 
 export default useScrollToTop;
