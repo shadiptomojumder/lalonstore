@@ -34,7 +34,12 @@ export const userSchema = z.object({
     refreshToken: z.string().optional(), // refreshToken is optional.
 });
 
-export type User = z.infer<typeof userSchema>;
+// Extend the original schema with the 'id' field
+const userSchemaWithId = userSchema.extend({
+    id: z.string(), // Assuming 'id' is a string. Adjust as needed (e.g., z.number(), z.number().int())
+});
+
+export type User = z.infer<typeof userSchemaWithId>;
 export type UserFormData = z.infer<typeof userSchema>;
 
 // Example usage and refinement for specific cases
@@ -94,6 +99,6 @@ export type GoogleLoginSchema = z.infer<typeof googleLoginSchema>;
 // Profile Update Schema (partial updates allowed)
 export const profileUpdateSchema = userSchema
     .partial()
-    .omit({ password: true, refreshToken: true, role: true, email: true, googleId: true });
+    .omit({ password: true, refreshToken: true, googleId: true });
 
 export type ProfileUpdateSchema = z.infer<typeof profileUpdateSchema>;

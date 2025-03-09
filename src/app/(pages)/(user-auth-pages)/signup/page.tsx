@@ -14,8 +14,10 @@ import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import LoginBanner from "../../../../../public/banners/login1.jpg";
+import { useRouter } from "next/navigation";
 
 const SignupPage = () => {
+    const router = useRouter()
     const {
         register,
         handleSubmit,
@@ -33,6 +35,7 @@ const SignupPage = () => {
             if (response.statusCode === 201) {
                 toast.success("Account successfully created");
                 reset();
+                router.push("/login");
             }
         },
         onError: (error: APIError) => {

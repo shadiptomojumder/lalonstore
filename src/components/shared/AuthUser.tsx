@@ -57,7 +57,7 @@ const AuthUser = () => {
                                     </div> */}
                                     <div className="flex cursor-pointer items-center gap-1.5 rounded-full bg-accent p-0 text-sm font-semibold text-primary sm:rounded-md sm:p-2">
                                         <CircleUser className="h-[35px] w-[35px] sm:h-[20px] sm:w-[20px]" />{" "}
-                                        <span className="hidden sm:block">Shadipto</span>
+                                        <span className="hidden sm:block capitalize">{user?.firstName}</span>
                                     </div>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="z-[2255] w-56">
