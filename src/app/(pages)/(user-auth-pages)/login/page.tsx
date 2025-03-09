@@ -23,7 +23,6 @@ const LoginPage = () => {
     const urlParams = useSearchParams();
     useEffect(() => {
         const message = urlParams.get("message");
-        console.log("The Message is:", message);
 
         if (message === "no-token") {
             toast.warning("No token found. Please log in again.", {
