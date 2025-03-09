@@ -26,9 +26,15 @@ const LoginPage = () => {
         console.log("The Message is:", message);
 
         if (message === "no-token") {
-            toast.warning("No token found. Please log in again.");
+            toast.warning("No token found. Please log in again.", {
+                closeButton: true,
+                duration: 10000,
+            });
         } else if (message === "session-expired") {
-            toast.warning("Your session has expired. Please log in again.");
+            toast.warning("Your session has expired. Please log in again.", {
+                duration: 10000,
+                closeButton: true,
+            });
         }
     }, [urlParams]); // Dependency ensures it runs when `urlParams` updates
 
