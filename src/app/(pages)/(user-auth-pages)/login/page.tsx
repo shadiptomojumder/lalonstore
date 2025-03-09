@@ -51,7 +51,6 @@ const LoginPage = () => {
         onSuccess: (response) => {
             console.log("The Response was:", response);
             console.log("The Response.data was:", response.data);
-            console.log("The Response statusCode was:", response.statusCode);
 
             const userData = response?.data?.user;
             const accesstoken = response?.data?.accessToken;
