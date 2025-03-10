@@ -2,6 +2,7 @@
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import useLogout from "@/hooks/useLogout ";
@@ -57,42 +58,47 @@ const AuthUser = () => {
                                         </span>
                                     </div>
                                 </DropdownMenuTrigger>
-                                <DropdownMenuContent className="z-[2255] w-56 p-2">
-                                    <section className="grid gap-1.5">
+                                <DropdownMenuContent className="z-[2255] grid w-56 gap-1.5 p-2">
+                                    <DropdownMenuItem asChild className="focus:bg-[#d7f2dc8e]">
                                         <Link
                                             href="/my-profile"
-                                            className="flex items-center gap-2 rounded-md border-2 border-[#d7f2dc8e] bg-[#d7f2dc8e] p-2 text-primary transition duration-300 ease-in-out hover:border-primary">
-                                            <User size={20} />
+                                            className="flex items-center gap-2 rounded-md border-2 border-[#d7f2dc8e] bg-[#d7f2dc8e] p-2 text-primary transition duration-300 ease-in-out hover:border-primary hover:bg-[#d7f2dc8e]">
+                                            <User size={20} className="text-primary" />
                                             <p className="text-sm font-medium text-gray-800">
                                                 My Profile
                                             </p>
                                         </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem asChild className="focus:bg-[#d7f2dc8e]">
                                         <Link
                                             href="/order-history"
-                                            className="flex items-center gap-2 rounded-md border-2 border-[#d7f2dc8e] bg-[#d7f2dc8e] p-2 text-primary transition duration-300 ease-in-out hover:border-primary">
-                                            <FileClock size={20} />
+                                            className="flex items-center gap-2 rounded-md border-2 border-[#d7f2dc8e] bg-[#d7f2dc8e] p-2 text-primary transition duration-300 ease-in-out hover:border-primary hover:bg-[#d7f2dc8e]">
+                                            <FileClock size={20} className="text-primary" />
                                             <p className="text-sm font-medium text-gray-800">
                                                 Order History
                                             </p>
                                         </Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem asChild className="focus:bg-[#d7f2dc8e]">
                                         <Link
                                             href="/dashboard"
-                                            className="flex items-center gap-2 rounded-md border-2 border-[#d7f2dc8e] bg-[#d7f2dc8e] p-2 text-primary transition duration-300 ease-in-out hover:border-primary">
-                                            <LayoutDashboard size={20} />
+                                            className="flex items-center gap-2 rounded-md border-2 border-[#d7f2dc8e] bg-[#d7f2dc8e] p-2 text-primary transition duration-300 ease-in-out hover:border-primary hover:bg-[#d7f2dc8e]">
+                                            <LayoutDashboard size={20} className="text-primary" />
                                             <p className="text-sm font-medium text-gray-800">
                                                 Dashboard
                                             </p>
                                         </Link>
-
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem asChild className="focus:bg-[#d7f2dc8e]">
                                         <button
                                             onClick={handleLogout}
-                                            className="flex cursor-pointer items-center gap-2 rounded-md border-2 border-[#d7f2dc8e] bg-[#d7f2dc8e] p-2 text-primary transition duration-300 ease-in-out hover:border-primary">
-                                            <LogOut size={20} />
+                                            className="flex cursor-pointer items-center gap-2 rounded-md border-2 border-[#d7f2dc8e] bg-[#d7f2dc8e] p-2 text-primary transition duration-300 ease-in-out hover:border-primary hover:bg-[#d7f2dc8e]">
+                                            <LogOut size={20} className="text-primary" />
                                             <p className="text-sm font-medium text-gray-800">
                                                 Logout
                                             </p>
                                         </button>
-                                    </section>
+                                    </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </>
