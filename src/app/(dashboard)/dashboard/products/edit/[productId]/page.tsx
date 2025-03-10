@@ -43,7 +43,7 @@ const EditProductPage = () => {
 
     const { data: product, isLoading: productIsLoading } = useQuery({
         queryKey: ["product", productId],
-        queryFn: () => getProductById({productId: productId as string}),
+        queryFn: () => getProductById({ productId: productId as string }),
         staleTime: 0, // Always fetch fresh data
         refetchOnMount: true,
     });
@@ -63,7 +63,18 @@ const EditProductPage = () => {
         formState: { errors, isDirty },
         reset,
         setValue,
-    } = useForm<ProductFormData>({ resolver: zodResolver(productSchema) });
+    } = useForm<ProductFormData>({
+        resolver: zodResolver(productSchema),
+        defaultValues: {
+            name: product?.name || "",
+            price: product?.price || 0,
+            finalPrice: product?.finalPrice || 0,
+            quantity: product?.quantity || "",
+            category: product?.category?.id || "",
+            description: product?.description || "",
+            images: product?.images || [],
+        },
+    });
 
     useEffect(() => {
         if (product) {
@@ -171,7 +182,7 @@ const EditProductPage = () => {
                     <Button
                         type="submit"
                         size="lg"
-                        disabled={(!isDirty && !isImageChanged) || isPending}>
+                        disabled={!(isDirty || isImageChanged) || isPending}>
                         {isPending ? (
                             <>
                                 <LoaderCircle className="animate-spin" /> Submiting
