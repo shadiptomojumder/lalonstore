@@ -2,17 +2,12 @@
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuShortcut,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import useLogout from "@/hooks/useLogout ";
 import { setLoading } from "@/lib/slices/userSlice";
 import { RootState } from "@/lib/store";
-import { CircleUser, ShoppingCart } from "lucide-react";
+import { CircleUser, FileClock, LayoutDashboard, LogOut, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -57,37 +52,47 @@ const AuthUser = () => {
                                     </div> */}
                                     <div className="flex cursor-pointer items-center gap-1.5 rounded-full bg-accent p-0 text-sm font-semibold text-primary sm:rounded-md sm:p-2">
                                         <CircleUser className="h-[35px] w-[35px] sm:h-[20px] sm:w-[20px]" />{" "}
-                                        <span className="hidden sm:block capitalize">{user?.firstName}</span>
+                                        <span className="hidden capitalize sm:block">
+                                            {user?.firstName}
+                                        </span>
                                     </div>
                                 </DropdownMenuTrigger>
-                                <DropdownMenuContent className="z-[2255] w-56">
-                                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuGroup>
-                                        <DropdownMenuItem>
-                                            Profile
-                                            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem>
-                                            Billing
-                                            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem>
-                                            Settings
-                                            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem>
-                                            <Link href="/dashboard">
+                                <DropdownMenuContent className="z-[2255] w-56 p-2">
+                                    <section className="grid gap-1.5">
+                                        <Link
+                                            href="/my-profile"
+                                            className="flex items-center gap-2 rounded-md border-2 border-[#d7f2dc8e] bg-[#d7f2dc8e] p-2 text-primary transition duration-300 ease-in-out hover:border-primary">
+                                            <User size={20} />
+                                            <p className="text-sm font-medium text-gray-800">
+                                                My Profile
+                                            </p>
+                                        </Link>
+                                        <Link
+                                            href="/order-history"
+                                            className="flex items-center gap-2 rounded-md border-2 border-[#d7f2dc8e] bg-[#d7f2dc8e] p-2 text-primary transition duration-300 ease-in-out hover:border-primary">
+                                            <FileClock size={20} />
+                                            <p className="text-sm font-medium text-gray-800">
+                                                Order History
+                                            </p>
+                                        </Link>
+                                        <Link
+                                            href="/dashboard"
+                                            className="flex items-center gap-2 rounded-md border-2 border-[#d7f2dc8e] bg-[#d7f2dc8e] p-2 text-primary transition duration-300 ease-in-out hover:border-primary">
+                                            <LayoutDashboard size={20} />
+                                            <p className="text-sm font-medium text-gray-800">
                                                 Dashboard
-                                                <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-                                            </Link>
-                                        </DropdownMenuItem>
-                                    </DropdownMenuGroup>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem onClick={handleLogout}>
-                                        Log out
-                                        <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-                                    </DropdownMenuItem>
+                                            </p>
+                                        </Link>
+
+                                        <button
+                                            onClick={handleLogout}
+                                            className="flex cursor-pointer items-center gap-2 rounded-md border-2 border-[#d7f2dc8e] bg-[#d7f2dc8e] p-2 text-primary transition duration-300 ease-in-out hover:border-primary">
+                                            <LogOut size={20} />
+                                            <p className="text-sm font-medium text-gray-800">
+                                                Logout
+                                            </p>
+                                        </button>
+                                    </section>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </>

@@ -35,7 +35,7 @@ export const userSchema = z.object({
 });
 
 // Extend the original schema with the 'id' field
-const userSchemaWithId = userSchema.extend({
+export const userSchemaWithId = userSchema.extend({
     id: z.string(), // Assuming 'id' is a string. Adjust as needed (e.g., z.number(), z.number().int())
 });
 

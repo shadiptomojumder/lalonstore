@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 // Define protected routes and their allowed roles
 const protectedRoutes: Record<string, string[]> = {
     "/dashboard": ["ADMIN"], // Both users & admins can access
-    // "/products": ["USER"], // Both users & admins can access
+    "/my-profile": ["USER", "ADMIN"], // Both users & admins can access
 };
 
 interface DecodedToken {
@@ -70,5 +70,5 @@ export function middleware(req: NextRequest) {
 
 // Define the routes where middleware should run
 export const config = {
-    matcher: ["/products/:path*", "/dashboard/:path*", "/dashboard/admin"], // Protect these routes
+    matcher: ["/my-profile", "/dashboard/:path*", "/dashboard/admin"], // Protect these routes
 };

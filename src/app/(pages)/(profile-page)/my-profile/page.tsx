@@ -17,7 +17,7 @@ import { useSelector } from "react-redux";
 import { toast } from "sonner";
 import AvatarUpload from "../components/avatar-upload";
 
-const page = () => {
+const MyProfile = () => {
     const [image, setImage] = useState<ImageFile | null>(null);
     const [isImageChanged, setIsImageChanged] = useState<boolean>(false);
     const queryClient = useQueryClient();
@@ -113,7 +113,8 @@ const page = () => {
             return;
         }
 
-        const formDataObj: Record<string, any> = {};
+        // ✅ Use more specific type 
+        const formDataObj: Record<string, string | Blob> = {};
 
         updatedData.forEach((value, key) => {
             formDataObj[key] = value;
@@ -265,4 +266,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default MyProfile;

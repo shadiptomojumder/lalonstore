@@ -32,12 +32,12 @@ export default function AvatarUpload({ image, setImage, setIsImageChanged }: Ava
         }
     };
 
-    const removeImage = () => {
-        if (image) {
-            URL.revokeObjectURL(image.id);
-        }
-        setImage(null);
-    };
+    // const removeImage = () => {
+    //     if (image) {
+    //         URL.revokeObjectURL(image.id);
+    //     }
+    //     setImage(null);
+    // };
 
     const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();

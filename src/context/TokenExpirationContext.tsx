@@ -86,7 +86,7 @@ const TokenExpirationContext = ({ children }: { children: React.ReactNode }) => 
                 try {
                     await logoutApi();
                 } catch (error) {
-                    console.error("Logout API Error:", error);
+                    console.log("Logout API Error:", error);
                 } finally {
                     dispatch(setLoading(false));
                     router.push("/login?message=session-expired");
