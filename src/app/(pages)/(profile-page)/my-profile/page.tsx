@@ -9,7 +9,8 @@ import { APIError, ImageFile } from "@/interfaces/common.schemas";
 import { ProfileUpdateSchema, profileUpdateSchema } from "@/interfaces/user.schemas";
 import { RootState } from "@/lib/store";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -19,8 +20,9 @@ import AvatarUpload from "../components/avatar-upload";
 const page = () => {
     const [image, setImage] = useState<ImageFile | null>(null);
     const [isImageChanged, setIsImageChanged] = useState<boolean>(false);
+    const queryClient = useQueryClient();
 
-    const { user, isLoading } = useSelector((state: RootState) => state.user);
+    const { user } = useSelector((state: RootState) => state.user);
     const { data: userData } = useQuery({
         queryKey: ["user", user?.id],
         queryFn: () => getUserById({ userId: user!.id }),
@@ -33,21 +35,21 @@ const page = () => {
         handleSubmit,
         formState: { errors, isDirty },
         reset,
-        setValue,
-    } = useForm<ProfileUpdateSchema>({ resolver: zodResolver(profileUpdateSchema) });
+    } = useForm<ProfileUpdateSchema>({
+        resolver: zodResolver(profileUpdateSchema),
+        defaultValues: userData || {
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: "",
+            address: "",
+            avatar: "",
+        },
+    });
 
     useEffect(() => {
         if (userData) {
-            const initialuserData: ProfileUpdateSchema = {
-                firstName: userData.firstName,
-                lastName: userData.lastName,
-                email: userData.email,
-                phone: userData.phone,
-                address: userData.address,
-            };
-
-            reset(userData); // Set form values
-
+            reset(userData);
             if (userData.avatar) {
                 setImage({
                     id: userData.avatar,
@@ -58,18 +60,22 @@ const page = () => {
                 });
             }
         }
-    }, [userData, setValue]);
+    }, [userData, reset]);
+
+    console.log("isDirty :", isDirty);
+    console.log("isImageChanged :", isImageChanged);
 
     const { mutate, isPending } = useMutation({
         mutationFn: updateUser,
         onSuccess: (response) => {
             console.log("The Response was:", response);
-            console.log("The Response.data was:", response.data);
+            console.log("The my profile Response Data was:", response.data);
 
             if (response.statusCode === 200) {
                 toast.success("Product successfully created");
-                reset();
-                setImage(null);
+                queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
+
+                window.location.reload();
             }
         },
         onError: (error: APIError) => {
@@ -126,10 +132,10 @@ const page = () => {
                     View and update your personal information.
                 </p>
             </div>
-            <Card className="mx-auto w-[800px]">
+            <Card className="mx-auto lg:w-[800px]">
                 <CardContent className="pt-6">
-                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-                        <div className="">
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className="mb-5 md:mb-8">
                             <AvatarUpload
                                 image={image}
                                 setImage={setImage}
@@ -140,9 +146,9 @@ const page = () => {
                             </p>
                         </div>
 
-                        <div className="grid gap-4 md:grid-cols-2">
-                            <div className="grid gap-2">
-                                <Label htmlFor="firstName">
+                        <div className="grid md:grid-cols-2 md:gap-4">
+                            <div className="">
+                                <Label htmlFor="firstName" className="mb-2">
                                     First Name <span className="text-red-600">*</span>
                                 </Label>
                                 <Input
@@ -160,8 +166,8 @@ const page = () => {
                                 </div>
                             </div>
 
-                            <div className="grid gap-2">
-                                <Label htmlFor="lastName">
+                            <div className="">
+                                <Label htmlFor="lastName" className="mb-2">
                                     Last Name <span className="text-red-600">*</span>
                                 </Label>
                                 <Input
@@ -180,8 +186,8 @@ const page = () => {
                             </div>
                         </div>
 
-                        <div className="grid gap-2">
-                            <Label htmlFor="email">
+                        <div className="">
+                            <Label htmlFor="email" className="mb-2">
                                 Email <span className="text-red-600">*</span>
                             </Label>
                             <Input
@@ -200,8 +206,8 @@ const page = () => {
                             </div>
                         </div>
 
-                        <div className="grid gap-2">
-                            <Label htmlFor="phone">
+                        <div className="">
+                            <Label htmlFor="phone" className="mb-2">
                                 Phone <span className="text-red-600">*</span>
                             </Label>
                             <Input
@@ -220,8 +226,8 @@ const page = () => {
                             </div>
                         </div>
 
-                        <div className="grid gap-2">
-                            <Label htmlFor="address">
+                        <div className="">
+                            <Label htmlFor="address" className="mb-2">
                                 address <span className="text-red-600">*</span>
                             </Label>
                             <Input
@@ -239,8 +245,18 @@ const page = () => {
                             </div>
                         </div>
 
-                        <Button type="submit" disabled={isLoading}>
-                            {isLoading ? "Saving..." : "Save Changes"}
+                        <Button
+                            size="lg"
+                            type="submit"
+                            disabled={!(isDirty || isImageChanged) || isPending}
+                            className="w-full">
+                            {isPending ? (
+                                <>
+                                    <LoaderCircle className="animate-spin" /> Saving
+                                </>
+                            ) : (
+                                <>Save the changes</>
+                            )}
                         </Button>
                     </form>
                 </CardContent>

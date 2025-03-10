@@ -74,6 +74,7 @@ export default function AvatarUpload({ image, setImage, setIsImageChanged }: Ava
                 <Image
                     src={image?.preview || "/placeholder.svg"}
                     alt="Product preview"
+                    priority
                     width={150}
                     height={150}
                     className="h-[170px] w-[170px] rounded-full object-cover object-center"
