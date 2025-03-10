@@ -15,6 +15,7 @@ const useLogout = () => {
 
         // Clear localStorage
         localStorage.clear();
+        localStorage.removeItem("accessToken");
 
         // Clear all persisted state
         persistStore(store).purge();

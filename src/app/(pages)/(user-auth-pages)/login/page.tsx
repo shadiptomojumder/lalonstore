@@ -55,6 +55,9 @@ const LoginPage = () => {
             const userData = response?.data?.user;
             const accesstoken = response?.data?.accessToken;
             console.log("The userData is:", userData);
+            if (accesstoken) {
+                localStorage.setItem("accessToken", accesstoken);
+            }
 
             if (response.statusCode === 200) {
                 toast.success("User successfully login");
