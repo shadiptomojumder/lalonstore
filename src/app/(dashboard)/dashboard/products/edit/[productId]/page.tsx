@@ -182,6 +182,7 @@ const EditProductPage = () => {
                     <Button
                         type="submit"
                         size="lg"
+                        className="hidden lg:block"
                         disabled={!(isDirty || isImageChanged) || isPending}>
                         {isPending ? (
                             <>
@@ -366,6 +367,19 @@ const EditProductPage = () => {
                         </div>
                     </section>
                 </section>
+                <Button
+                        type="submit"
+                        size="lg"
+                        className="w-full mt-5 lg:hidden"
+                        disabled={!(isDirty || isImageChanged) || isPending}>
+                        {isPending ? (
+                            <>
+                                <LoaderCircle className="animate-spin" /> Submiting
+                            </>
+                        ) : (
+                            <>Save & Publish</>
+                        )}
+                    </Button>
             </form>
         </div>
     );
