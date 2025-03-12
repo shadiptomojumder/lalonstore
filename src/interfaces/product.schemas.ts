@@ -66,6 +66,29 @@ export const productDataSchema = productSchema.extend({
 
 // Generate TypeScript types from the schema
 export type Product = z.infer<typeof productDataSchema>;
+export interface IProduct{
+    name: string;
+    price: number;
+    finalPrice:number;
+    discount:number;
+    quantity: string;
+    description:string;
+    stock:number;
+    images:[string];
+    sku:string;
+    isActive:boolean;
+    isWeekendDeal:boolean;
+    isFeatured:boolean;
+    category: {
+        value: string;
+        title: string;
+        logo: string;
+        thumbnail: string;
+        id: string;
+    };
+    createdAt: string;
+    updatedAt: string;
+}
 
 export type ProductFormData = z.infer<typeof productSchema>;
 

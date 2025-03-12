@@ -42,6 +42,19 @@ export const userSchemaWithId = userSchema.extend({
 export type User = z.infer<typeof userSchemaWithId>;
 export type UserFormData = z.infer<typeof userSchema>;
 
+export interface IUser {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    address: string;
+    googleId: string;
+    role: string;
+    avatar: string;
+    otp: number;
+    refreshToken: string;
+}
+
 // Example usage and refinement for specific cases
 
 // Signup Schema (password required, no googleId)
