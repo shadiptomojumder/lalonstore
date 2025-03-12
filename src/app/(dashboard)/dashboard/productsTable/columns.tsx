@@ -48,10 +48,10 @@ export const columns: ColumnDef<Product>[] = [
                             alt="thumbnail"
                             width={70}
                             height={70}
-                            className="min-w-[83px] rounded-md object-cover transition-transform duration-300 ease-in-out hover:scale-110"
+                            className="aspect-[415/332] min-w-[84px] max-w-[84px] rounded-md object-cover transition-transform duration-300 ease-in-out hover:scale-110"
                         />
                     ) : (
-                        <div className="flex min-h-[60px] w-[60px] min-w-[60px] items-center justify-center bg-slate-200">
+                        <div className="aspect-[415/332] max-w-[84px] w-[84px] flex items-center justify-center rounded-md bg-slate-200">
                             <FileImage />
                         </div>
                     )}
