@@ -79,16 +79,22 @@ const AuthUser = () => {
                                             </p>
                                         </Link>
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem asChild className="focus:bg-[#d7f2dc8e]">
-                                        <Link
-                                            href="/dashboard"
-                                            className="flex items-center gap-2 rounded-md border-2 border-[#d7f2dc8e] bg-[#d7f2dc8e] p-2 text-primary transition duration-300 ease-in-out hover:border-primary hover:bg-[#d7f2dc8e]">
-                                            <LayoutDashboard size={20} className="text-primary" />
-                                            <p className="text-sm font-medium text-gray-800">
-                                                Dashboard
-                                            </p>
-                                        </Link>
-                                    </DropdownMenuItem>
+                                    {user && user.role === "ADMIN" && (
+                                        <DropdownMenuItem asChild className="focus:bg-[#d7f2dc8e]">
+                                            <Link
+                                                href="/dashboard"
+                                                className="flex items-center gap-2 rounded-md border-2 border-[#d7f2dc8e] bg-[#d7f2dc8e] p-2 text-primary transition duration-300 ease-in-out hover:border-primary hover:bg-[#d7f2dc8e]">
+                                                <LayoutDashboard
+                                                    size={20}
+                                                    className="text-primary"
+                                                />
+                                                <p className="text-sm font-medium text-gray-800">
+                                                    Dashboard
+                                                </p>
+                                            </Link>
+                                        </DropdownMenuItem>
+                                    )}
+
                                     <DropdownMenuItem asChild className="focus:bg-[#d7f2dc8e]">
                                         <button
                                             onClick={handleLogout}

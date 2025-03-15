@@ -50,19 +50,19 @@ export function middleware(req: NextRequest) {
         req.nextUrl.pathname.startsWith(route),
     );
 
-    if (matchedRoute) {
-        const allowedRoles = protectedRoutes[matchedRoute];
+    // if (matchedRoute) {
+    //     const allowedRoles = protectedRoutes[matchedRoute];
 
-        // If no token or role is found, redirect to login
-        if (!token) {
-            return NextResponse.redirect(new URL("/login", req.url));
-        }
+    //     // If no token or role is found, redirect to login
+    //     if (!token) {
+    //         return NextResponse.redirect(new URL("/login", req.url));
+    //     }
 
-        // If user role is not allowed, redirect to unauthorized page
-        if (userRole && !allowedRoles.includes(userRole)) {
-            return NextResponse.redirect(new URL("/unauthorized", req.url));
-        }
-    }
+    //     // If user role is not allowed, redirect to unauthorized page
+    //     if (userRole && !allowedRoles.includes(userRole)) {
+    //         return NextResponse.redirect(new URL("/unauthorized", req.url));
+    //     }
+    // }
 
     // Allow the request if everything is fine
     return NextResponse.next();

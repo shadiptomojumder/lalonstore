@@ -2,6 +2,7 @@ import { AppSidebar } from "@/components/dashboardComponents/app-sidebar";
 import { TopNavbar } from "@/components/dashboardComponents/top-navbar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/sonner";
+import AdminContext from "@/context/admin-context";
 import TokenExpirationContext from "@/context/TokenExpirationContext";
 import TanstackProvider from "@/TanstackProvider/TanstackProvider";
 import type { Metadata } from "next";
@@ -38,13 +39,15 @@ export default function RootLayout({
                 <StoreProvider>
                     <TanstackProvider>
                         <TokenExpirationContext>
-                            <SidebarProvider>
-                                <AppSidebar />
-                                <SidebarInset>
-                                    <TopNavbar />
-                                    {children}
-                                </SidebarInset>
-                            </SidebarProvider>
+                            <AdminContext role="ADMIN">
+                                <SidebarProvider>
+                                    <AppSidebar />
+                                    <SidebarInset>
+                                        <TopNavbar />
+                                        {children}
+                                    </SidebarInset>
+                                </SidebarProvider>
+                            </AdminContext>
                         </TokenExpirationContext>
                     </TanstackProvider>
                     <Toaster richColors />
