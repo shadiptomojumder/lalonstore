@@ -3,10 +3,10 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 // Define protected routes and their allowed roles
-const protectedRoutes: Record<string, string[]> = {
-    "/dashboard": ["ADMIN"], // Both users & admins can access
-    "/my-profile": ["USER", "ADMIN"], // Both users & admins can access
-};
+// const protectedRoutes: Record<string, string[]> = {
+//     "/dashboard": ["ADMIN"], // Both users & admins can access
+//     "/my-profile": ["USER", "ADMIN"], // Both users & admins can access
+// };
 
 interface DecodedToken {
     id: string;
@@ -46,9 +46,9 @@ export function middleware(req: NextRequest) {
     console.log("userRole from Cookies:", userRole);
 
     // Check if the requested route is protected
-    const matchedRoute = Object.keys(protectedRoutes).find((route) =>
-        req.nextUrl.pathname.startsWith(route),
-    );
+    // const matchedRoute = Object.keys(protectedRoutes).find((route) =>
+    //     req.nextUrl.pathname.startsWith(route),
+    // );
 
     // if (matchedRoute) {
     //     const allowedRoles = protectedRoutes[matchedRoute];
