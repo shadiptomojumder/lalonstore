@@ -10,11 +10,7 @@ interface DeleteProductProps {
     ids?: string[];
 }
 
-/**
- * Deletes a single product or multiple products
- * @param {DeleteProductProps} params - Either `productId` for single deletion or `ids` array for bulk deletion
- * @returns {Promise<APIResponse<null>>} API response with success/failure message
- */
+
 const deleteProducts = async ({
     productId,
     ids,

@@ -28,7 +28,6 @@ import { toast } from "sonner";
 
 const EditProductPage = () => {
     const [images, setImages] = useState<ImageFile[]>([]);
-    //console.log("The images are form file:", images);
     const [initialData, setInitialData] = useState<ProductFormData | null>(null);
     const [isImageChanged, setIsImageChanged] = useState<boolean>(false);
 
@@ -39,8 +38,6 @@ const EditProductPage = () => {
 
     const { productId } = params;
 
-    // console.log("The productId is:", productId);
-
     const { data: product, isLoading: productIsLoading } = useQuery({
         queryKey: ["product", productId],
         queryFn: () => getProductById({ productId: productId as string }),
@@ -48,13 +45,10 @@ const EditProductPage = () => {
         refetchOnMount: true,
     });
 
-    // console.log("The product is:", product);
-
     const { data: categories } = useQuery<Category[]>({
         queryKey: ["categories"],
         queryFn: () => getCategories(),
     });
-    // console.log("The categories are:", categories);
 
     const {
         control,
@@ -68,13 +62,14 @@ const EditProductPage = () => {
         defaultValues: {
             name: product?.name || "",
             price: product?.price || 0,
-            finalPrice: product?.finalPrice || 0,
             quantity: product?.quantity || "",
             category: product?.category?.id || "",
             description: product?.description || "",
-            images: product?.images || [],
         },
     });
+
+    console.log("The Errors are:", errors);
+    console.log("The isDirty is:", isDirty);
 
     useEffect(() => {
         if (product) {
@@ -97,8 +92,8 @@ const EditProductPage = () => {
     const { mutate, isPending } = useMutation({
         mutationFn: updateProduct,
         onSuccess: (response) => {
-            console.log("The Response was:", response);
-            console.log("The Response.data was:", response.data);
+            // console.log("The Response was:", response);
+            // console.log("The Response.data was:", response.data);
 
             if (response.statusCode === 200) {
                 toast.success("Product successfully created");
@@ -146,8 +141,8 @@ const EditProductPage = () => {
             }
         });
 
-        // Check if images changed
-        if (isImageChanged) {
+        // Append images only if they were changed
+        if (isImageChanged && images.length > 0) {
             images.forEach((image) => {
                 if (image.file) {
                     formData.append("images", image.file);
@@ -185,9 +180,9 @@ const EditProductPage = () => {
                         className="hidden lg:block"
                         disabled={!(isDirty || isImageChanged) || isPending}>
                         {isPending ? (
-                            <>
+                            <div className="flex items-center gap-2">
                                 <LoaderCircle className="animate-spin" /> Submiting
-                            </>
+                            </div>
                         ) : (
                             <>Save & Publish</>
                         )}
@@ -209,7 +204,7 @@ const EditProductPage = () => {
                                 name="name"
                                 type="text"
                                 placeholder="Enter Product Name"
-                                className="mt-2 h-11"
+                                className="mt-2 h-11 bg-white"
                             />
 
                             <div className="h-5">
@@ -230,7 +225,7 @@ const EditProductPage = () => {
                                 id="description"
                                 name="description"
                                 placeholder="Enter Product Description"
-                                className="mt-2 h-11 outline-primary"
+                                className="mt-2 h-11 bg-white outline-primary"
                             />
 
                             <div className="h-5">
@@ -255,7 +250,7 @@ const EditProductPage = () => {
                                     name="price"
                                     type="number"
                                     placeholder="Enter Product Price"
-                                    className="mt-2 h-11"
+                                    className="mt-2 h-11 bg-white"
                                 />
 
                                 <div className="h-5">
@@ -282,7 +277,7 @@ const EditProductPage = () => {
                                             }}
                                             value={value}
                                             defaultValue={value}>
-                                            <SelectTrigger className="mt-2 h-11 capitalize focus:ring-primary">
+                                            <SelectTrigger className="mt-2 h-11 bg-white capitalize focus:ring-primary">
                                                 <SelectValue placeholder="Select Product Category" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -325,7 +320,7 @@ const EditProductPage = () => {
                                     name="quantity"
                                     type="text"
                                     placeholder="Enter Product Quantity"
-                                    className="mt-2 h-11"
+                                    className="mt-2 h-11 bg-white"
                                 />
 
                                 <div className="h-5">
@@ -348,7 +343,7 @@ const EditProductPage = () => {
 
                         <div className="px-5">
                             <Label htmlFor="picture" className="block py-2 text-base font-semibold">
-                                Selected Pictures <span className="text-red-600">*</span>
+                                Select Images <span className="text-red-600">*</span>
                             </Label>
 
                             <ProductImageSelector
@@ -368,18 +363,18 @@ const EditProductPage = () => {
                     </section>
                 </section>
                 <Button
-                        type="submit"
-                        size="lg"
-                        className="w-full mt-5 lg:hidden"
-                        disabled={!(isDirty || isImageChanged) || isPending}>
-                        {isPending ? (
-                            <>
-                                <LoaderCircle className="animate-spin" /> Submiting
-                            </>
-                        ) : (
-                            <>Save & Publish</>
-                        )}
-                    </Button>
+                    type="submit"
+                    size="lg"
+                    className="mt-5 w-full lg:hidden"
+                    disabled={!(isDirty || isImageChanged) || isPending}>
+                    {isPending ? (
+                        <>
+                            <LoaderCircle className="animate-spin" /> Submiting
+                        </>
+                    ) : (
+                        <>Save & Publish</>
+                    )}
+                </Button>
             </form>
         </div>
     );

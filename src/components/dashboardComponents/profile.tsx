@@ -20,8 +20,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Profile = () => {
     const { user, isLoading } = useSelector((state: RootState) => state.user);
-    console.log("Redux User is:", user);
-    console.log("Redux isLoading is:", isLoading);
+    // console.log("Redux User is:", user);
+    // console.log("Redux isLoading is:", isLoading);
     const handleLogout = useLogout();
     const dispatch = useDispatch();
 

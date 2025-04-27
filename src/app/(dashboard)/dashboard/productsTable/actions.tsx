@@ -1,4 +1,16 @@
+"use client";
 import deleteProducts from "@/api/products/deleteProduct";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -11,15 +23,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { Eye, Pencil, Settings2, Trash2 } from "lucide-react";
+import { Eye, Loader, Pencil, Settings2, Trash2, TriangleAlert } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import { toast } from "sonner";
 import AddStock from "./add-stock";
 
 const Actions = ({ productId }: { productId: string }) => {
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
     const queryClient = useQueryClient();
 
-    const { mutate } = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationKey: [],
         mutationFn: deleteProducts,
         onSuccess: (response) => {
@@ -28,6 +42,7 @@ const Actions = ({ productId }: { productId: string }) => {
             if (response.statusCode === 200) {
                 toast.success("Product successfully deleted");
                 queryClient.invalidateQueries({ queryKey: ["products"] });
+                setIsDeleteDialogOpen(false);
             }
         },
         onError: (error: AxiosError) => {
@@ -55,17 +70,45 @@ const Actions = ({ productId }: { productId: string }) => {
                     className="flex h-9 w-9 items-center justify-center rounded-full bg-[#d7f2dc] text-primary">
                     <Pencil size={18} />
                 </Link>
-                <button
-                    onClick={() => handleDelete()}
-                    className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-red-200 text-red-700">
-                    <Trash2 size={18} />
-                </button>
-                {/* <button className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-green-100 text-green-700">
-                    <Eye size={18} />
-                </button> */}
-                {/* <button className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-sky-100 text-sky-700">
-                    <PackagePlus size={18} />
-                </button> */}
+                <AlertDialog open={isDeleteDialogOpen}>
+                    <AlertDialogTrigger asChild>
+                        <button
+                            onClick={() => setIsDeleteDialogOpen(true)}
+                            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-red-200 text-red-700">
+                            <Trash2 size={18} />
+                        </button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="shadow-2xl drop-shadow-lg">
+                        <AlertDialogHeader>
+                            <AlertDialogTitle className="flex items-center gap-1.5 text-red-700">
+                                <TriangleAlert />
+                                <span className="text-black">Are you absolutely sure?</span>
+                            </AlertDialogTitle>
+                            <AlertDialogDescription className="text-gray-700">
+                                This action cannot be undone. This will permanently delete this
+                                appointment and remove this data from the servers.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel onClick={setIsDeleteDialogOpen.bind(null, false)}>
+                                Cancel
+                            </AlertDialogCancel>
+                            <AlertDialogAction
+                                onClick={handleDelete}
+                                disabled={isPending}
+                                className="bg-red-700 hover:bg-red-700">
+                                {isPending ? (
+                                    <>
+                                        <Loader className="animate-spin" />
+                                        Deleting
+                                    </>
+                                ) : (
+                                    "Delete"
+                                )}
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
                 <AddStock productId={productId} />
             </div>
             <DropdownMenu>

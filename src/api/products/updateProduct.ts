@@ -31,7 +31,7 @@ const updateProduct = async ({
             throw new Error("Invalid API response: Missing data field");
         }
 
-        console.log("Response in updateProduct.ts file:", response);
+        // console.log("Response in updateProduct.ts file:", response);
 
         return response.data;
     } catch (error) {

@@ -9,10 +9,10 @@ const AdminContext = ({ children,role }: { children: React.ReactNode ,role:strin
     
     useEffect(() => {
         const accessToken = localStorage.getItem("accessToken");
-        console.log("Access token:", accessToken);
+        // console.log("Access token:", accessToken);
 
         const decodedAccessToken = decodeToken(accessToken || "");
-        console.log("Decoded access token:", decodedAccessToken);
+        // console.log("Decoded access token:", decodedAccessToken);
 
         if (!decodedAccessToken) {
             router.replace("/login");

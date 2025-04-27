@@ -18,11 +18,6 @@ export const productSchema = z.object({
         .max(100, { message: "Discount must be between 0 and 100" })
         .optional(), // Discount is optional
 
-    finalPrice: z
-        .number()
-        .positive({ message: "Final price must be a positive number" })
-        .optional(),
-
     quantity: z
         .string()
         .min(1, { message: "Quantity is required" })

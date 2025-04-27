@@ -28,7 +28,7 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Table } from "@tanstack/react-table";
 import { AxiosError } from "axios";
-import { Loader } from "lucide-react";
+import { Loader, TriangleAlert } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -100,10 +100,10 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
                                     Delete selected
                                 </Badge>
                             </AlertDialogTrigger>
-                            <AlertDialogContent>
+                            <AlertDialogContent className="shadow-2xl drop-shadow-lg">
                                 <AlertDialogHeader>
-                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                    <AlertDialogDescription>
+                                    <AlertDialogTitle className="text-red-700 flex items-center gap-1.5"><TriangleAlert /><span className="text-black">Are you absolutely sure?</span></AlertDialogTitle>
+                                    <AlertDialogDescription className="text-gray-700">
                                         This action cannot be undone. This will permanently delete
                                         this appointment and remove this data from the servers.
                                     </AlertDialogDescription>
@@ -116,14 +116,14 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
                                     <AlertDialogAction
                                         onClick={handleMultipleDelete}
                                         disabled={isPending}
-                                        className="hover:bg-primary">
+                                        className="hover:bg-red-700 bg-red-700">
                                         {isPending ? (
                                             <>
                                                 <Loader className="animate-spin" />
-                                                Continue
+                                                Deleting
                                             </>
                                         ) : (
-                                            "Continue"
+                                            "Delete"
                                         )}
                                     </AlertDialogAction>
                                 </AlertDialogFooter>

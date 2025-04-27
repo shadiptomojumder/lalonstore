@@ -14,7 +14,7 @@ const AllProductPage = () => {
     });
     const products = data?.data;
 
-    console.log("The products are:", products);
+    // console.log("The products are:", products);
 
     return (
         <section className="px-4 py-5 sm:px-5 md:px-7 lg:px-12">

@@ -4,10 +4,10 @@ import { Product } from "@/interfaces/product.schemas";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader, Trash2 } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 import { toast } from "sonner";
 import { Label } from "../ui/label";
 import { Skeleton } from "../ui/skeleton";
-import { useState } from "react";
 
 interface ProductImageBoardProps {
     product?: Product;
@@ -17,7 +17,6 @@ interface ProductImageBoardProps {
 const ProductImageBoard = ({ product, productIsLoading }: ProductImageBoardProps) => {
     const queryClient = useQueryClient();
     const [loadingImage, setLoadingImage] = useState<string | null>(null); // Track which image is being deleted
-
 
     const { mutate, isPending } = useMutation({
         mutationFn: deleteProductImage,
@@ -31,10 +30,12 @@ const ProductImageBoard = ({ product, productIsLoading }: ProductImageBoardProps
             if (response.statusCode === 200) {
                 toast.success("Image successfully deleted");
                 queryClient.invalidateQueries({ queryKey: ["product", product?.id] });
+                setLoadingImage(null); // Reset loading state after success
             }
         },
         onError: (error: APIError) => {
             console.log("The Create Product Page Error is: ", error);
+            setLoadingImage(null); // Reset loading state on error
 
             if (error.statusCode === 409) {
                 toast.warning("Product already exist.");
@@ -63,8 +64,8 @@ const ProductImageBoard = ({ product, productIsLoading }: ProductImageBoardProps
                         <Skeleton className="h-32 w-full rounded-lg" />
                         <Skeleton className="h-32 w-full rounded-lg" />
                     </>
-                ) : (
-                    product?.images.map((image: string, index: number) => (
+                ) : product && product.images && product.images.length > 0 ? (
+                    product.images.map((image: string, index: number) => (
                         <div key={index} className="group relative">
                             <Image
                                 src={image || "/placeholder.svg"}
@@ -73,16 +74,15 @@ const ProductImageBoard = ({ product, productIsLoading }: ProductImageBoardProps
                                 height={100}
                                 className="h-32 w-full rounded-lg object-cover"
                             />
-                            
-                            
+
                             {loadingImage === image ? (
                                 <div className="absolute top-1/2 left-1/2 flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-lg bg-red-700/30 opacity-100 backdrop-blur-sm backdrop-opacity-10 transition-opacity duration-200 ease-in-out hover:opacity-100">
-                                <Loader size={28} className="animate-spin text-white" />
+                                    <Loader size={28} className="animate-spin text-white" />
                                 </div>
                             ) : (
                                 <div className="absolute top-1/2 left-1/2 flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-lg bg-red-700/30 opacity-0 backdrop-blur-sm backdrop-opacity-10 transition-opacity duration-200 ease-in-out hover:opacity-100">
                                     <button
-                                    disabled={isPending}
+                                        disabled={isPending}
                                         type="button"
                                         onClick={() => handleProductImageDelete(image)}
                                         className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-sm bg-red-200 p-1 text-red-700 opacity-0 shadow-md transition-opacity group-hover:opacity-100"
@@ -93,6 +93,10 @@ const ProductImageBoard = ({ product, productIsLoading }: ProductImageBoardProps
                             )}
                         </div>
                     ))
+                ) : (
+                    <div className="col-span-4 flex h-32 w-full items-center justify-center rounded-lg bg-white font-semibold text-primary">
+                        No image found
+                    </div>
                 )}
             </div>
         </div>

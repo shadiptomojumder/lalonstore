@@ -93,7 +93,7 @@ export default function ProductImageSelector({ images, setImages,setIsImageChang
                                     <button
                                         type="button"
                                         onClick={() => removeImage(image.id)}
-                                        className="absolute top-1 right-1 rounded-full bg-white p-1 opacity-0 shadow-md transition-opacity group-hover:opacity-100"
+                                        className="absolute top-1 right-1 rounded-full bg-white p-1 opacity-0 shadow-md transition-opacity group-hover:opacity-100 cursor-pointer"
                                         aria-label="Remove image">
                                         <X className="h-4 w-4 text-gray-600" />
                                     </button>
@@ -101,19 +101,14 @@ export default function ProductImageSelector({ images, setImages,setIsImageChang
                             ))}
                         </div>
                     ) : (
-                        <Image
-                            src={gallery}
-                            alt="Gallery"
-                            width={100}
-                            height={100}
-                            className="mx-auto h-32 w-fit"
-                        />
+                        <div className="h-32 col-span-4 w-full font-semibold text-primary rounded-lg bg-white flex items-center justify-center" >No image seleted</div>
+                        
                     )}
                 </>
             )}
 
             <div
-                className="mt-3 cursor-pointer rounded-lg border-2 border-dashed border-gray-300 p-16 text-center transition-colors hover:border-gray-400"
+                className="mt-3 cursor-pointer bg-[#d7f2dc] rounded-lg border-2 border-dashed border-gray-300 p-16 text-center transition-colors hover:border-primary"
                 onClick={() => fileInputRef.current?.click()}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
@@ -127,7 +122,7 @@ export default function ProductImageSelector({ images, setImages,setIsImageChang
                     className="hidden"
                     aria-label="Select product images"
                 />
-                <p className="text-gray-600">
+                <p className="text-gray-600 font-semibold">
                     Click to select or drag and drop product images here
                 </p>
             </div>
