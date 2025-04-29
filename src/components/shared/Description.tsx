@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Product } from "@/interfaces/product.schemas";
+import { IProduct } from "@/interfaces/product.schemas";
 
-const Description = ({ product }: { product?: Product }) => {
+const Description = ({ product }: { product?: IProduct }) => {
     return (
         <div>
             <Tabs defaultValue="description" className="w-full">

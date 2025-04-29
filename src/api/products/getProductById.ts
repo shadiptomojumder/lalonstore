@@ -1,11 +1,11 @@
 import { APIResponse } from "@/interfaces/common.schemas";
-import { Product } from "@/interfaces/product.schemas";
+import { IProduct } from "@/interfaces/product.schemas";
 import { AxiosError, AxiosResponse } from "axios";
 import { api } from "../api";
 
-const getProductById = async ({ productId }: { productId: string }): Promise<Product> => {
+const getProductById = async ({ productId }: { productId: string }): Promise<IProduct> => {
     try {
-        const response: AxiosResponse<APIResponse<Product>> = await api.get<APIResponse<Product>>(
+        const response: AxiosResponse<APIResponse<IProduct>> = await api.get<APIResponse<IProduct>>(
             `/products/${productId}`,
         );
 

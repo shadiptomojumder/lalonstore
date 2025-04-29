@@ -1,6 +1,6 @@
 import deleteProductImage from "@/api/products/deleteProductImage";
 import { APIError } from "@/interfaces/common.schemas";
-import { Product } from "@/interfaces/product.schemas";
+import { IProduct } from "@/interfaces/product.schemas";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader, Trash2 } from "lucide-react";
 import Image from "next/image";
@@ -10,7 +10,7 @@ import { Label } from "../ui/label";
 import { Skeleton } from "../ui/skeleton";
 
 interface ProductImageBoardProps {
-    product?: Product;
+    product?: IProduct;
     productIsLoading: boolean;
 }
 
