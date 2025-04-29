@@ -9,11 +9,11 @@ import {
     SidebarMenuSub,
     SidebarMenuSubItem,
     SidebarRail,
+    useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type * as React from "react";
-import { SearchForm } from "./search-form";
 
 // This is sample data.
 const data = {
@@ -93,11 +93,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         if (item.items?.some((subItem) => pathname === subItem.url)) return true;
         return false;
     };
+
+    const { setOpenMobile } = useSidebar();
+
     return (
         <Sidebar {...props}>
             <SidebarHeader>
                 <p className="text-center text-3xl font-bold text-black italic">Lalon Store</p>
-                <SearchForm />
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup className="pr-0">
@@ -119,7 +121,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                                 return (
                                                     <Link key={item.title} href={item.url}>
                                                         <SidebarMenuSubItem
-                                                            className={`cursor-pointer border-l-2 py-2 ps-2 text-sm duration-200 ease-out hover:border-primary hover:bg-[#d7f2dc] hover:text-primary ${active ? "border-primary bg-[#d7f2dc] font-medium text-primary" : "border-white font-medium bg-white text-black"}`}>
+                                                            onClick={() => setOpenMobile(false)}
+                                                            className={`cursor-pointer border-l-2 py-2 ps-2 text-sm duration-200 ease-out hover:border-primary hover:bg-[#d7f2dc] hover:text-primary ${active ? "border-primary bg-[#d7f2dc] font-medium text-primary" : "border-white bg-white font-medium text-black"}`}>
                                                             {item.title}
                                                         </SidebarMenuSubItem>
                                                     </Link>

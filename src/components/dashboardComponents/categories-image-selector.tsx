@@ -1,10 +1,9 @@
 "use client";
 import { ImageFile } from "@/interfaces/common.schemas";
-import { Image as ImageIcon, X } from "lucide-react";
+import { X } from "lucide-react";
 import Image from "next/image";
 import type React from "react";
 import { useRef, type ChangeEvent } from "react";
-import { Skeleton } from "../ui/skeleton";
 
 interface CategoryImageSelectorProps {
     images: { thumbnail: ImageFile | null; logo: ImageFile | null };
@@ -80,8 +79,8 @@ export default function CategoriesImageSelector({
         <div className="mx-auto w-full max-w-2xl">
             {/* Thumbnail */}
             <div className="mb-5">
-                <p className="text-base font-semibold">
-                    Category Thumbnail <span className="text-red-600">*</span>
+                <p className="py-2 text-base font-semibold">
+                    Select Thumbnail <span className="text-red-600">*</span>
                 </p>
                 {images.thumbnail ? (
                     <div className="relative mx-auto w-fit">
@@ -101,14 +100,12 @@ export default function CategoriesImageSelector({
                         </button>
                     </div>
                 ) : (
-                    <div className="flex justify-center">
-                        <Skeleton className="flex h-[78px] w-[228px] items-center justify-center rounded-lg bg-gray-300 text-[230px] text-gray-400">
-                            <ImageIcon size={28} />
-                        </Skeleton>
+                    <div className="col-span-4 flex h-28 w-full items-center justify-center rounded-lg bg-white font-semibold text-primary">
+                        No image seleted
                     </div>
                 )}
                 <div
-                    className="mt-3 cursor-pointer rounded-lg border-2 border-dashed border-gray-300 p-4 text-center transition-colors duration-200 hover:border-gray-400"
+                    className="mt-3 cursor-pointer rounded-lg border-2 border-dashed border-gray-300 bg-[#d7f2dc] px-4 py-6 text-center transition-colors duration-200 hover:border-primary"
                     onClick={() => thumbnailInputRef.current?.click()}
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
@@ -121,16 +118,17 @@ export default function CategoriesImageSelector({
                         className="hidden"
                         aria-label="Select thumbnail image"
                     />
-                    <p className="text-gray-600">
-                        Click to select or drag and drop a thumbnail image here
+                    <p className="font-semibold text-gray-600">
+                        Click to select or drag and drop thumbnail image here (1536*261 pixels
+                        recommended)
                     </p>
                 </div>
             </div>
 
             {/* Logo */}
             <div>
-                <p className="text-base font-semibold">
-                    Category Logo <span className="text-red-600">*</span>
+                <p className="py-2 text-base font-semibold">
+                    Select Logo <span className="text-red-600">*</span>
                 </p>
                 {images.logo ? (
                     <div className="relative mx-auto w-fit">
@@ -150,14 +148,12 @@ export default function CategoriesImageSelector({
                         </button>
                     </div>
                 ) : (
-                    <div className="flex justify-center">
-                        <Skeleton className="flex h-[128px] w-[128px] items-center justify-center rounded-lg bg-gray-300 text-[230px] text-gray-400">
-                            <ImageIcon size={28} />
-                        </Skeleton>
+                    <div className="col-span-4 flex h-32 w-full items-center justify-center rounded-lg bg-white font-semibold text-primary">
+                        No image seleted
                     </div>
                 )}
                 <div
-                    className="mt-3 cursor-pointer rounded-lg border-2 border-dashed border-gray-300 p-4 text-center transition-colors duration-200 hover:border-gray-400"
+                    className="mt-3 cursor-pointer rounded-lg border-2 border-dashed border-gray-300 bg-[#d7f2dc] px-4 py-8 text-center transition-colors duration-200 hover:border-primary"
                     onClick={() => logoInputRef.current?.click()}
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
@@ -170,8 +166,9 @@ export default function CategoriesImageSelector({
                         className="hidden"
                         aria-label="Select logo image"
                     />
-                    <p className="text-gray-600">
-                        Click to select or drag and drop a logo image here
+                    <p className="font-semibold text-gray-600">
+                        Click to select or drag and drop logo image here (300*300 pixels
+                        recommended)
                     </p>
                 </div>
             </div>

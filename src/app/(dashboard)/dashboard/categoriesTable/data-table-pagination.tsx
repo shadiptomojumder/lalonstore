@@ -28,7 +28,7 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Table } from "@tanstack/react-table";
 import { AxiosError } from "axios";
-import { Loader } from "lucide-react";
+import { Loader, TriangleAlert } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -62,13 +62,13 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
                 selectedRows.forEach(() => {
                     table.toggleAllRowsSelected(false);
                 });
-                toast.success("Selected products are deleted");
+                toast.success("Selected categories are deleted");
                 queryClient.invalidateQueries({ queryKey: ["categories"] });
                 setIsDeleteDialogOpen(false);
             }
         },
         onError: (error: AxiosError) => {
-            console.log("The Error Appointment is:", error);
+            console.log("The Error Category is:", error);
             if (error?.response?.status == 400) {
                 toast.warning("Nothing selected!");
             } else if (error?.response?.status == 500) {
@@ -106,7 +106,7 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                                 <AlertDialogHeader>
-                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                <AlertDialogTitle className="text-red-700 flex items-center gap-1.5"><TriangleAlert /><span className="text-black">Are you absolutely sure?</span></AlertDialogTitle>
                                     <AlertDialogDescription>
                                         This action cannot be undone. This will permanently delete
                                         this appointment and remove this data from the servers.
@@ -120,14 +120,14 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
                                     <AlertDialogAction
                                         onClick={handleMultipleDelete}
                                         disabled={isPending}
-                                        className="hover:bg-primary">
+                                        className="hover:bg-red-700 bg-red-700">
                                         {isPending ? (
                                             <>
                                                 <Loader className="animate-spin" />
-                                                Continue
+                                                Deleting
                                             </>
                                         ) : (
-                                            "Continue"
+                                            "Delete"
                                         )}
                                     </AlertDialogAction>
                                 </AlertDialogFooter>

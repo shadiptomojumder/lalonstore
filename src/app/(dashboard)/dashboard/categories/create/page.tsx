@@ -78,81 +78,90 @@ const CategoryCreatePage = () => {
     };
     return (
         <div className="px-4 py-5 sm:px-5 md:px-7 lg:px-12">
-            <div>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-5 flex flex-col items-start justify-between gap-3 lg:flex-row">
-                    <div>
-                        <h2 className="flex gap-2 text-center text-lg font-semibold text-primary sm:text-left">
-                            <PackagePlus />
-                            Create New Product Category
-                        </h2>
-                        <p className="text-start text-sm sm:text-left">
-                            Select your image and suitable name for product and click create button.
-                        </p>
+                    <div className="mb-5 flex flex-col items-start justify-between gap-3 lg:flex-row">
+                        <div>
+                            <h2 className="flex gap-2 text-center text-lg font-semibold text-primary sm:text-left">
+                                <PackagePlus />
+                                Create New Product Category
+                            </h2>
+                            <p className="text-start text-sm sm:text-left">
+                                Select your image and suitable name for product and click create
+                                button.
+                            </p>
+                        </div>
                     </div>
+
+                    <Button type="submit" size="lg" disabled={isPending} className="hidden lg:block">
+                        {isPending ? (
+                            <span className="flex items-center gap-2">
+                                <LoaderCircle className="animate-spin" /> Submiting
+                            </span>
+                        ) : (
+                            <>Save & Publish</>
+                        )}
+                    </Button>
                 </div>
-                <section className="">
-                    <form className="" onSubmit={handleSubmit(onSubmit)}>
-                        <section className="mb-5 flex flex-col justify-between gap-5 lg:flex-row">
-                            <section className="col-span-7 rounded-lg border-2 bg-gray-100 pb-5 lg:w-[80%]">
-                                <h2 className="mb-3 border-b-2 border-primary px-5 py-2 text-lg font-semibold text-primary">
-                                    General information
-                                </h2>
-                                <div className="px-5">
-                                    <Label htmlFor="title" className="text-base font-semibold">
-                                        Category Title <span className="text-red-600">*</span>
-                                    </Label>
-                                    <Input
-                                        {...register("title")}
-                                        id="title"
-                                        name="title"
-                                        type="text"
-                                        placeholder="Enter Product Name"
-                                        className="mt-2 h-11"
-                                    />
 
-                                    <div className="h-5">
-                                        {errors.title && (
-                                            <span className="text-xs text-red-500">
-                                                {errors.title.message}
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
-                            </section>
+                <section className="mb-5 flex flex-col justify-between gap-5 lg:flex-row">
+                    {/* First Element */}
+                    <section className="rounded-lg border-2 bg-gray-100 pb-5 lg:w-[80%]">
+                        <h2 className="mb-3 border-b-2 border-primary px-5 py-2 text-lg font-semibold text-primary">
+                            General information
+                        </h2>
+                        <div className="px-5">
+                            <Label htmlFor="title" className="text-base font-semibold">
+                                Category Title <span className="text-red-600">*</span>
+                            </Label>
+                            <Input
+                                {...register("title")}
+                                id="title"
+                                name="title"
+                                type="text"
+                                placeholder="Enter Product Name"
+                                className="mt-2 h-11 bg-white"
+                            />
 
-                            <section className="col-span-4 h-fit rounded-lg border-2 bg-gray-100 lg:w-[600px] lg:max-w-[600px]">
-                                <h2 className="mb-3 border-b-2 border-primary px-5 py-2 text-lg font-semibold text-primary">
-                                    Media
-                                </h2>
-                                <div className="px-5">
-                                    <CategoriesImageSelector
-                                        images={images}
-                                        setImages={setImages}
-                                    />
+                            <div className="h-5">
+                                {errors.title && (
+                                    <span className="text-xs text-red-500">
+                                        {errors.title.message}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                    </section>
 
-                                    <div className="h-5">
-                                        {errors.thumbnail && (
-                                            <span className="text-xs text-red-500">
-                                                Please select a thumbnail
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
-                            </section>
-                        </section>
+                    {/* Secoend Element */}
+                    <section className="rounded-lg border-2 bg-gray-100 lg:w-[600px] lg:max-w-[600px]">
+                        <h2 className="mb-3 border-b-2 border-primary px-5 py-2 text-lg font-semibold text-primary">
+                            Category Media
+                        </h2>
+                        <div className="px-5">
+                            <CategoriesImageSelector images={images} setImages={setImages} />
 
-                        <Button type="submit" size="lg" disabled={isPending} className="">
-                            {isPending ? (
-                                <>
-                                    <LoaderCircle className="animate-spin" /> Submiting
-                                </>
-                            ) : (
-                                <>Save & Publish</>
-                            )}
-                        </Button>
-                    </form>
+                            <div className="h-5">
+                                {errors.thumbnail && (
+                                    <span className="text-xs text-red-500">
+                                        Please select a thumbnail
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                    </section>
                 </section>
-            </div>
+
+                <Button type="submit" size="lg" disabled={isPending} className="mt-5 w-full lg:hidden">
+                    {isPending ? (
+                        <>
+                            <LoaderCircle className="animate-spin" /> Submiting
+                        </>
+                    ) : (
+                        <>Save & Publish</>
+                    )}
+                </Button>
+            </form>
         </div>
     );
 };

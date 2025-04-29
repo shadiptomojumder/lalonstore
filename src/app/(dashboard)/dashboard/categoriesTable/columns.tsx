@@ -35,12 +35,15 @@ export const columns: ColumnDef<Category>[] = [
     {
         id: "logo",
         accessorKey: "logo",
-        header: () => <div>Category Icon</div>,
+        header: () => <p className="text-nowrap">Category Icon</p>,
         cell: ({ row }) => (
-            <div className="">
-                {/* {row.getValue("thumbnail")} */}
-                <Image src={row.getValue("logo")} alt="Logo" width={100} height={100} className="p-1 aspect-square" />
-            </div>
+            <Image
+                src={row.getValue("logo")}
+                alt="Logo"
+                width={100}
+                height={100}
+                className="aspect-[300/300] max-w-[84px] min-w-[84px] rounded-md object-cover transition-transform duration-300 ease-in-out hover:scale-110"
+            />
         ),
     },
     {

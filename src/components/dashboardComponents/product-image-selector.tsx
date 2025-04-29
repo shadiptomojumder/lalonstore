@@ -4,7 +4,6 @@ import { X } from "lucide-react";
 import Image from "next/image";
 import type React from "react";
 import { useRef, useState, type ChangeEvent } from "react";
-import gallery from "../../../public/icons/gallery_add.png";
 import { Skeleton } from "../ui/skeleton";
 
 interface ProductImageSelectorProps {
@@ -13,7 +12,11 @@ interface ProductImageSelectorProps {
     setIsImageChanged?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function ProductImageSelector({ images, setImages,setIsImageChanged }: ProductImageSelectorProps) {
+export default function ProductImageSelector({
+    images,
+    setImages,
+    setIsImageChanged,
+}: ProductImageSelectorProps) {
     const [isLoading, setIsLoading] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -81,7 +84,7 @@ export default function ProductImageSelector({ images, setImages,setIsImageChang
                 <>
                     {images.length > 0 ? (
                         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-                            {images.map((image,index) => (
+                            {images.map((image, index) => (
                                 <div key={index} className="group relative">
                                     <Image
                                         src={image.preview || "/placeholder.svg"}
@@ -93,7 +96,7 @@ export default function ProductImageSelector({ images, setImages,setIsImageChang
                                     <button
                                         type="button"
                                         onClick={() => removeImage(image.id)}
-                                        className="absolute top-1 right-1 rounded-full bg-white p-1 opacity-0 shadow-md transition-opacity group-hover:opacity-100 cursor-pointer"
+                                        className="absolute top-1 right-1 cursor-pointer rounded-full bg-white p-1 opacity-0 shadow-md transition-opacity group-hover:opacity-100"
                                         aria-label="Remove image">
                                         <X className="h-4 w-4 text-gray-600" />
                                     </button>
@@ -101,14 +104,15 @@ export default function ProductImageSelector({ images, setImages,setIsImageChang
                             ))}
                         </div>
                     ) : (
-                        <div className="h-32 col-span-4 w-full font-semibold text-primary rounded-lg bg-white flex items-center justify-center" >No image seleted</div>
-                        
+                        <div className="col-span-4 flex h-32 w-full items-center justify-center rounded-lg bg-white font-semibold text-primary">
+                            No image seleted
+                        </div>
                     )}
                 </>
             )}
 
             <div
-                className="mt-3 cursor-pointer bg-[#d7f2dc] rounded-lg border-2 border-dashed border-gray-300 p-16 text-center transition-colors hover:border-primary"
+                className="mt-3 cursor-pointer rounded-lg border-2 border-dashed border-gray-300 bg-[#d7f2dc] p-16 text-center transition-colors hover:border-primary"
                 onClick={() => fileInputRef.current?.click()}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
@@ -122,8 +126,8 @@ export default function ProductImageSelector({ images, setImages,setIsImageChang
                     className="hidden"
                     aria-label="Select product images"
                 />
-                <p className="text-gray-600 font-semibold">
-                    Click to select or drag and drop product images here
+                <p className="font-semibold text-gray-600">
+                    Click to select or drag and drop product image here (415*332 pixels recommended)
                 </p>
             </div>
         </div>
